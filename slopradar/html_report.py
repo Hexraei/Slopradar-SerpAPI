@@ -41,7 +41,7 @@ def to_html(report: NicheReport, max_rules: int = 25) -> str:
         f'<p class="sub">Live Google results via SerpApi for {", ".join("<code>" + e(q) + "</code>" for q in report.queries)}. Generated {e(report.generated_at)}.</p>',
         f'<div class="index">{idx}<span style="font-size:24px">/100</span></div>',
         f"<p>{_band(report.band)} Rank-weighted: <b>{'n/a' if report.rank_weighted_index is None else report.rank_weighted_index}</b>/100. "
-        f"Scored with {e(str(sum(1 for p in report.pages if p.score is not None)))} of {len(report.pages)} pages. No LLM used.</p>",
+        f"Scored {sum(1 for p in report.pages if p.score is not None)} of {len(report.pages)} pages. No LLM used.</p>",
         "<table><tr><th>#</th><th>Score</th><th></th><th>Band</th><th>Page</th></tr>",
     ]
     for p in report.pages:
