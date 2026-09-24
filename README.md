@@ -76,7 +76,7 @@ SerpApi is the data source for the whole product. Without live search results th
 | `slopradar/pipeline.py` | The agent loop: plan, search, dedupe, fetch, score, aggregate |
 | `slopradar/report.py` | Terminal, Markdown and JSON output |
 | `slopradar/html_report.py` | Self-contained HTML report |
-| `slopradar/cli.py` | `scan`, `demo`, `score`, `rules` commands |
+| `slopradar/cli.py` | `scan`, `compare`, `demo`, `score`, `rules` commands |
 
 The only runtime dependency is `requests`.
 
@@ -130,6 +130,15 @@ slopradar scan "standing desks" --queries 3 --num 15 --html report.html --json-o
 | `--json` / `--json-out` / `--markdown` / `--html` | | Machine-readable and shareable reports. The HTML report is one self-contained file. |
 | `--show-rules N` | 3 | Matched rules shown per page in the terminal |
 | `--ignore-robots` | off | Skip robots.txt checks |
+
+### Compare Google markets
+
+```bash
+slopradar compare "credit cards"                       # US vs India
+slopradar compare "credit cards" --gl us --gl uk --gl in
+```
+
+Runs the same niche through SerpApi once per country (`gl`) and ranks the markets by their Slop Index, with the top pattern in each and the domains that rank everywhere. One SerpApi search per market.
 
 ### Score a single page or file
 
@@ -248,7 +257,7 @@ A high score means the page leans on patterns that are common in generated copy.
 pytest
 ```
 
-41 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
+44 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market comparison and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
 
 ## Limitations
 
@@ -260,7 +269,6 @@ pytest
 ## Roadmap
 
 - Track a niche over time and chart the index week by week.
-- Compare two countries or languages for the same query (`gl`/`hl`).
 - Per-domain history, to spot sites that switched to templated content.
 - Project-level allowlists for words that are legitimate in a niche.
 
