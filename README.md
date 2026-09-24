@@ -8,8 +8,8 @@ No LLM is involved in scoring. Same page in, same score out, every time, and eve
 
 ```
 $ slopradar scan "ai writing tools"
-AI SLOP INDEX for "ai writing tools": 56/100  (Sloppy)
-Rank-weighted index (top results count more): 39/100
+AI SLOP INDEX for "ai writing tools": 53/100  (Sloppy)
+Rank-weighted index (top results count more): 38/100
 ```
 
 ## Why
@@ -155,8 +155,8 @@ slopradar rules --json                # full library with regexes
 A real run on September 24, 2026 against the live Google results for `ai writing tools` (US, English), 1 SerpApi search:
 
 ```
-AI SLOP INDEX for "ai writing tools": 56/100  (Sloppy)
-Rank-weighted index (top results count more): 39/100
+AI SLOP INDEX for "ai writing tools": 53/100  (Sloppy)
+Rank-weighted index (top results count more): 38/100
 
  #  score                        band      domain
  1     19  ####................  Human     emailvendorselection.com
@@ -166,7 +166,7 @@ Rank-weighted index (top results count more): 39/100
  5     83  #################...  Slop      ahrefs.com
  6    -    --------------------  Not scor  scribbr.com                  skipped: HTTP 403
  7     55  ###########.........  Sloppy    grammarly.com
- 8     52  ##########..........  Sloppy    aimadesimple0.substack.com
+ 8     40  ########............  Mixed     aimadesimple0.substack.com
  9    -    --------------------  Not scor  reddit.com                   skipped: blocked by robots.txt
 ```
 
@@ -177,6 +177,8 @@ phrase.elevate-your     x6   "Grammar Checker Elevate your writing with our free
 vocab.effortlessly      x16  "our AI writing tools will craft the marketing copy effortlessly."
 vocab.unlock            x4   "Emoji Translator Unlock emotions with our AI translator!"
 ```
+
+Live pages change, so a rerun can move the numbers a few points. The full reports from this run are in [`examples/`](examples/) as HTML, Markdown and JSON.
 
 Pages that block automated requests are listed as "Not scored" and left out of the index rather than guessed at.
 
