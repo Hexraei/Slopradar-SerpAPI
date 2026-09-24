@@ -277,4 +277,8 @@ pytest
 - **Prior work:** SlopRadar's detection approach comes from [Voxfold](https://github.com/Hexraei/VoxfoldWeb), my deterministic anti-slop copy linter that existed before this hackathon. The rule engine in this repository is a new Python implementation written for SlopRadar, following Voxfold's approach and rule categories. The SerpApi search, fetching, pipeline, index and reporting are all new.
 - **AI tools:** Built with AI coding assistance (Claude Code). The detection engine itself uses no LLM or model of any kind: it is pure pattern matching.
 
+## License
+
+[MIT](LICENSE)
+
 Built by Navin Venkatesan ([@Hexraei](https://github.com/Hexraei)) for the SerpApi India Hackathon 2026.

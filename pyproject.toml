@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "AI Slop Index for any Google niche: SerpApi search plus a deterministic, LLM-free copy linter."
 readme = "README.md"
 requires-python = ">=3.9"
+license = { text = "MIT" }
 authors = [{ name = "Navin Venkatesan" }]
 dependencies = ["requests>=2.28"]
 keywords = ["serpapi", "seo", "ai-detection", "linter", "copywriting"]
