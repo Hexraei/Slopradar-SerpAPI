@@ -67,6 +67,26 @@ def parse_organic_results(payload: Dict, query: str) -> List[SearchResult]:
     return results
 
 
+def parse_related_searches(payload: Dict, limit: int = 10) -> List[str]:
+    """Queries Google itself suggests next to this one ("related searches" and
+    "people also ask"). SlopRadar uses them to widen its sample of a niche the
+    way real searchers do, instead of guessing variants."""
+    seen, out = set(), []
+    candidates = [r.get("query") for r in payload.get("related_searches", []) or []]
+    candidates += [r.get("question") for r in payload.get("related_questions", []) or []]
+    for q in candidates:
+        if not q:
+            continue
+        key = " ".join(q.lower().split())
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(q.strip())
+        if len(out) >= limit:
+            break
+    return out
+
+
 class SerpApiClient:
     """Thin client with an optional on-disk cache so repeat runs cost nothing."""
 
@@ -114,3 +134,7 @@ class SerpApiClient:
 
     def search(self, query: str, **kwargs) -> List[SearchResult]:
         return parse_organic_results(self.raw_search(query, **kwargs), query)
+
+    def search_with_related(self, query: str, **kwargs):
+        payload = self.raw_search(query, **kwargs)
+        return parse_organic_results(payload, query), parse_related_searches(payload)
