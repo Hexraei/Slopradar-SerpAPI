@@ -147,7 +147,8 @@ STOCK_PHRASES = [
 STRUCTURES = [
     ("em-dash", "Em dash (U+2014), heavily overused in generated copy", 1.5,
      r"\u2014"),
-    ("spaced-en-dash", "Spaced en dash used as an em dash", 1.0, r"\s\u2013\s"),
+    # Only mid-sentence (lowercase on both sides); "16. Tool \u2013 Best for X" list headings are fine.
+    ("spaced-en-dash", "Spaced en dash used as an em dash mid-sentence", 1.0, r"[a-z,]\s\u2013\s[a-z]"),
     ("not-just-x-but-y", "'Not just X, but Y' construction", 3.0,
      r"\bnot\s+(?:just|only|merely|simply)\b[^.!?]{1,80}?\bbut\b"),
     ("its-not-x-its-y", "'It's not X, it's Y' reframe", 3.0,
@@ -157,7 +158,8 @@ STRUCTURES = [
     ("more-than-just", "'More than just X' framing", 2.0, r"\bmore\s+than\s+just\b"),
     ("tricolon-adjectives", "Tricolon of adjectives or -ly/-ive/-ful words", 1.0,
      r"\b\w+(?:ly|ive|ful|less|ous|able|ible|ent|ant)\b,\s+\w+(?:ly|ive|ful|less|ous|able|ible|ent|ant)\b,?\s+and\s+\w+(?:ly|ive|ful|less|ous|able|ible|ent|ant)\b"),
-    ("tricolon-list", "Rhythmic 'X, Y, and Z' triplet of single words", 0.5,
+    # Plain lists are everywhere in human writing, so this only nudges the score.
+    ("tricolon-list", "Rhythmic 'X, Y, and Z' triplet of single words", 0.25,
      r"\b[A-Za-z]{4,},\s+[A-Za-z]{4,},\s+and\s+[A-Za-z]{4,}\b"),
     ("whether-or", "'Whether you're X or Y' audience sweep", 2.5,
      r"\bwhether\s+you(?:'re|\u2019re|\s+are)\s+[^.!?]{1,60}?\s+or\s+"),
@@ -171,8 +173,8 @@ STRUCTURES = [
      r"(?:^|[.!?]\s+)(?:Moreover|Furthermore|Additionally|Consequently|Notably|Importantly|Ultimately|Indeed|Thus|Hence),"),
     ("sentence-in-short", "Sentence opening with a summary tag", 1.5,
      r"(?:^|[.!?]\s+)(?:In short|In essence|In summary|In conclusion|Overall|To conclude|Simply put|Put simply),"),
-    ("colon-reveal", "Short colon reveal ('One thing: ...')", 0.8,
-     r"(?:^|[.!?]\s+)(?:The\s+)?\w+(?:\s+\w+)?:\s+[A-Z][^.!?]{1,40}\."),
+    ("colon-reveal", "Colon reveal ('The result: ...', 'The catch: ...')", 1.5,
+     r"(?:^|[.!?]\s+)(?:The\s+)?(?:[Rr]esult|[Aa]nswer|[Tt]ruth|[Cc]atch|[Ss]ecret|[Kk]icker|[Tt]wist|[Bb]ottom line|[Vv]erdict|[Tt]akeaway):\s+[A-Z]"),
     ("emoji-bullet", "Emoji used as a bullet or heading marker", 1.5,
      r"(?m)^\s*[\u2705\u2728\U0001F680\U0001F4A1\U0001F525\U0001F449\U0001F4CC\U0001F31F\u2B50\U0001F3AF\U0001F4C8\U0001F512\u26A1]"),
     ("sparkle-emoji", "Rocket, sparkle or fire emoji in copy", 1.0,
@@ -191,7 +193,6 @@ STRUCTURES = [
      r"\bno\s+more\s+\w+[^.!?]{0,40}[.!]\s+no\s+more\b"),
     ("its-all-about", "'It's all about X'", 1.5, r"\bit(?:'s|\u2019s)\s+all\s+about\b"),
     ("the-best-part", "'The best part?'", 2.0, r"\bthe\s+best\s+part\b"),
-    ("both-and", "'Both X and Y' balance", 0.5, r"\bboth\s+\w+\s+and\s+\w+\b"),
     ("nothing-short-of", "'Nothing short of'", 2.0, r"\bnothing\s+short\s+of\b"),
     ("exclamation-cluster", "Two or more exclamation sentences in a row", 1.0,
      r"![^.!?\n]{1,80}!"),
@@ -229,7 +230,7 @@ def _build_rules() -> List[Rule]:
             f"Stock phrase: '{phrase}'", 2.0, _phrase_regex(phrase))
     for rule_id, description, weight, regex in STRUCTURES:
         add(f"structure.{rule_id}", "structure", description, weight,
-            re.compile(regex, re.IGNORECASE if not rule_id.startswith(("sentence-", "title-", "colon-", "rhetorical")) else 0))
+            re.compile(regex, re.IGNORECASE if not rule_id.startswith(("sentence-", "title-", "colon-", "rhetorical", "spaced-")) else 0))
     return rules
 
 

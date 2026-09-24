@@ -96,3 +96,23 @@ def test_bands():
     assert band_for(30) == "Mixed"
     assert band_for(60) == "Sloppy"
     assert band_for(90) == "Slop"
+
+
+# False positives found while checking live "ai writing tools" results.
+def test_listicle_heading_en_dash_is_not_flagged():
+    r = score_text("16. ParagraphAI \u2013 Best for Free Text Generation." + FILLER)
+    assert "structure.spaced-en-dash" not in ids(r)
+    r = score_text("it works well \u2013 until it does not." + FILLER)
+    assert "structure.spaced-en-dash" in ids(r)
+
+
+def test_label_colons_are_not_reveals():
+    r = score_text("Best for: All-round content. Note: This post has affiliate links." + FILLER)
+    assert "structure.colon-reveal" not in ids(r)
+    r = score_text("We shipped it. The result: Faster pages for everyone." + FILLER)
+    assert "structure.colon-reveal" in ids(r)
+
+
+def test_plain_comparison_is_not_flagged():
+    r = score_text("I used the same prompt on both ChatGPT and Sudowrite." + FILLER)
+    assert not any(h.rule_id.startswith("structure.both") for h in r.hits)
