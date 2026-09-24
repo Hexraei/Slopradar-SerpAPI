@@ -38,6 +38,25 @@ def _emit(report, args) -> None:
     print(to_json(report) if args.json else to_terminal(report, show_rules=args.show_rules))
 
 
+def _expander(args, client, say):
+    """Pick where follow-up queries come from when --queries > 1."""
+    if args.expand == "templates":
+        return None
+    if args.expand == "related":
+        return lambda q: client.search_with_related(q, gl=args.gl, hl=args.hl, location=args.location)
+
+    def trends(q):
+        results = client.search(q, gl=args.gl, hl=args.hl, location=args.location)
+        try:
+            rising = client.trends_related(q, geo=args.gl)
+        except SerpApiError as exc:
+            say(f"Google Trends had nothing for '{q}' ({exc}); falling back to templates")
+            return results, []
+        say("Google Trends: " + ", ".join(f"{t.query} ({t.value})" for t in rising[:5]))
+        return results, [t.query for t in rising]
+    return trends
+
+
 def cmd_scan(args) -> int:
     say = _progress(args.quiet)
     if args.serp_json:
@@ -63,8 +82,7 @@ def cmd_scan(args) -> int:
             max_results=args.num,
             progress=say,
             serp_stats=lambda: {"calls": client.calls_made, "cache_hits": client.cache_hits},
-            related_search=(lambda q: client.search_with_related(q, gl=args.gl, hl=args.hl, location=args.location))
-            if args.expand == "related" else None,
+            related_search=_expander(args, client, say),
         )
     except SerpApiError as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -202,9 +220,10 @@ def build_parser() -> argparse.ArgumentParser:
     scan.add_argument("niche", help='keyword or niche, e.g. "project management software"')
     scan.add_argument("--queries", type=int, default=1,
                       help="how many query variants to search (1-6, each costs one SerpApi search)")
-    scan.add_argument("--expand", choices=["related", "templates"], default="related",
-                      help="how extra queries are chosen when --queries > 1: Google's own related "
-                           "searches via SerpApi (default) or fixed templates")
+    scan.add_argument("--expand", choices=["related", "trends", "templates"], default="related",
+                      help="how extra queries are chosen when --queries > 1: Google's related searches "
+                           "(default, free with the first search), Google Trends rising queries "
+                           "(one extra search), or fixed templates")
     scan.add_argument("--gl", default="us", help="Google country code (default us)")
     scan.add_argument("--hl", default="en", help="Google language code (default en)")
     scan.add_argument("--location", help='optional SerpApi location, e.g. "Chennai, Tamil Nadu, India"')
