@@ -87,6 +87,67 @@ def parse_related_searches(payload: Dict, limit: int = 10) -> List[str]:
     return out
 
 
+def parse_news_results(payload: Dict, query: str) -> List[SearchResult]:
+    """Google News results via SerpApi (engine=google_news).
+
+    Top stories arrive either flat or as clusters with a nested ``stories``
+    list; clusters are flattened in order so every article gets a rank.
+    """
+    if payload.get("error"):
+        raise SerpApiError(f"SerpApi error: {payload['error']}")
+    flat = []
+    for item in payload.get("news_results", []) or []:
+        if item.get("link"):
+            flat.append(item)
+        for story in item.get("stories", []) or []:
+            if story.get("link"):
+                flat.append(story)
+    results = []
+    for item in flat:
+        link = item["link"]
+        if not link.startswith(("http://", "https://")):
+            continue
+        source = item.get("source") or {}
+        results.append(SearchResult(
+            query=query,
+            position=len(results) + 1,
+            title=item.get("title") or "",
+            link=link,
+            displayed_link=source.get("name", "") if isinstance(source, dict) else str(source),
+            snippet=item.get("date") or "",
+            source=source.get("name", "") if isinstance(source, dict) else str(source),
+        ))
+    return results
+
+
+@dataclass
+class TrendQuery:
+    query: str
+    kind: str          # "rising" or "top"
+    value: str         # as Google shows it: "Breakout", "+4,500%", "100"
+    extracted_value: int
+
+
+def parse_trends_related(payload: Dict, limit: int = 10) -> List[TrendQuery]:
+    """Related queries from Google Trends (engine=google_trends,
+    data_type=RELATED_QUERIES). Rising queries come first, strongest first,
+    then top queries: what people are starting to search for right now."""
+    if payload.get("error"):
+        raise SerpApiError(f"SerpApi error: {payload['error']}")
+    related = payload.get("related_queries") or {}
+    out: List[TrendQuery] = []
+    seen = set()
+    for kind in ("rising", "top"):
+        items = sorted(related.get(kind, []) or [], key=lambda i: -(i.get("extracted_value") or 0))
+        for item in items:
+            q = (item.get("query") or "").strip()
+            if not q or q.lower() in seen:
+                continue
+            seen.add(q.lower())
+            out.append(TrendQuery(q, kind, str(item.get("value", "")), int(item.get("extracted_value") or 0)))
+    return out[:limit]
+
+
 class SerpApiClient:
     """Thin client with an optional on-disk cache so repeat runs cost nothing."""
 
@@ -111,6 +172,9 @@ class SerpApiClient:
         params = {"engine": "google", "q": query, "gl": gl, "hl": hl, "start": start}
         if location:
             params["location"] = location
+        return self._call(params)
+
+    def _call(self, params: Dict) -> Dict:
         cache_path = self._cache_path(params)
         if cache_path and cache_path.exists():
             self.cache_hits += 1
@@ -134,6 +198,15 @@ class SerpApiClient:
 
     def search(self, query: str, **kwargs) -> List[SearchResult]:
         return parse_organic_results(self.raw_search(query, **kwargs), query)
+
+    def news_search(self, query: str, gl: str = "us", hl: str = "en") -> List[SearchResult]:
+        return parse_news_results(self._call({"engine": "google_news", "q": query, "gl": gl, "hl": hl}), query)
+
+    def trends_related(self, query: str, geo: str = "", date: str = "today 3-m") -> List[TrendQuery]:
+        params = {"engine": "google_trends", "q": query, "data_type": "RELATED_QUERIES", "date": date}
+        if geo:
+            params["geo"] = geo.upper()
+        return parse_trends_related(self._call(params))
 
     def search_with_related(self, query: str, **kwargs):
         payload = self.raw_search(query, **kwargs)
