@@ -1,0 +1,12 @@
+{
+  "search_metadata": {"id": "test", "status": "Success"},
+  "search_parameters": {"engine": "google", "q": "standing desks", "gl": "us", "hl": "en"},
+  "ads": [{"position": 1, "title": "Ad: Buy desks", "link": "https://ads.example.com/desk"}],
+  "organic_results": [
+    {"position": 2, "title": "Human review", "link": "https://www.human.example.com/review/", "displayed_link": "human.example.com", "snippet": "I used it for a year", "source": "Human Blog"},
+    {"position": 1, "title": "Ultimate standing desk guide", "link": "https://slop.example.com/guide", "displayed_link": "slop.example.com", "snippet": "Unlock the power of standing"},
+    {"position": 3, "title": "Duplicate of #2", "link": "https://human.example.com/review", "snippet": "dupe"},
+    {"position": 4, "title": "Broken page", "link": "https://broken.example.com/", "snippet": "404"},
+    {"position": 5, "title": "Not a web link", "link": "/search?q=desk"}
+  ]
+}
