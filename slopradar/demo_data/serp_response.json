@@ -1,0 +1,11 @@
+{
+  "search_metadata": {"status": "Success", "note": "Sample response shaped like SerpApi Google Search output, trimmed for the offline demo."},
+  "search_parameters": {"engine": "google", "q": "ai writing tools", "gl": "us", "hl": "en"},
+  "organic_results": [
+    {"position": 1, "title": "10 Best AI Writing Tools to Supercharge Your Content in 2026", "link": "https://demo.slopradar.test/best-ai-writing-tools", "displayed_link": "demo.slopradar.test", "snippet": "Unlock the power of AI writing..."},
+    {"position": 2, "title": "I tested 6 AI writing tools for a month. Here's what stuck.", "link": "https://demo.slopradar.test/tested-six-tools", "displayed_link": "demo.slopradar.test", "snippet": "Short version: two of them saved me time."},
+    {"position": 3, "title": "AI Writing Tools: The Ultimate Guide", "link": "https://demo.slopradar.test/ultimate-guide", "displayed_link": "demo.slopradar.test", "snippet": "Everything you need to know..."},
+    {"position": 4, "title": "Ask HN-style thread: do you use AI to write docs?", "link": "https://demo.slopradar.test/forum-thread", "displayed_link": "demo.slopradar.test", "snippet": "We tried it for API docs..."},
+    {"position": 5, "title": "Pricing - WriteFlow AI", "link": "https://demo.slopradar.test/pricing", "displayed_link": "demo.slopradar.test", "snippet": "Plans for every team."}
+  ]
+}
