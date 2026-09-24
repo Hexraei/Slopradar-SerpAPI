@@ -28,6 +28,10 @@ def _emit(report, args) -> None:
     if args.markdown:
         Path(args.markdown).write_text(to_markdown(report), encoding="utf-8")
         _progress(args.quiet)(f"Markdown report written to {args.markdown}")
+    if args.html:
+        from .html_report import to_html
+        Path(args.html).write_text(to_html(report), encoding="utf-8")
+        _progress(args.quiet)(f"HTML report written to {args.html}")
     if args.json_out:
         Path(args.json_out).write_text(to_json(report), encoding="utf-8")
         _progress(args.quiet)(f"JSON report written to {args.json_out}")
@@ -144,6 +148,7 @@ def _add_output_flags(p: argparse.ArgumentParser) -> None:
     p.add_argument("--json", action="store_true", help="print the full JSON report to stdout")
     p.add_argument("--json-out", metavar="FILE", help="also write the JSON report to FILE")
     p.add_argument("--markdown", metavar="FILE", help="also write a Markdown report to FILE")
+    p.add_argument("--html", metavar="FILE", help="also write a self-contained HTML report to FILE")
     p.add_argument("--show-rules", type=int, default=3, help="matched rules shown per page in the terminal")
     p.add_argument("--quiet", action="store_true", help="hide progress messages")
 
