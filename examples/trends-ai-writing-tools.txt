@@ -1,0 +1,42 @@
+AI SLOP INDEX for "ai writing tools": 55/100  (Sloppy)
+Rank-weighted index (top results count more): 33/100
+Queries: ai writing tools, ai content writing tools, chatgpt ai writing tools
+
+ #  score                        band      domain / title
+ 1     16  ###.................  Human     emailvendorselection.com  27 Best AI Writing Tools in 2026 (Tested & Reviewed)
+                                    phrase.user-friendly-interface x3: "...common. Here’s what to look out for. A user-friendly interface Support for multiple ..."
+                                    vocab.optimize x9: "...language tool. That is, it uses NLP to optimize text for search engines, rather than..."
+ 2    -    --------------------  Not scor  chatgpt.com  Improve Your Writing with AI
+                                    skipped: HTTP 403
+ 3    -    --------------------  Not scor  ilampadmanabhan.medium.com  Best AI Writing Tools (May 2026): I Tested 8 AI Writers W...
+                                    skipped: HTTP 403
+ 4     55  ###########.........  Sloppy    kontent.ai  Top 10 AI tools for content writers
+                                    structure.em-dash x4: "...the best? Let’s find your perfect match—here are my top ten picks to help boost..."
+                                    vocab.enhance x6: "...roduce content faster? The productivity-enhancing AI features in Kontent.ai are my f..."
+ 5    -    --------------------  Not scor  openai.com  Writing with AI
+                                    skipped: HTTP 403
+ 6    -    --------------------  Not scor  quillbot.com  Free AI Writer
+                                    skipped: HTTP 403
+ 7     50  ##########..........  Sloppy    copy.ai  Free AI Writing Generator & Tools
+                                    structure.em-dash x12: "...tent with Copy.ai’s AI Sentence Expander—boost your writing productivity and clar..."
+                                    vocab.craft x16: "...AI-powered cold email generator. GTM AI crafts personalized outreach to boost respon..."
+ 8    -    --------------------  Not scor  reddit.com  Chat GPT vs Dedicated AI Writing tools : r/GrowthHacking
+                                    skipped: blocked by robots.txt
+ 9     70  ##############......  Sloppy    deepai.org  AI Writer
+                                    structure.not-just-x-but-y x1: "...ol will help you craft scripts that are not only compelling but also meaningful. Upl..."
+                                    vocab.craft x1: "...gence, this powerful tool will help you craft scripts that are not only compelling b..."
+10    -    --------------------  Too litt  youtube.com  Top 5 AI Writing tools better than ChatGPT?
+11     82  ################....  Slop      ahrefs.com  Free AI Writing Tools
+                                    phrase.elevate-your x6: "...transformed in seconds! Grammar Checker Elevate your writing with our free AI gramma..."
+                                    vocab.craft x5: "...thoughts, and our AI writing tools will craft the marketing copy effortlessly. It’s ..."
+12    -    --------------------  Not scor  scribbr.com  Free AI Writing Resources
+                                    skipped: HTTP 403
+
+Most common patterns across the niche:
+  structure.tricolon-list                  on 4 page(s), 43 hit(s)
+  vocab.craft                              on 4 page(s), 26 hit(s)
+  vocab.optimize                           on 4 page(s), 23 hit(s)
+  vocab.streamline                         on 4 page(s), 12 hit(s)
+  structure.em-dash                        on 3 page(s), 17 hit(s)
+
+SerpApi calls: 0 (cache hits: 4). Done in 3.1s. No LLM was used to score anything.

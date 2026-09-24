@@ -1,0 +1,12 @@
+AI Slop Index for "ai writing tools": organic web vs Google News (gl=us)
+  web    51/100  Sloppy   5/9 pages scored
+         82  ahrefs.com  Free AI Writing Tools
+         70  deepai.org  AI Writer
+         52  grammarly.com  Free AI Writer
+  news   32/100  Mixed    8/10 pages scored
+         52  today.usc.edu  Is AI making everyone’s writing the same? — USC News
+         47  cnet.com  Can You Tell When Students Write AI Essays? How to Catch AI 
+         38  techbullion.com  How AI Humanizers Work and Why Content Writers Use Them
+Gap: 19 points, web pages read sloppier.
+Patterns common to both: structure.em-dash, structure.from-x-to-y, structure.tricolon-list, vocab.craft
+SerpApi calls: 0 (cache hits: 2)
