@@ -130,6 +130,51 @@ def cmd_compare(args) -> int:
     return 0
 
 
+def cmd_channels(args) -> int:
+    """Organic web vs Google News for the same niche: which channel is sloppier?"""
+    say = _progress(args.quiet)
+    try:
+        client = SerpApiClient(cache_dir=None if args.no_cache else args.cache_dir)
+    except SerpApiError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    fetcher = PageFetcher(timeout=args.timeout, respect_robots=not args.ignore_robots)
+    channels = [
+        ("web", lambda q: client.search(q, gl=args.gl, hl=args.hl)),
+        ("news", lambda q: client.news_search(q, gl=args.gl, hl=args.hl)),
+    ]
+    reports = {}
+    for name, search in channels:
+        say(f"Channel: {name}")
+        try:
+            reports[name] = run_radar(args.niche, search=search, fetcher=fetcher, queries=1,
+                                      max_results=args.num, progress=say)
+        except SerpApiError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+    if args.json:
+        print(json.dumps({"niche": args.niche, "channels": {k: v.to_dict() for k, v in reports.items()}},
+                         indent=2, ensure_ascii=False))
+        return 0
+    print(f"AI Slop Index for \"{args.niche}\": organic web vs Google News (gl={args.gl})")
+    for name, r in reports.items():
+        idx = "n/a" if r.slop_index is None else f"{r.slop_index:>3}/100"
+        scored = sum(1 for p in r.pages if p.score is not None)
+        print(f"  {name:<5} {idx}  {r.band:<8} {scored}/{len(r.pages)} pages scored")
+        for p in sorted((p for p in r.pages if p.score is not None), key=lambda p: -p.score)[:3]:
+            print(f"        {p.score:>3}  {p.domain}  {p.title[:60]}")
+    web, news = reports["web"].slop_index, reports["news"].slop_index
+    if web is not None and news is not None:
+        gap = web - news
+        verdict = "about the same" if abs(gap) < 5 else ("web pages read sloppier" if gap > 0 else "news reads sloppier")
+        print(f"Gap: {abs(gap)} points, {verdict}.")
+    web_rules = {r["rule_id"] for r in reports["web"].top_rules}
+    news_rules = {r["rule_id"] for r in reports["news"].top_rules}
+    print(f"Patterns common to both: {', '.join(sorted(web_rules & news_rules)) or 'none'}")
+    print(f"SerpApi calls: {client.calls_made} (cache hits: {client.cache_hits})")
+    return 0
+
+
 class _FixtureFetcher(PageFetcher):
     """Serves pages from the bundled demo folder instead of the network."""
 
@@ -236,6 +281,19 @@ def build_parser() -> argparse.ArgumentParser:
                       help="replay a saved SerpApi JSON response instead of searching (pages are still fetched live)")
     _add_output_flags(scan)
     scan.set_defaults(func=cmd_scan)
+
+    chan = sub.add_parser("channels", help="organic web vs Google News for one niche (2 searches)")
+    chan.add_argument("niche")
+    chan.add_argument("--gl", default="us")
+    chan.add_argument("--hl", default="en")
+    chan.add_argument("--num", type=int, default=10)
+    chan.add_argument("--cache-dir", default=os.environ.get("SLOPRADAR_CACHE", ".slopradar_cache"))
+    chan.add_argument("--no-cache", action="store_true")
+    chan.add_argument("--timeout", type=float, default=12.0)
+    chan.add_argument("--ignore-robots", action="store_true")
+    chan.add_argument("--json", action="store_true")
+    chan.add_argument("--quiet", action="store_true")
+    chan.set_defaults(func=cmd_channels)
 
     compare = sub.add_parser("compare", help="compare one niche across Google markets (one search per market)")
     compare.add_argument("niche")
