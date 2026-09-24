@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slopradar"
+version = "0.1.0"
+description = "AI Slop Index for any Google niche: SerpApi search plus a deterministic, LLM-free copy linter."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Navin Venkatesan" }]
+dependencies = ["requests>=2.28"]
+keywords = ["serpapi", "seo", "ai-detection", "linter", "copywriting"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+slopradar = "slopradar.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["slopradar*"]
+
+[tool.setuptools.package-data]
+slopradar = ["demo_data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
