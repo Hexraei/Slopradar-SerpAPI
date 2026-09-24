@@ -82,6 +82,8 @@ The only runtime dependency is `requests`.
 
 ## Setup
 
+Short on time? [docs/walkthrough.md](docs/walkthrough.md) is a five-minute path through every feature.
+
 Requires Python 3.9+.
 
 ```bash
@@ -264,7 +266,7 @@ pytest
 - Sites behind bot protection (Cloudflare and similar) often return 403. They are reported as not scored.
 - The rules target English copy.
 - Short pages (under 80 words) are not scored because a couple of hits would swing the result.
-- Rule weights are hand-tuned. They are all visible in `slopradar/engine/rules.py` and easy to change.
+- Rule weights are hand-tuned. They are all visible in `slopradar/engine/rules.py`, and [docs/rules.md](docs/rules.md) explains how to add or tune one.
 
 ## Roadmap
 
