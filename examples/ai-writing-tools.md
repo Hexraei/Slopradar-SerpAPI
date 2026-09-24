@@ -1,21 +1,21 @@
 # AI Slop Index: ai writing tools
 
-**Index: 53/100 (Sloppy)**
+**Index: 51/100 (Sloppy)**
 
-Rank-weighted index: 38/100
+Rank-weighted index: 36/100
 Queries searched via SerpApi: `ai writing tools`
-Generated: 2026-09-24T21:31:25+0530
+Generated: 2026-09-24T21:40:53+0530
 
 | Rank | Score | Band | Domain | Title |
 |---|---|---|---|---|
-| 1 | 19 | Human | emailvendorselection.com | 27 Best AI Writing Tools in 2026 (Tested & Reviewed) |
+| 1 | 16 | Human | emailvendorselection.com | 27 Best AI Writing Tools in 2026 (Tested & Reviewed) |
 | 2 | n/a | Not scored | ilampadmanabhan.medium.com | Best AI Writing Tools (May 2026): I Tested 8 AI Writers With ... |
 | 3 | n/a | Not scored | quillbot.com | Free AI Writer |
 | 4 | 70 | Sloppy | deepai.org | AI Writer |
-| 5 | 83 | Slop | ahrefs.com | Free AI Writing Tools |
+| 5 | 82 | Slop | ahrefs.com | Free AI Writing Tools |
 | 6 | n/a | Not scored | scribbr.com | Free AI Writing Resources |
-| 7 | 55 | Sloppy | grammarly.com | Free AI Writer |
-| 8 | 40 | Mixed | aimadesimple0.substack.com | I Tested 25+ AI Writing Tools, and This One Writes Better Than ... |
+| 7 | 52 | Sloppy | grammarly.com | Free AI Writer |
+| 8 | 37 | Mixed | aimadesimple0.substack.com | I Tested 25+ AI Writing Tools, and This One Writes Better Than ... |
 | 9 | n/a | Not scored | reddit.com | What is actually the best AI writing tools right now (local ... |
 
 ## Most common patterns
@@ -30,25 +30,22 @@ Generated: 2026-09-24T21:31:25+0530
 | `structure.em-dash` | 2 | 27 |
 | `structure.heres-the-thing` | 2 | 11 |
 | `vocab.optimize` | 2 | 10 |
-| `structure.colon-reveal` | 2 | 7 |
 | `vocab.unlock` | 2 | 6 |
+| `vocab.tailored` | 2 | 5 |
 
 ## Per-page detail
 
 ### 1. 27 Best AI Writing Tools in 2026 (Tested & Reviewed)
 
 - URL: https://www.emailvendorselection.com/best-ai-writing-tools/
-- Slop score: **19** (Human)
-- Words scored: 9204, weighted hits per 1k words: 5.3
+- Slop score: **16** (Human)
+- Words scored: 9204, weighted hits per 1k words: 4.3
 
 | Rule | Category | Hits | Example |
 |---|---|---|---|
 | `phrase.user-friendly-interface` | stock-phrase | 3 | ...common. Here’s what to look out for. A user-friendly interface Support for multiple text types... |
-| `structure.spaced-en-dash` | structure | 10 | ...f their written content. 16. ParagraphAI – Best for Free Text Generation ParagraphA... |
 | `vocab.optimize` | inflated-vocabulary | 9 | ...language tool. That is, it uses NLP to optimize text for search engines, rather than fo... |
 | `phrase.are-you-looking-to` | stock-phrase | 2 | ...type of AI writing tool that you need. Are you looking to generate content fast? Then prioriti... |
-| `structure.colon-reveal` | structure | 5 | ...a free plan with 10k characters a month. Best for: All-round general content creation. Get sta... |
-| `structure.tricolon-list` | structure | 8 | ...for you? Here are all the key features, pros, cons, and costs of the best products on the mark... |
 | `phrase.all-in-all` | stock-phrase | 1 | ...now introduced example prompts to help. All in all, ChatGPT is an AI text generator in nam... |
 | `phrase.as-an-ai` | stock-phrase | 1 | ...content. And a chatbot tool that works as an AI writing assistant to bounce ideas off o... |
 | `phrase.in-this-article` | stock-phrase | 1 | ...ls drive many of the services mentioned in this article. ChatGPT is simply OpenAI’s own interf... |
@@ -57,8 +54,11 @@ Generated: 2026-09-24T21:31:25+0530
 | `vocab.unlock` | inflated-vocabulary | 2 | ...ee to use, but with paid-for plans that unlock more features. It’s free to use Grammar... |
 | `hedge.in-terms-of` | hedge-intensifier | 1 | ...prompt. It’s free to use and unlimited in terms of how much text it will generate. Another... |
 | `structure.sentence-in-short` | structure | 1 | ...’ to guide you from planning to creation. Overall, there are 130+ templates and recipes co... |
+| `structure.tricolon-list` | structure | 8 | ...for you? Here are all the key features, pros, cons, and costs of the best products on the mark... |
 | `hedge.highly` | hedge-intensifier | 2 | ...dients that make those articles rank so highly. These then become a checklist for you... |
-| ... | | | 7 more rules in the JSON report |
+| `structure.key-feature-list` | structure | 1 | ...writing tool for you? Here are all the key features, pros, cons, and costs of the best prod... |
+| `structure.spaced-en-dash` | structure | 1 | ...ed product. ChatGPT Pros Hugely versatile – will generate text in response to pretty... |
+| ... | | | 6 more rules in the JSON report |
 
 ### 2. Best AI Writing Tools (May 2026): I Tested 8 AI Writers With ...
 
@@ -89,8 +89,8 @@ Generated: 2026-09-24T21:31:25+0530
 ### 5. Free AI Writing Tools
 
 - URL: https://ahrefs.com/writing-tools
-- Slop score: **83** (Slop)
-- Words scored: 1113, weighted hits per 1k words: 44.5
+- Slop score: **82** (Slop)
+- Words scored: 1113, weighted hits per 1k words: 43.4
 
 | Rule | Category | Hits | Example |
 |---|---|---|---|
@@ -101,10 +101,10 @@ Generated: 2026-09-24T21:31:25+0530
 | `vocab.unlock` | inflated-vocabulary | 4 | ...writing effortlessly. Emoji Translator Unlock emotions with our AI translator! Seamle... |
 | `hedge.a-wide-range-of` | hedge-intensifier | 2 | ...EO-friendly blog post titles to inspire a wide range of traffic-driving content. Content Idea ... |
 | `vocab.tailored` | inflated-vocabulary | 3 | ...r! Instantly discover trending hashtags tailored to your content. TikTok Username Genera... |
-| `structure.tricolon-list` | structure | 6 | Marketing reports, apps, and automations, handled. Meet Letaido. Get Started Mar... |
 | `vocab.enhance` | inflated-vocabulary | 2 | ...s / Free AI Writing tools Save time and enhance your marketing and content performance... |
 | `hedge.a-variety-of` | hedge-intensifier | 1 | ...st sales. Product Name Generator Create a variety of creative product names until you find t... |
 | `structure.em-dash` | structure | 1 | ...AI-powered markdown content effortlessly—no coding required. |
+| `structure.tricolon-list` | structure | 6 | Marketing reports, apps, and automations, handled. Meet Letaido. Get Started Mar... |
 | `structure.from-x-to-y` | structure | 1 | ...r Input your rough ideas and transition from a blank page to an organized, well-structured out... |
 | `vocab.cutting-edge` | inflated-vocabulary | 1 | ...levate your Instagram presence with our cutting-edge AI Bio Generator. Craft personalized, e... |
 | `vocab.optimize` | inflated-vocabulary | 1 | ...nd easily. SEO Title Generator Generate optimized titles for better search engine visibil... |
@@ -121,24 +121,24 @@ Generated: 2026-09-24T21:31:25+0530
 ### 7. Free AI Writer
 
 - URL: https://www.grammarly.com/ai-writer
-- Slop score: **55** (Sloppy)
-- Words scored: 785, weighted hits per 1k words: 19.7
+- Slop score: **52** (Sloppy)
+- Words scored: 785, weighted hits per 1k words: 18.2
 
 | Rule | Category | Hits | Example |
 |---|---|---|---|
 | `phrase.tailored-to-your-needs` | stock-phrase | 2 | ...ails and quickly receive unique content tailored to your needs and goals. Whether you need eng... |
 | `vocab.craft` | inflated-vocabulary | 3 | ...ke-free articles efficiently. Marketers Craft compelling campaign messages, blog post... |
-| `structure.tricolon-list` | structure | 5 | ...e unique content for social media, blog posts, documents, and more with just a few clicks. Ste... |
 | `vocab.enhance` | inflated-vocabulary | 2 | ...the time and effort of manual writing. Enhance readability Transform complex ideas int... |
 | `vocab.tailored` | inflated-vocabulary | 2 | ...ails and quickly receive unique content tailored to your needs and goals. Whether you ne... |
+| `structure.tricolon-list` | structure | 5 | ...e unique content for social media, blog posts, documents, and more with just a few clicks. Ste... |
 | `vocab.leverage` | inflated-vocabulary | 1 | ...ut the links below for creative ways to leverage AI, tips on crafting effective prompts,... |
 | `vocab.seamless` | inflated-vocabulary | 1 | ...ts, making the content creation process seamless and efficient. How to use Grammarly’s F... |
 
 ### 8. I Tested 25+ AI Writing Tools, and This One Writes Better Than ...
 
 - URL: https://aimadesimple0.substack.com/p/i-tested-25-ai-writing-tools-and
-- Slop score: **40** (Mixed)
-- Words scored: 5475, weighted hits per 1k words: 12.6
+- Slop score: **37** (Mixed)
+- Words scored: 5475, weighted hits per 1k words: 11.6
 
 | Rule | Category | Hits | Example |
 |---|---|---|---|
@@ -150,14 +150,14 @@ Generated: 2026-09-24T21:31:25+0530
 | `phrase.the-takeaway` | stock-phrase | 2 | ...er testing 25+ AI writing tools, here’s the takeaway: most tools are either too generic or j... |
 | `hedge.a-variety-of` | hedge-intensifier | 2 | ...directed to the dashboard, which offers a variety of categories to choose from. Here, you ca... |
 | `structure.sentence-in-short` | structure | 2 | ...ntly say most of them are simply useless. In short, most of these AI writing tools are just... |
-| `structure.both-and` | structure | 8 | ...oint, I used the same writing prompt on both ChatGPT and Sudowrite, and the difference was cle... |
-| `structure.tricolon-list` | structure | 18 | ...nd well-formatted sections with logical transitions, subheadings, and CTAs without needing man... |
 | `hedge.genuinely` | hedge-intensifier | 4 | ...it can make me much more productive and genuinely help in my work. I’ve also noticed that... |
 | `structure.from-x-to-y` | structure | 2 | ...see, it has all the features one needs, from brainstorming ideas to writing in continuation, r... |
 | `vocab.craft` | inflated-vocabulary | 2 | ...ose your genre, select a writing style, craft a synopsis, do a brain dump, add charac... |
 | `vocab.enhance` | inflated-vocabulary | 2 | ...streamline their marketing process. It enhances brand experience, speeds up content cre... |
 | `vocab.streamline` | inflated-vocabulary | 2 | ...uilt to help businesses and individuals streamline their marketing process. It enhances br... |
-| ... | | | 4 more rules in the JSON report |
+| `structure.tricolon-list` | structure | 18 | ...nd well-formatted sections with logical transitions, subheadings, and CTAs without needing man... |
+| `hedge.incredibly` | hedge-intensifier | 2 | ...me, both ChatGPT and Claude have become incredibly powerful across almost every category,... |
+| ... | | | 2 more rules in the JSON report |
 
 ### 9. What is actually the best AI writing tools right now (local ...
 

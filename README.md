@@ -8,8 +8,8 @@ No LLM is involved in scoring. Same page in, same score out, every time, and eve
 
 ```
 $ slopradar scan "ai writing tools"
-AI SLOP INDEX for "ai writing tools": 53/100  (Sloppy)
-Rank-weighted index (top results count more): 38/100
+AI SLOP INDEX for "ai writing tools": 51/100  (Sloppy)
+Rank-weighted index (top results count more): 36/100
 ```
 
 ## Why
@@ -50,7 +50,7 @@ SlopRadar gives them one:
  +--------------+
        |
        v
- +--------------+   391 regex rules in 4 categories, weighted,
+ +--------------+   390 regex rules in 4 categories, weighted,
  | 5. Score     |   capped per rule, normalised per 1,000 words
  +--------------+
        |
@@ -164,18 +164,18 @@ slopradar rules --json                # full library with regexes
 A real run on September 24, 2026 against the live Google results for `ai writing tools` (US, English), 1 SerpApi search:
 
 ```
-AI SLOP INDEX for "ai writing tools": 53/100  (Sloppy)
-Rank-weighted index (top results count more): 38/100
+AI SLOP INDEX for "ai writing tools": 51/100  (Sloppy)
+Rank-weighted index (top results count more): 36/100
 
  #  score                        band      domain
- 1     19  ####................  Human     emailvendorselection.com
+ 1     16  ###.................  Human     emailvendorselection.com
  2    -    --------------------  Not scor  ilampadmanabhan.medium.com   skipped: HTTP 403
  3    -    --------------------  Not scor  quillbot.com                 skipped: HTTP 403
  4     70  ##############......  Sloppy    deepai.org
- 5     83  #################...  Slop      ahrefs.com
+ 5     82  ################....  Slop      ahrefs.com
  6    -    --------------------  Not scor  scribbr.com                  skipped: HTTP 403
- 7     55  ###########.........  Sloppy    grammarly.com
- 8     40  ########............  Mixed     aimadesimple0.substack.com
+ 7     52  ##########..........  Sloppy    grammarly.com
+ 8     37  #######.............  Mixed     aimadesimple0.substack.com
  9    -    --------------------  Not scor  reddit.com                   skipped: blocked by robots.txt
 ```
 
@@ -241,7 +241,7 @@ The JSON report (`--json`) contains everything above plus, for each page, every 
 | inflated-vocabulary | 164 | delve, tapestry, testament, seamless, robust, elevate, leverage |
 | stock-phrase | 149 | "in today's fast-paced world", "let's dive in", "unlock the power of", "in conclusion" |
 | hedge-intensifier | 45 | "it's worth noting", "plays a crucial role", "a wide range of", truly |
-| structure | 33 | em dash overuse, "not just X but Y", "It's not X, it's Y", "Whether you're X or Y", "The result? ...", tricolons, emoji bullets |
+| structure | 32 | em dash overuse, "not just X but Y", "It's not X, it's Y", "Whether you're X or Y", "The result? ...", tricolons, emoji bullets |
 
 A high score means the page leans on patterns that are common in generated copy. It does not prove a page was written by AI, and a human who writes in marketing clichés will score high too. That is working as intended: the tool measures the copy, not the author.
 
@@ -257,7 +257,7 @@ A high score means the page leans on patterns that are common in generated copy.
 pytest
 ```
 
-44 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market comparison and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
+47 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market comparison and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
 
 ## Limitations
 

@@ -3,8 +3,8 @@
   "queries": [
     "ai writing tools"
   ],
-  "slop_index": 53,
-  "rank_weighted_index": 38,
+  "slop_index": 51,
+  "rank_weighted_index": 36,
   "band": "Sloppy",
   "band_counts": {
     "Human": 1,
@@ -71,24 +71,24 @@
       "pages": 2
     },
     {
-      "rule_id": "structure.colon-reveal",
-      "description": "Short colon reveal ('One thing: ...')",
-      "category": "structure",
-      "total_hits": 7,
-      "pages": 2
-    },
-    {
       "rule_id": "vocab.unlock",
       "description": "Inflated vocabulary: 'unlock'",
       "category": "inflated-vocabulary",
       "total_hits": 6,
       "pages": 2
+    },
+    {
+      "rule_id": "vocab.tailored",
+      "description": "Inflated vocabulary: 'tailored'",
+      "category": "inflated-vocabulary",
+      "total_hits": 5,
+      "pages": 2
     }
   ],
   "serp_calls": 0,
   "serp_cache_hits": 0,
-  "elapsed_seconds": 2.0,
-  "generated_at": "2026-09-24T21:31:25+0530",
+  "elapsed_seconds": 2.39,
+  "generated_at": "2026-09-24T21:40:53+0530",
   "pages": [
     {
       "rank": 1,
@@ -97,15 +97,15 @@
       "url": "https://www.emailvendorselection.com/best-ai-writing-tools/",
       "domain": "emailvendorselection.com",
       "status": "scored",
-      "score": 19,
+      "score": 16,
       "band": "Human",
       "word_count": 9204,
-      "density_per_1k": 5.27,
+      "density_per_1k": 4.26,
       "category_totals": {
         "inflated-vocabulary": 11.0,
         "hedge-intensifier": 3.0,
         "stock-phrase": 16.0,
-        "structure": 18.5
+        "structure": 9.25
       },
       "hits": [
         {
@@ -118,18 +118,6 @@
             "...common. Here’s what to look out for. A user-friendly interface Support for multiple text types. Look o...",
             "...to support the creative writing process User-friendly interface. All tools are available at a click as...",
             "...anking analysis and competitor analysis User-friendly interface Multiple editing options Growthbar Cons..."
-          ]
-        },
-        {
-          "rule_id": "structure.spaced-en-dash",
-          "category": "structure",
-          "description": "Spaced en dash used as an em dash",
-          "weight": 1.0,
-          "count": 10,
-          "examples": [
-            "...f their written content. 16. ParagraphAI – Best for Free Text Generation ParagraphA...",
-            "...f and improve their writing. 18. ChatGPT – Best for AI-Powered Research If there’s...",
-            "...d product. ChatGPT Pros Hugely versatile – will generate text in response to pretty..."
           ]
         },
         {
@@ -153,30 +141,6 @@
           "examples": [
             "...type of AI writing tool that you need. Are you looking to generate content fast? Then prioritise...",
             "...st? Then prioritise text generation. Or are you looking to improve quality and accuracy? If so, a..."
-          ]
-        },
-        {
-          "rule_id": "structure.colon-reveal",
-          "category": "structure",
-          "description": "Short colon reveal ('One thing: ...')",
-          "weight": 0.8,
-          "count": 5,
-          "examples": [
-            "...a free plan with 10k characters a month. Best for: All-round general content creation. Get started with Rytr for free 4. HubSp...",
-            "...ging the style and retaining the meaning. Fluency: Improves readability and removes errors. Formal: Makes text more professional. S...",
-            "...rs. Formal: Makes text more professional. Simple: Makes text easier to read and understand. Creative: Changes wording and phrasing..."
-          ]
-        },
-        {
-          "rule_id": "structure.tricolon-list",
-          "category": "structure",
-          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
-          "weight": 0.5,
-          "count": 8,
-          "examples": [
-            "...for you? Here are all the key features, pros, cons, and costs of the best products on the market toda...",
-            "...rfer has integrations with Google Docs, WordPress, Semrush, and Jasper. Or there is an API to connect it with...",
-            "...here are a series of tools for editing, expanding, improving, and rewording copy. There are also some interesting i..."
           ]
         },
         {
@@ -262,6 +226,18 @@
           ]
         },
         {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.25,
+          "count": 8,
+          "examples": [
+            "...for you? Here are all the key features, pros, cons, and costs of the best products on the market toda...",
+            "...rfer has integrations with Google Docs, WordPress, Semrush, and Jasper. Or there is an API to connect it with...",
+            "...here are a series of tools for editing, expanding, improving, and rewording copy. There are also some interesting i..."
+          ]
+        },
+        {
           "rule_id": "hedge.highly",
           "category": "hedge-intensifier",
           "description": "Hedge or filler intensifier: 'highly'",
@@ -280,6 +256,16 @@
           "count": 1,
           "examples": [
             "...writing tool for you? Here are all the key features, pros, cons, and costs of the best prod..."
+          ]
+        },
+        {
+          "rule_id": "structure.spaced-en-dash",
+          "category": "structure",
+          "description": "Spaced en dash used as an em dash mid-sentence",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...ed product. ChatGPT Pros Hugely versatile – will generate text in response to pretty..."
           ]
         },
         {
@@ -431,15 +417,15 @@
       "url": "https://ahrefs.com/writing-tools",
       "domain": "ahrefs.com",
       "status": "scored",
-      "score": 83,
+      "score": 82,
       "band": "Slop",
       "word_count": 1113,
-      "density_per_1k": 44.47,
+      "density_per_1k": 43.35,
       "category_totals": {
         "inflated-vocabulary": 30.0,
         "hedge-intensifier": 4.5,
         "stock-phrase": 10.0,
-        "structure": 5.0
+        "structure": 3.75
       },
       "hits": [
         {
@@ -526,18 +512,6 @@
           ]
         },
         {
-          "rule_id": "structure.tricolon-list",
-          "category": "structure",
-          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
-          "weight": 0.5,
-          "count": 6,
-          "examples": [
-            "Marketing reports, apps, and automations, handled. Meet Letaido. Get Started Mar...",
-            "...ed. Meet Letaido. Get Started Marketing reports, apps, and automations, handled. Meet Letaido. Get Started The...",
-            "...AI grammar checker. Effortlessly catch grammar, spelling, and punctuation errors, ensuring your content is polish..."
-          ]
-        },
-        {
           "rule_id": "vocab.enhance",
           "category": "inflated-vocabulary",
           "description": "Inflated vocabulary: 'enhance'",
@@ -566,6 +540,18 @@
           "count": 1,
           "examples": [
             "...AI-powered markdown content effortlessly—no coding required."
+          ]
+        },
+        {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.25,
+          "count": 6,
+          "examples": [
+            "Marketing reports, apps, and automations, handled. Meet Letaido. Get Started Mar...",
+            "...ed. Meet Letaido. Get Started Marketing reports, apps, and automations, handled. Meet Letaido. Get Started The...",
+            "...AI grammar checker. Effortlessly catch grammar, spelling, and punctuation errors, ensuring your content is polish..."
           ]
         },
         {
@@ -663,14 +649,14 @@
       "url": "https://www.grammarly.com/ai-writer",
       "domain": "grammarly.com",
       "status": "scored",
-      "score": 55,
+      "score": 52,
       "band": "Sloppy",
       "word_count": 785,
-      "density_per_1k": 19.75,
+      "density_per_1k": 18.15,
       "category_totals": {
         "inflated-vocabulary": 9.0,
         "stock-phrase": 4.0,
-        "structure": 2.5
+        "structure": 1.25
       },
       "hits": [
         {
@@ -697,18 +683,6 @@
           ]
         },
         {
-          "rule_id": "structure.tricolon-list",
-          "category": "structure",
-          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
-          "weight": 0.5,
-          "count": 5,
-          "examples": [
-            "...e unique content for social media, blog posts, documents, and more with just a few clicks. Step 1 Access a...",
-            "...ove your writing and instantly generate emails, documents, and more in your preferred voice. Get Grammarly...",
-            "...or social media, websites, blogs, cover letters, taglines, and much more. Simply enter a few details and qu..."
-          ]
-        },
-        {
           "rule_id": "vocab.enhance",
           "category": "inflated-vocabulary",
           "description": "Inflated vocabulary: 'enhance'",
@@ -728,6 +702,18 @@
           "examples": [
             "...ails and quickly receive unique content tailored to your needs and goals. Whether you ne...",
             "...ll generate engaging and unique content tailored to your needs. Where can I use Grammarl..."
+          ]
+        },
+        {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.25,
+          "count": 5,
+          "examples": [
+            "...e unique content for social media, blog posts, documents, and more with just a few clicks. Step 1 Access a...",
+            "...ove your writing and instantly generate emails, documents, and more in your preferred voice. Get Grammarly...",
+            "...or social media, websites, blogs, cover letters, taglines, and much more. Simply enter a few details and qu..."
           ]
         },
         {
@@ -760,15 +746,15 @@
       "url": "https://aimadesimple0.substack.com/p/i-tested-25-ai-writing-tools-and",
       "domain": "aimadesimple0.substack.com",
       "status": "scored",
-      "score": 40,
+      "score": 37,
       "band": "Mixed",
       "word_count": 5475,
-      "density_per_1k": 12.62,
+      "density_per_1k": 11.64,
       "category_totals": {
         "inflated-vocabulary": 6.0,
         "hedge-intensifier": 7.0,
         "stock-phrase": 8.0,
-        "structure": 48.1
+        "structure": 42.75
       },
       "hits": [
         {
@@ -864,30 +850,6 @@
           ]
         },
         {
-          "rule_id": "structure.both-and",
-          "category": "structure",
-          "description": "'Both X and Y' balance",
-          "weight": 0.5,
-          "count": 8,
-          "examples": [
-            "...oint, I used the same writing prompt on both ChatGPT and Sudowrite, and the difference was clear. As you c...",
-            "...e scenes. And the best part? Over time, both ChatGPT and Claude have become incredibly powerful across...",
-            "...cific writing style. And the best part? Both ChatGPT and Claude offer free usage limits, which makes th..."
-          ]
-        },
-        {
-          "rule_id": "structure.tricolon-list",
-          "category": "structure",
-          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
-          "weight": 0.5,
-          "count": 18,
-          "examples": [
-            "...nd well-formatted sections with logical transitions, subheadings, and CTAs without needing manual fixing. Rewrites...",
-            "...existing drafts in a way that improves clarity, emotion, and engagement, and can generate unique ideas without...",
-            "...iting tools still struggle to match the creativity, tone, and flow of a skilled human writer. In that case..."
-          ]
-        },
-        {
           "rule_id": "hedge.genuinely",
           "category": "hedge-intensifier",
           "description": "Hedge or filler intensifier: 'genuinely'",
@@ -944,14 +906,15 @@
           ]
         },
         {
-          "rule_id": "structure.colon-reveal",
+          "rule_id": "structure.tricolon-list",
           "category": "structure",
-          "description": "Short colon reveal ('One thing: ...')",
-          "weight": 0.8,
-          "count": 2,
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.25,
+          "count": 18,
           "examples": [
-            "...suggest to you some of the best options. Note: This post contains a few affiliate links. If you choose to become a paid member t...",
-            "...suggest to you some of the best options. Note: This post contains a few affiliate links. If you choose to become a paid member t..."
+            "...nd well-formatted sections with logical transitions, subheadings, and CTAs without needing manual fixing. Rewrites...",
+            "...existing drafts in a way that improves clarity, emotion, and engagement, and can generate unique ideas without...",
+            "...iting tools still struggle to match the creativity, tone, and flow of a skilled human writer. In that case..."
           ]
         },
         {
