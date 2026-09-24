@@ -59,6 +59,8 @@ The rest of this README goes into setup, commands and the technical details.
 
 ## How it works
 
+In short: pick the searches, run them on Google, download the top pages, keep only the readable article text, score it, and write up the results. The diagram below is the same thing with the technical details.
+
 ```
  niche / keyword
        |
@@ -94,6 +96,13 @@ The rest of this README goes into setup, commands and the technical details.
  +--------------+
 ```
 
+What the technical terms mean:
+
+- **Organic results** are the normal Google results, not ads.
+- **robots.txt** is a file where a site says which pages automated tools may visit. SlopRadar respects it and skips pages it is asked to skip.
+- **Regex rules** (regular expressions) are text patterns a program can search for, such as "unlock the power of" or "It's not X, it's Y".
+- **Normalised per 1,000 words** means a long page is not punished just for being long: hits are counted relative to the amount of text.
+
 ### SerpApi APIs used
 
 | SerpApi API | Engine | What SlopRadar uses it for |
@@ -115,18 +124,18 @@ SerpApi is the data source for the whole product. Without live search results th
 | `slopradar/extract.py` | Standard-library HTML to reader-visible text |
 | `slopradar/engine/rules.py` | The rule library |
 | `slopradar/engine/scorer.py` | Deterministic scoring and bands |
-| `slopradar/pipeline.py` | The agent loop: plan, search, dedupe, fetch, score, aggregate |
+| `slopradar/pipeline.py` | The main loop that runs each step in order: plan the searches, search, remove duplicate pages, fetch, score, combine the results |
 | `slopradar/report.py` | Terminal, Markdown and JSON output |
 | `slopradar/html_report.py` | Self-contained HTML report |
 | `slopradar/cli.py` | `scan`, `channels`, `compare`, `demo`, `score`, `rules` commands |
 
-The only runtime dependency is `requests`.
+The only third-party library it needs to run is `requests`.
 
 ## Setup
 
 Short on time? [docs/walkthrough.md](docs/walkthrough.md) is a five-minute path through every feature.
 
-Requires Python 3.9+.
+You need Python 3.9 or newer. The commands below download the code, create an isolated Python environment (`.venv`) so nothing clashes with other projects, and install SlopRadar.
 
 ```bash
 git clone https://github.com/Hexraei/Slopradar-SerpAPI.git
@@ -135,7 +144,7 @@ python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\act
 pip install -e ".[dev]"
 ```
 
-Get a SerpApi key from https://serpapi.com/manage-api-key and export it:
+To run live searches you need a SerpApi API key, which is like a password that lets the tool use your SerpApi account. The free plan gives 100 searches a month. Get your key from https://serpapi.com/manage-api-key and set it in your terminal:
 
 ```bash
 export SERPAPI_API_KEY="your_key_here"        # Windows PowerShell: $env:SERPAPI_API_KEY="your_key_here"
@@ -151,7 +160,7 @@ The key is read from the environment only. It is not printed, logged, or written
 slopradar demo
 ```
 
-Runs the full pipeline on a bundled sample search response and sample pages. No network, no key.
+Runs the whole process on a saved sample search and sample pages that ship with the code. No internet connection and no key needed, so it is the quickest way to see what the output looks like.
 
 ### Scan a niche live
 
@@ -166,12 +175,12 @@ slopradar scan "standing desks" --queries 3 --num 15 --html report.html --json-o
 | `--queries N` | 1 | Queries to search (1-6). Each extra query is one SerpApi search. |
 | `--expand` | `related` | Where extra queries come from: `related` (Google's related searches and "people also ask" from the first response, no extra call), `trends` (Google Trends rising queries, one extra call), or fixed `templates` |
 | `--num N` | 10 | Pages to fetch and score |
-| `--gl`, `--hl` | `us`, `en` | Google country and language |
-| `--location` | none | SerpApi location string |
-| `--cache-dir` | `.slopradar_cache` | Repeat runs of the same search cost nothing |
+| `--gl`, `--hl` | `us`, `en` | Which country's Google (`in` for India, `uk` for the UK) and which language |
+| `--location` | none | Search as if from a specific city, e.g. `"Chennai, Tamil Nadu, India"` |
+| `--cache-dir` | `.slopradar_cache` | Where saved search results are kept, so repeating the same search costs nothing |
 | `--no-cache` | off | Always hit SerpApi |
-| `--serp-json FILE` | none | Replay a saved SerpApi response instead of searching |
-| `--json` / `--json-out` / `--markdown` / `--html` | | Machine-readable and shareable reports. The HTML report is one self-contained file. |
+| `--serp-json FILE` | none | Use a saved search result file instead of searching again |
+| `--json` / `--json-out` / `--markdown` / `--html` | | Save the report in other formats. JSON is for other programs, Markdown and HTML are for sharing. The HTML report is a single file you can open in any browser. |
 | `--show-rules N` | 3 | Matched rules shown per page in the terminal |
 | `--ignore-robots` | off | Skip robots.txt checks |
 
@@ -181,7 +190,7 @@ slopradar scan "standing desks" --queries 3 --num 15 --html report.html --json-o
 slopradar channels "ai writing tools"
 ```
 
-Scores the organic web results and the Google News results for the same niche and reports the gap. Two SerpApi searches. A live run from September 24, 2026:
+Are news articles about a topic written any better than the regular web pages about it? This command scores both and reports the difference. Two SerpApi searches. A live run from September 24, 2026:
 
 ```
 AI Slop Index for "ai writing tools": organic web vs Google News (gl=us)
@@ -207,9 +216,11 @@ slopradar compare "credit cards"                       # US vs India
 slopradar compare "credit cards" --gl us --gl uk --gl in
 ```
 
-Runs the same niche through SerpApi once per country (`gl`) and ranks the markets by their Slop Index, with the top pattern in each and the domains that rank everywhere. One SerpApi search per market.
+Does Google show more slop in one country than another? This runs the same search in each country and ranks the countries by their Slop Index, with the top pattern in each and the domains that rank everywhere. One SerpApi search per market.
 
 ### Score a single page or file
+
+Check any one page, file or piece of text you have, such as your own blog post before publishing. This runs locally and uses no SerpApi searches.
 
 ```bash
 slopradar score https://example.com/blog/post
