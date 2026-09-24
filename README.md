@@ -2,9 +2,19 @@
 
 **An AI Slop Index for any corner of Google.**
 
-Type a keyword or niche. SlopRadar searches Google live through [SerpApi](https://serpapi.com), fetches the pages that actually rank, and scores each one for AI-sounding copy with a deterministic rule engine. You get a ranked list of results, a slop score per page, every rule that fired with the exact text it matched, and one number for the whole niche.
+## In plain English
 
-No LLM is involved in scoring. Same page in, same score out, every time, and every point of the score traces back to a rule you can read.
+A lot of what shows up on Google now reads like it was churned out by a chatbot: "In today's fast-paced digital landscape...", "Unlock the power of...", "It's not just a tool, it's a game-changer." People call this kind of filler **AI slop**.
+
+SlopRadar tells you how much of it is in the search results for any topic.
+
+1. You type a topic, for example `ai writing tools`.
+2. SlopRadar runs that search on Google right now and gets the same results a real person would see.
+3. It opens each of the top pages and reads the text.
+4. It checks the text against a list of 390 known "slop" patterns: overused words, stock phrases, empty filler and tell-tale sentence shapes.
+5. It gives each page a score from 0 to 100, and the whole topic one overall number: the **AI Slop Index**.
+
+It also shows its work. For every page you see exactly which patterns it found and the sentence each one came from, so you never have to take a score on trust.
 
 ```
 $ slopradar scan "ai writing tools"
@@ -12,17 +22,40 @@ AI SLOP INDEX for "ai writing tools": 51/100  (Sloppy)
 Rank-weighted index (top results count more): 36/100
 ```
 
-## Why
+### What the numbers mean
 
-Search results are filling up with copy that reads machine-made: "In today's fast-paced digital landscape", "It's not just a tool, it's a game-changer", "Unlock the power of seamless...". People who work in a niche feel this, but nobody can point at a number.
+| Score | Label | In practice |
+|---|---|---|
+| 0-24 | Human | Reads like a person wrote it. Few or no stock patterns. |
+| 25-49 | Mixed | Some filler, but mostly normal writing. |
+| 50-74 | Sloppy | Leans on stock phrases and buzzwords. |
+| 75-100 | Slop | Packed with them, sentence after sentence. |
 
-SlopRadar gives them one:
+The **rank-weighted index** counts the top results more heavily, because most people only read the first few. If it is lower than the plain index (as above), the very top of Google is cleaner than the rest of page one.
 
-- **SEO and content teams** can see how flooded their niche is, and which competitors rank with templated copy.
+### No AI judging AI
+
+SlopRadar does not use an AI model to decide what is AI-sounding. It uses plain, readable rules, like a spell checker for clichés. That means:
+
+- The same page always gets the same score.
+- Every point of a score traces back to a rule you can read.
+- It makes no claim about *who* wrote a page. A human who writes in marketing clichés will score high too. It measures the writing, not the author.
+
+### Who it is for
+
+- **SEO and content teams** (people whose job is getting pages to rank on Google) can see how flooded their topic is, and which competitors rank with templated copy.
 - **Writers and marketers** can check their own pages against what ranks.
-- **Developers** can lint landing pages before they ship.
+- **Developers** can check landing-page copy before it ships.
 
-"AI detectors" that are themselves AI models are opaque and unreliable. SlopRadar makes no claim about who wrote a page. It measures style patterns and shows its work.
+### Where the search results come from
+
+SlopRadar gets its Google results from [SerpApi](https://serpapi.com), a service that runs a Google search and hands back the results in a tidy, machine-readable form. SlopRadar uses three of its tools:
+
+- **Google Search**, for the regular results that get scored.
+- **Google News**, to compare news articles with the regular web on the same topic.
+- **Google Trends**, to find what people are starting to search for around a topic, so the scan follows real interest.
+
+The rest of this README goes into setup, commands and the technical details.
 
 ## How it works
 
