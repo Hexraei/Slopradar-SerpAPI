@@ -30,13 +30,14 @@ SlopRadar gives them one:
  niche / keyword
        |
        v
- +--------------+   query plan: the niche, then Google's own related
- | 1. Planner   |   searches / people-also-ask from SerpApi
- +--------------+   (or fixed templates with --expand templates)
+ +--------------+   query plan: the niche, then follow-ups from
+ | 1. Planner   |   Google related searches / people-also-ask, or
+ +--------------+   Google Trends rising queries (SerpApi)
        |
        v
  +--------------+   SerpApi Google Search API (engine=google)
- | 2. Search    |   organic results only, ads dropped, cached on disk
+ | 2. Search    |   Google Search (or Google News for `channels`),
+ |              |   organic results only, ads dropped, cached on disk
  +--------------+
        |
        v
@@ -60,7 +61,15 @@ SlopRadar gives them one:
  +--------------+
 ```
 
-SerpApi is used twice: once for the organic results that get scored, and once, from the same response, for Google's related searches and "people also ask" questions, which become the next queries. That way the sample of a niche follows what real searchers type, not what the tool guesses.
+### SerpApi APIs used
+
+| SerpApi API | Engine | What SlopRadar uses it for |
+|---|---|---|
+| Google Search | `google` | The organic results that get fetched and scored. Also Google's related searches and "people also ask" from the same response, which become follow-up queries at no extra cost (`--expand related`, the default). |
+| Google Trends | `google_trends`, `data_type=RELATED_QUERIES` | Rising and top related queries for the niche, so follow-ups track what people are starting to search for (`--expand trends`). Off-topic breakouts are filtered out. |
+| Google News | `google_news` | News coverage of the same niche, scored with the same rules, to compare journalism with the organic web (`slopradar channels`). |
+
+Each gives the tool a different view of the same niche: what ranks, what is rising, and what is being reported. The sample of a niche follows what real searchers type, not what the tool guesses.
 
 SerpApi is the data source for the whole product. Without live search results there is nothing to score: the point is to measure what Google actually shows for a query today, in a given country and language.
 
@@ -76,7 +85,7 @@ SerpApi is the data source for the whole product. Without live search results th
 | `slopradar/pipeline.py` | The agent loop: plan, search, dedupe, fetch, score, aggregate |
 | `slopradar/report.py` | Terminal, Markdown and JSON output |
 | `slopradar/html_report.py` | Self-contained HTML report |
-| `slopradar/cli.py` | `scan`, `compare`, `demo`, `score`, `rules` commands |
+| `slopradar/cli.py` | `scan`, `channels`, `compare`, `demo`, `score`, `rules` commands |
 
 The only runtime dependency is `requests`.
 
@@ -122,7 +131,7 @@ slopradar scan "standing desks" --queries 3 --num 15 --html report.html --json-o
 | Flag | Default | Meaning |
 |---|---|---|
 | `--queries N` | 1 | Queries to search (1-6). Each extra query is one SerpApi search. |
-| `--expand` | `related` | Where extra queries come from: Google's own related searches and "people also ask" for the niche (read from the first SerpApi response, so no extra call), or fixed `templates` |
+| `--expand` | `related` | Where extra queries come from: `related` (Google's related searches and "people also ask" from the first response, no extra call), `trends` (Google Trends rising queries, one extra call), or fixed `templates` |
 | `--num N` | 10 | Pages to fetch and score |
 | `--gl`, `--hl` | `us`, `en` | Google country and language |
 | `--location` | none | SerpApi location string |
@@ -132,6 +141,31 @@ slopradar scan "standing desks" --queries 3 --num 15 --html report.html --json-o
 | `--json` / `--json-out` / `--markdown` / `--html` | | Machine-readable and shareable reports. The HTML report is one self-contained file. |
 | `--show-rules N` | 3 | Matched rules shown per page in the terminal |
 | `--ignore-robots` | off | Skip robots.txt checks |
+
+### Web vs news
+
+```bash
+slopradar channels "ai writing tools"
+```
+
+Scores the organic web results and the Google News results for the same niche and reports the gap. Two SerpApi searches. A live run from September 24, 2026:
+
+```
+AI Slop Index for "ai writing tools": organic web vs Google News (gl=us)
+  web    51/100  Sloppy   5/9 pages scored
+  news   32/100  Mixed    8/10 pages scored
+Gap: 19 points, web pages read sloppier.
+```
+
+Full output: [examples/channels-ai-writing-tools.txt](examples/channels-ai-writing-tools.txt).
+
+### Follow Google Trends
+
+```bash
+slopradar scan "ai writing tools" --queries 3 --expand trends
+```
+
+Adds one Google Trends call. For `ai writing tools` it picked `ai content writing tools` (+40% rising) and `chatgpt ai writing tools`, and dropped 7 suggestions that were off-topic (Trends listed "concerts" and "soup" as rising) or just rewordings of the niche. Output: [examples/trends-ai-writing-tools.txt](examples/trends-ai-writing-tools.txt).
 
 ### Compare Google markets
 
@@ -259,7 +293,7 @@ A high score means the page leans on patterns that are common in generated copy.
 pytest
 ```
 
-47 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market comparison and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
+56 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing, Google News cluster flattening, Google Trends ordering and off-topic filtering on a recorded response), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market and web-vs-news comparisons and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
 
 ## Limitations
 

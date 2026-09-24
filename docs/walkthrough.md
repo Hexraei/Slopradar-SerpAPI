@@ -8,7 +8,7 @@ A path through SlopRadar for reviewers. Steps 1-3 need no API key.
 git clone https://github.com/Hexraei/Slopradar-SerpAPI.git
 cd Slopradar-SerpAPI
 pip install -e ".[dev]"
-pytest -q            # 47 tests, all offline
+pytest -q            # 56 tests, all offline
 ```
 
 ## 2. See the whole pipeline offline
@@ -45,7 +45,19 @@ slopradar scan "home loan" --gl in --queries 3
 
 The first SerpApi response carries Google's related searches and "people also ask" questions. SlopRadar uses those as the next two queries, so the sample of the niche follows what real searchers type.
 
-## 6. Compare markets (1 search per market)
+## 6. Web vs news (2 searches)
+
+```bash
+slopradar channels "ai writing tools"
+```
+
+## 7. Follow what is rising on Google Trends (2 searches + follow-ups)
+
+```bash
+slopradar scan "ai writing tools" --queries 3 --expand trends
+```
+
+## 8. Compare markets (1 search per market)
 
 ```bash
 slopradar compare "credit cards" --gl us --gl in --gl uk
