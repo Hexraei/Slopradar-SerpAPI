@@ -30,9 +30,9 @@ SlopRadar gives them one:
  niche / keyword
        |
        v
- +--------------+   query plan (1-6 deterministic variants)
- | 1. Planner   |   "standing desks", "best standing desks", ...
- +--------------+
+ +--------------+   query plan: the niche, then Google's own related
+ | 1. Planner   |   searches / people-also-ask from SerpApi
+ +--------------+   (or fixed templates with --expand templates)
        |
        v
  +--------------+   SerpApi Google Search API (engine=google)
@@ -60,6 +60,8 @@ SlopRadar gives them one:
  +--------------+
 ```
 
+SerpApi is used twice: once for the organic results that get scored, and once, from the same response, for Google's related searches and "people also ask" questions, which become the next queries. That way the sample of a niche follows what real searchers type, not what the tool guesses.
+
 SerpApi is the data source for the whole product. Without live search results there is nothing to score: the point is to measure what Google actually shows for a query today, in a given country and language.
 
 ### Code layout
@@ -73,6 +75,7 @@ SerpApi is the data source for the whole product. Without live search results th
 | `slopradar/engine/scorer.py` | Deterministic scoring and bands |
 | `slopradar/pipeline.py` | The agent loop: plan, search, dedupe, fetch, score, aggregate |
 | `slopradar/report.py` | Terminal, Markdown and JSON output |
+| `slopradar/html_report.py` | Self-contained HTML report |
 | `slopradar/cli.py` | `scan`, `demo`, `score`, `rules` commands |
 
 The only runtime dependency is `requests`.
@@ -111,19 +114,20 @@ Runs the full pipeline on a bundled sample search response and sample pages. No 
 ```bash
 slopradar scan "project management software"
 slopradar scan "home loan interest rates" --gl in --location "Chennai, Tamil Nadu, India"
-slopradar scan "standing desks" --queries 3 --num 15 --markdown report.md --json-out report.json
+slopradar scan "standing desks" --queries 3 --num 15 --html report.html --json-out report.json
 ```
 
 | Flag | Default | Meaning |
 |---|---|---|
-| `--queries N` | 1 | Query variants to search (1-6). Each variant is one SerpApi search. |
+| `--queries N` | 1 | Queries to search (1-6). Each extra query is one SerpApi search. |
+| `--expand` | `related` | Where extra queries come from: Google's own related searches and "people also ask" for the niche (read from the first SerpApi response, so no extra call), or fixed `templates` |
 | `--num N` | 10 | Pages to fetch and score |
 | `--gl`, `--hl` | `us`, `en` | Google country and language |
 | `--location` | none | SerpApi location string |
 | `--cache-dir` | `.slopradar_cache` | Repeat runs of the same search cost nothing |
 | `--no-cache` | off | Always hit SerpApi |
 | `--serp-json FILE` | none | Replay a saved SerpApi response instead of searching |
-| `--json` / `--json-out` / `--markdown` | | Machine-readable and shareable reports |
+| `--json` / `--json-out` / `--markdown` / `--html` | | Machine-readable and shareable reports. The HTML report is one self-contained file. |
 | `--show-rules N` | 3 | Matched rules shown per page in the terminal |
 | `--ignore-robots` | off | Skip robots.txt checks |
 
@@ -232,7 +236,7 @@ A high score means the page leans on patterns that are common in generated copy.
 
 ## Cost
 
-- One scan with default settings is **one SerpApi search**. `--queries 3` is three.
+- One scan with default settings is **one SerpApi search**. `--queries 3` is three: the related-search suggestions come free with the first response.
 - Responses are cached for repeat runs, and `--serp-json` replays a saved response for free.
 - Page fetching and scoring run locally. No other paid APIs, no GPU, no model downloads.
 
@@ -242,7 +246,7 @@ A high score means the page leans on patterns that are common in generated copy.
 pytest
 ```
 
-36 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key), the pipeline (dedupe, ranking, index math, unscored pages) and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
+41 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
 
 ## Limitations
 
