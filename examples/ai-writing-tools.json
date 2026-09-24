@@ -1,0 +1,1009 @@
+{
+  "niche": "ai writing tools",
+  "queries": [
+    "ai writing tools"
+  ],
+  "slop_index": 53,
+  "rank_weighted_index": 38,
+  "band": "Sloppy",
+  "band_counts": {
+    "Human": 1,
+    "Not scored": 4,
+    "Sloppy": 2,
+    "Slop": 1,
+    "Mixed": 1
+  },
+  "top_rules": [
+    {
+      "rule_id": "structure.tricolon-list",
+      "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+      "category": "structure",
+      "total_hits": 37,
+      "pages": 4
+    },
+    {
+      "rule_id": "vocab.craft",
+      "description": "Inflated vocabulary: 'craft'",
+      "category": "inflated-vocabulary",
+      "total_hits": 11,
+      "pages": 4
+    },
+    {
+      "rule_id": "vocab.enhance",
+      "description": "Inflated vocabulary: 'enhance'",
+      "category": "inflated-vocabulary",
+      "total_hits": 6,
+      "pages": 3
+    },
+    {
+      "rule_id": "structure.from-x-to-y",
+      "description": "'From X to Y' range flourish",
+      "category": "structure",
+      "total_hits": 5,
+      "pages": 3
+    },
+    {
+      "rule_id": "vocab.streamline",
+      "description": "Inflated vocabulary: 'streamline'",
+      "category": "inflated-vocabulary",
+      "total_hits": 4,
+      "pages": 3
+    },
+    {
+      "rule_id": "structure.em-dash",
+      "description": "Em dash (U+2014), heavily overused in generated copy",
+      "category": "structure",
+      "total_hits": 27,
+      "pages": 2
+    },
+    {
+      "rule_id": "structure.heres-the-thing",
+      "description": "'Here's the thing / Here's why' setup",
+      "category": "structure",
+      "total_hits": 11,
+      "pages": 2
+    },
+    {
+      "rule_id": "vocab.optimize",
+      "description": "Inflated vocabulary: 'optimize'",
+      "category": "inflated-vocabulary",
+      "total_hits": 10,
+      "pages": 2
+    },
+    {
+      "rule_id": "structure.colon-reveal",
+      "description": "Short colon reveal ('One thing: ...')",
+      "category": "structure",
+      "total_hits": 7,
+      "pages": 2
+    },
+    {
+      "rule_id": "vocab.unlock",
+      "description": "Inflated vocabulary: 'unlock'",
+      "category": "inflated-vocabulary",
+      "total_hits": 6,
+      "pages": 2
+    }
+  ],
+  "serp_calls": 0,
+  "serp_cache_hits": 0,
+  "elapsed_seconds": 2.0,
+  "generated_at": "2026-09-24T21:31:25+0530",
+  "pages": [
+    {
+      "rank": 1,
+      "query": "ai writing tools",
+      "title": "27 Best AI Writing Tools in 2026 (Tested & Reviewed)",
+      "url": "https://www.emailvendorselection.com/best-ai-writing-tools/",
+      "domain": "emailvendorselection.com",
+      "status": "scored",
+      "score": 19,
+      "band": "Human",
+      "word_count": 9204,
+      "density_per_1k": 5.27,
+      "category_totals": {
+        "inflated-vocabulary": 11.0,
+        "hedge-intensifier": 3.0,
+        "stock-phrase": 16.0,
+        "structure": 18.5
+      },
+      "hits": [
+        {
+          "rule_id": "phrase.user-friendly-interface",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'user-friendly interface'",
+          "weight": 2.0,
+          "count": 3,
+          "examples": [
+            "...common. Here’s what to look out for. A user-friendly interface Support for multiple text types. Look o...",
+            "...to support the creative writing process User-friendly interface. All tools are available at a click as...",
+            "...anking analysis and competitor analysis User-friendly interface Multiple editing options Growthbar Cons..."
+          ]
+        },
+        {
+          "rule_id": "structure.spaced-en-dash",
+          "category": "structure",
+          "description": "Spaced en dash used as an em dash",
+          "weight": 1.0,
+          "count": 10,
+          "examples": [
+            "...f their written content. 16. ParagraphAI – Best for Free Text Generation ParagraphA...",
+            "...f and improve their writing. 18. ChatGPT – Best for AI-Powered Research If there’s...",
+            "...d product. ChatGPT Pros Hugely versatile – will generate text in response to pretty..."
+          ]
+        },
+        {
+          "rule_id": "vocab.optimize",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'optimize'",
+          "weight": 1.0,
+          "count": 9,
+          "examples": [
+            "...language tool. That is, it uses NLP to optimize text for search engines, rather than fo...",
+            "...Points-based analysis means anyone can optimize text quickly Easy integration with Goog...",
+            "...ts worldwide. You can create clean, SEO-optimized copy in just a 4 steps. First, you choo..."
+          ]
+        },
+        {
+          "rule_id": "phrase.are-you-looking-to",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'are you looking to'",
+          "weight": 2.0,
+          "count": 2,
+          "examples": [
+            "...type of AI writing tool that you need. Are you looking to generate content fast? Then prioritise...",
+            "...st? Then prioritise text generation. Or are you looking to improve quality and accuracy? If so, a..."
+          ]
+        },
+        {
+          "rule_id": "structure.colon-reveal",
+          "category": "structure",
+          "description": "Short colon reveal ('One thing: ...')",
+          "weight": 0.8,
+          "count": 5,
+          "examples": [
+            "...a free plan with 10k characters a month. Best for: All-round general content creation. Get started with Rytr for free 4. HubSp...",
+            "...ging the style and retaining the meaning. Fluency: Improves readability and removes errors. Formal: Makes text more professional. S...",
+            "...rs. Formal: Makes text more professional. Simple: Makes text easier to read and understand. Creative: Changes wording and phrasing..."
+          ]
+        },
+        {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.5,
+          "count": 8,
+          "examples": [
+            "...for you? Here are all the key features, pros, cons, and costs of the best products on the market toda...",
+            "...rfer has integrations with Google Docs, WordPress, Semrush, and Jasper. Or there is an API to connect it with...",
+            "...here are a series of tools for editing, expanding, improving, and rewording copy. There are also some interesting i..."
+          ]
+        },
+        {
+          "rule_id": "phrase.all-in-all",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'all in all'",
+          "weight": 2.0,
+          "count": 1,
+          "examples": [
+            "...now introduced example prompts to help. All in all, ChatGPT is an AI text generator in nam..."
+          ]
+        },
+        {
+          "rule_id": "phrase.as-an-ai",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'as an ai'",
+          "weight": 2.0,
+          "count": 1,
+          "examples": [
+            "...content. And a chatbot tool that works as an AI writing assistant to bounce ideas off o..."
+          ]
+        },
+        {
+          "rule_id": "phrase.in-this-article",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'in this article'",
+          "weight": 2.0,
+          "count": 1,
+          "examples": [
+            "...ls drive many of the services mentioned in this article. ChatGPT is simply OpenAI’s own interfa..."
+          ]
+        },
+        {
+          "rule_id": "structure.from-x-to-y",
+          "category": "structure",
+          "description": "'From X to Y' range flourish",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...Voice (formerly Boss Mode) tool learns from your existing content to get the right tone, style and detail for consistency and ac...",
+            "...lan, just a 3-day free trial. Best for: From hobbyists to professional authors, anyone looking for help with their crea..."
+          ]
+        },
+        {
+          "rule_id": "structure.heres-the-thing",
+          "category": "structure",
+          "description": "'Here's the thing / Here's why' setup",
+          "weight": 2.0,
+          "count": 1,
+          "examples": [
+            "...rtain features and qualities in common. Here’s what to look out for. A user-friendly interf..."
+          ]
+        },
+        {
+          "rule_id": "vocab.unlock",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'unlock'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...ee to use, but with paid-for plans that unlock more features. It’s free to use Grammar...",
+            "...lets you paraphrase unlimited words and unlocks the other tools. Best for: Getting help..."
+          ]
+        },
+        {
+          "rule_id": "hedge.in-terms-of",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'in terms of'",
+          "weight": 1.5,
+          "count": 1,
+          "examples": [
+            "...prompt. It’s free to use and unlimited in terms of how much text it will generate. Another..."
+          ]
+        },
+        {
+          "rule_id": "structure.sentence-in-short",
+          "category": "structure",
+          "description": "Sentence opening with a summary tag",
+          "weight": 1.5,
+          "count": 1,
+          "examples": [
+            "...’ to guide you from planning to creation. Overall, there are 130+ templates and recipes co..."
+          ]
+        },
+        {
+          "rule_id": "hedge.highly",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'highly'",
+          "weight": 0.5,
+          "count": 2,
+          "examples": [
+            "...dients that make those articles rank so highly. These then become a checklist for you...",
+            "...res an analysis of what makes them rank highly. And then suggests content, keywords, a..."
+          ]
+        },
+        {
+          "rule_id": "structure.key-feature-list",
+          "category": "structure",
+          "description": "'Key features/benefits include' list intro",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...writing tool for you? Here are all the key features, pros, cons, and costs of the best prod..."
+          ]
+        },
+        {
+          "rule_id": "vocab.comprehensive",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'comprehensive'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...keyword performance in your text. More comprehensive keyword and content research are also a..."
+          ]
+        },
+        {
+          "rule_id": "vocab.impactful",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'impactful'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...more efficient, more accurate and more impactful. Here are the 5 best AI writing tools:..."
+          ]
+        },
+        {
+          "rule_id": "vocab.navigate",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'navigate'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...an, making everything easy to learn and navigate. The creation starts by typing in keywo..."
+          ]
+        },
+        {
+          "rule_id": "vocab.streamline",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'streamline'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...EO copywriters who want to speed up and streamline the creation process. 22. Peppercontent..."
+          ]
+        },
+        {
+          "rule_id": "hedge.truly",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'truly'",
+          "weight": 0.5,
+          "count": 1,
+          "examples": [
+            "...at it supports 128 languages. So it’s a truly global AI copywriting tool. It also has..."
+          ]
+        },
+        {
+          "rule_id": "structure.double-adjective-noun",
+          "category": "structure",
+          "description": "'X and Y' paired adjectives before a noun",
+          "weight": 0.5,
+          "count": 1,
+          "examples": [
+            "...articles very quickly. The interface is simple and clean, making everything easy to learn and na..."
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "rank": 2,
+      "query": "ai writing tools",
+      "title": "Best AI Writing Tools (May 2026): I Tested 8 AI Writers With ...",
+      "url": "https://ilampadmanabhan.medium.com/best-ai-writing-tools-2025-i-tested-8-ai-writers-with-detection-software-46702c34e0f0",
+      "domain": "ilampadmanabhan.medium.com",
+      "status": "error",
+      "score": null,
+      "band": "Not scored",
+      "word_count": 0,
+      "density_per_1k": 0.0,
+      "category_totals": {},
+      "hits": [],
+      "error": "HTTP 403"
+    },
+    {
+      "rank": 3,
+      "query": "ai writing tools",
+      "title": "Free AI Writer",
+      "url": "https://quillbot.com/ai-writing-tools/ai-writer",
+      "domain": "quillbot.com",
+      "status": "error",
+      "score": null,
+      "band": "Not scored",
+      "word_count": 0,
+      "density_per_1k": 0.0,
+      "category_totals": {},
+      "hits": [],
+      "error": "HTTP 403"
+    },
+    {
+      "rank": 4,
+      "query": "ai writing tools",
+      "title": "AI Writer",
+      "url": "https://deepai.org/chat/writer",
+      "domain": "deepai.org",
+      "status": "scored",
+      "score": 70,
+      "band": "Sloppy",
+      "word_count": 166,
+      "density_per_1k": 30.12,
+      "category_totals": {
+        "inflated-vocabulary": 2.0,
+        "structure": 3.0
+      },
+      "hits": [
+        {
+          "rule_id": "structure.not-just-x-but-y",
+          "category": "structure",
+          "description": "'Not just X, but Y' construction",
+          "weight": 3.0,
+          "count": 1,
+          "examples": [
+            "...ol will help you craft scripts that are not only compelling but also meaningful. Upload Successful! You..."
+          ]
+        },
+        {
+          "rule_id": "vocab.craft",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'craft'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...gence, this powerful tool will help you craft scripts that are not only compelling bu..."
+          ]
+        },
+        {
+          "rule_id": "vocab.unparalleled",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'unparalleled'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...s your ultimate writing companion! With unparalleled creativity and intelligence, this power..."
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "rank": 5,
+      "query": "ai writing tools",
+      "title": "Free AI Writing Tools",
+      "url": "https://ahrefs.com/writing-tools",
+      "domain": "ahrefs.com",
+      "status": "scored",
+      "score": 83,
+      "band": "Slop",
+      "word_count": 1113,
+      "density_per_1k": 44.47,
+      "category_totals": {
+        "inflated-vocabulary": 30.0,
+        "hedge-intensifier": 4.5,
+        "stock-phrase": 10.0,
+        "structure": 5.0
+      },
+      "hits": [
+        {
+          "rule_id": "phrase.elevate-your",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'elevate your'",
+          "weight": 2.0,
+          "count": 6,
+          "examples": [
+            "...transformed in seconds! Grammar Checker Elevate your writing with our free AI grammar checke...",
+            "...nclusions with this user-friendly tool. Elevate your writing effortlessly. Emoji Translator...",
+            "...rful free tool. Instagram Bio Generator Elevate your Instagram presence with our cutting-edg..."
+          ]
+        },
+        {
+          "rule_id": "vocab.craft",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'craft'",
+          "weight": 1.0,
+          "count": 5,
+          "examples": [
+            "...thoughts, and our AI writing tools will craft the marketing copy effortlessly. It’s a...",
+            "...or-free. Conclusion Generator Instantly craft compelling conclusions with this user-f...",
+            "...ut a hassle. Meta Description Generator Craft informative, SEO-friendly meta descript..."
+          ]
+        },
+        {
+          "rule_id": "vocab.effortlessly",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'effortlessly'",
+          "weight": 1.0,
+          "count": 16,
+          "examples": [
+            "...ing tools will craft the marketing copy effortlessly. It’s as straightforward as that. Writi...",
+            "...iting with our free AI grammar checker. Effortlessly catch grammar, spelling, and punctuatio...",
+            "...ser-friendly tool. Elevate your writing effortlessly. Emoji Translator Unlock emotions with..."
+          ]
+        },
+        {
+          "rule_id": "vocab.elevate",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'elevate'",
+          "weight": 1.0,
+          "count": 6,
+          "examples": [
+            "...transformed in seconds! Grammar Checker Elevate your writing with our free AI grammar c...",
+            "...nclusions with this user-friendly tool. Elevate your writing effortlessly. Emoji Transl...",
+            "...rful free tool. Instagram Bio Generator Elevate your Instagram presence with our cuttin..."
+          ]
+        },
+        {
+          "rule_id": "vocab.unlock",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'unlock'",
+          "weight": 1.0,
+          "count": 4,
+          "examples": [
+            "...writing effortlessly. Emoji Translator Unlock emotions with our AI translator! Seamle...",
+            "...e of hashtags. Instagram Name Generator Unlock unique Instagram usernames effortlessly...",
+            "...your content. TikTok Username Generator Unlock endless creativity with our AI-powered..."
+          ]
+        },
+        {
+          "rule_id": "hedge.a-wide-range-of",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'a wide range of'",
+          "weight": 1.5,
+          "count": 2,
+          "examples": [
+            "...EO-friendly blog post titles to inspire a wide range of traffic-driving content. Content Idea G...",
+            "...you! Business Name Generator Brainstorm a wide range of creative business names until you find..."
+          ]
+        },
+        {
+          "rule_id": "vocab.tailored",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'tailored'",
+          "weight": 1.0,
+          "count": 3,
+          "examples": [
+            "...r! Instantly discover trending hashtags tailored to your content. TikTok Username Genera...",
+            "...name Generator. Discover unique handles tailored to your style. Social Media Bio Generat...",
+            "...name generator. Instant, creative, and tailored just for you! Business Name Generator B..."
+          ]
+        },
+        {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.5,
+          "count": 6,
+          "examples": [
+            "Marketing reports, apps, and automations, handled. Meet Letaido. Get Started Mar...",
+            "...ed. Meet Letaido. Get Started Marketing reports, apps, and automations, handled. Meet Letaido. Get Started The...",
+            "...AI grammar checker. Effortlessly catch grammar, spelling, and punctuation errors, ensuring your content is polish..."
+          ]
+        },
+        {
+          "rule_id": "vocab.enhance",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'enhance'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...s / Free AI Writing tools Save time and enhance your marketing and content performance...",
+            "...ils or articles. Sentence Rewriter Tool Enhance the quality and clarity of any sentence..."
+          ]
+        },
+        {
+          "rule_id": "hedge.a-variety-of",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'a variety of'",
+          "weight": 1.5,
+          "count": 1,
+          "examples": [
+            "...st sales. Product Name Generator Create a variety of creative product names until you find t..."
+          ]
+        },
+        {
+          "rule_id": "structure.em-dash",
+          "category": "structure",
+          "description": "Em dash (U+2014), heavily overused in generated copy",
+          "weight": 1.5,
+          "count": 1,
+          "examples": [
+            "...AI-powered markdown content effortlessly—no coding required."
+          ]
+        },
+        {
+          "rule_id": "structure.from-x-to-y",
+          "category": "structure",
+          "description": "'From X to Y' range flourish",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...r Input your rough ideas and transition from a blank page to an organized, well-structured outline in minutes. Par..."
+          ]
+        },
+        {
+          "rule_id": "vocab.cutting-edge",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'cutting-edge'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...levate your Instagram presence with our cutting-edge AI Bio Generator. Craft personalized, e..."
+          ]
+        },
+        {
+          "rule_id": "vocab.optimize",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'optimize'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...nd easily. SEO Title Generator Generate optimized titles for better search engine visibil..."
+          ]
+        },
+        {
+          "rule_id": "vocab.seamlessly",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'seamlessly'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...Unlock emotions with our AI translator! Seamlessly convert text to expressive emojis. Comm..."
+          ]
+        },
+        {
+          "rule_id": "vocab.showcase",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'showcase'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...ct one that highlights your product and showcases its potential. Resignation Letter Gener..."
+          ]
+        },
+        {
+          "rule_id": "vocab.streamline",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'streamline'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...Try our AI Acronym Generator today and streamline your workflow. AI Content Detector Dete..."
+          ]
+        },
+        {
+          "rule_id": "vocab.unleash",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'unleash'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...siness & Marketing Brand Name Generator Unleash your brand identity effortlessly with o..."
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "rank": 6,
+      "query": "ai writing tools",
+      "title": "Free AI Writing Resources",
+      "url": "https://www.scribbr.com/ai-writing/",
+      "domain": "scribbr.com",
+      "status": "error",
+      "score": null,
+      "band": "Not scored",
+      "word_count": 0,
+      "density_per_1k": 0.0,
+      "category_totals": {},
+      "hits": [],
+      "error": "HTTP 403"
+    },
+    {
+      "rank": 7,
+      "query": "ai writing tools",
+      "title": "Free AI Writer",
+      "url": "https://www.grammarly.com/ai-writer",
+      "domain": "grammarly.com",
+      "status": "scored",
+      "score": 55,
+      "band": "Sloppy",
+      "word_count": 785,
+      "density_per_1k": 19.75,
+      "category_totals": {
+        "inflated-vocabulary": 9.0,
+        "stock-phrase": 4.0,
+        "structure": 2.5
+      },
+      "hits": [
+        {
+          "rule_id": "phrase.tailored-to-your-needs",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'tailored to your needs'",
+          "weight": 2.0,
+          "count": 2,
+          "examples": [
+            "...ails and quickly receive unique content tailored to your needs and goals. Whether you need engaging co...",
+            "...ll generate engaging and unique content tailored to your needs. Where can I use Grammarly’s free AI wr..."
+          ]
+        },
+        {
+          "rule_id": "vocab.craft",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'craft'",
+          "weight": 1.0,
+          "count": 3,
+          "examples": [
+            "...ke-free articles efficiently. Marketers Craft compelling campaign messages, blog post...",
+            "...r creative ways to leverage AI, tips on crafting effective prompts, and more. All About...",
+            "...t Shine Write a Great Blog Post With AI Craft Compelling Titles With AI Works where y..."
+          ]
+        },
+        {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.5,
+          "count": 5,
+          "examples": [
+            "...e unique content for social media, blog posts, documents, and more with just a few clicks. Step 1 Access a...",
+            "...ove your writing and instantly generate emails, documents, and more in your preferred voice. Get Grammarly...",
+            "...or social media, websites, blogs, cover letters, taglines, and much more. Simply enter a few details and qu..."
+          ]
+        },
+        {
+          "rule_id": "vocab.enhance",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'enhance'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...the time and effort of manual writing. Enhance readability Transform complex ideas int...",
+            "...ins and outs of using generative AI to enhance your writing and productivity? Check ou..."
+          ]
+        },
+        {
+          "rule_id": "vocab.tailored",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'tailored'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...ails and quickly receive unique content tailored to your needs and goals. Whether you ne...",
+            "...ll generate engaging and unique content tailored to your needs. Where can I use Grammarl..."
+          ]
+        },
+        {
+          "rule_id": "vocab.leverage",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'leverage'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...ut the links below for creative ways to leverage AI, tips on crafting effective prompts,..."
+          ]
+        },
+        {
+          "rule_id": "vocab.seamless",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'seamless'",
+          "weight": 1.0,
+          "count": 1,
+          "examples": [
+            "...ts, making the content creation process seamless and efficient. How to use Grammarly’s F..."
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "rank": 8,
+      "query": "ai writing tools",
+      "title": "I Tested 25+ AI Writing Tools, and This One Writes Better Than ...",
+      "url": "https://aimadesimple0.substack.com/p/i-tested-25-ai-writing-tools-and",
+      "domain": "aimadesimple0.substack.com",
+      "status": "scored",
+      "score": 40,
+      "band": "Mixed",
+      "word_count": 5475,
+      "density_per_1k": 12.62,
+      "category_totals": {
+        "inflated-vocabulary": 6.0,
+        "hedge-intensifier": 7.0,
+        "stock-phrase": 8.0,
+        "structure": 48.1
+      },
+      "hits": [
+        {
+          "rule_id": "structure.heres-the-thing",
+          "category": "structure",
+          "description": "'Here's the thing / Here's why' setup",
+          "weight": 2.0,
+          "count": 10,
+          "examples": [
+            "...ince it will just make your work worse. Here’s what you actually need: An AI writer tool th...",
+            "...write will appear right at the top. And here’s why: unlike most AI tools built for blogs o...",
+            "...k details, and uploaded my content. And here’s what it generated: My experience: In the fir..."
+          ]
+        },
+        {
+          "rule_id": "structure.the-best-part",
+          "category": "structure",
+          "description": "'The best part?'",
+          "weight": 2.0,
+          "count": 12,
+          "examples": [
+            "...eatures of Muse that make it stand out: The best part? You can further: Adjust the style, ton...",
+            "...e to generate content the way I wanted. The best part is that I can further make changes, mak...",
+            "...use these models behind the scenes. And the best part? Over time, both ChatGPT and Claude hav..."
+          ]
+        },
+        {
+          "rule_id": "structure.rhetorical-reveal",
+          "category": "structure",
+          "description": "Rhetorical question then answer ('The result? ...')",
+          "weight": 2.0,
+          "count": 4,
+          "examples": [
+            "...use these models behind the scenes. And the best part? Over time, both ChatGPT and Claude have b...",
+            "...to mimic a specific writing style. And the best part? Both ChatGPT and Claude offer free usage...",
+            "...use these models behind the scenes. And the best part? Over time, both ChatGPT and Claude have b..."
+          ]
+        },
+        {
+          "rule_id": "structure.em-dash",
+          "category": "structure",
+          "description": "Em dash (U+2014), heavily overused in generated copy",
+          "weight": 1.5,
+          "count": 26,
+          "examples": [
+            "...st writers I hired from Fiverr: Jasmina — writing coach and mentor Daniella H — w...",
+            "...a — writing coach and mentor Daniella H — writes professional SEO blog posts and...",
+            "...SEO blog posts and articles Sam Barclay — writes engaging SEO articles and blog p..."
+          ]
+        },
+        {
+          "rule_id": "phrase.let-s-dive-into",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'let's dive into'",
+          "weight": 2.0,
+          "count": 2,
+          "examples": [
+            "...rol + revisions + human expertise. Now, let’s dive into the recommendations for the best AI wri...",
+            "...rol + revisions + human expertise. Now, let’s dive into the recommendations for the best AI wri..."
+          ]
+        },
+        {
+          "rule_id": "phrase.the-takeaway",
+          "category": "stock-phrase",
+          "description": "Stock phrase: 'the takeaway'",
+          "weight": 2.0,
+          "count": 2,
+          "examples": [
+            "...er testing 25+ AI writing tools, here’s the takeaway: most tools are either too generic or j...",
+            "...er testing 25+ AI writing tools, here’s the takeaway: most tools are either too generic or j..."
+          ]
+        },
+        {
+          "rule_id": "hedge.a-variety-of",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'a variety of'",
+          "weight": 1.5,
+          "count": 2,
+          "examples": [
+            "...directed to the dashboard, which offers a variety of categories to choose from. Here, you ca...",
+            "...directed to the dashboard, which offers a variety of categories to choose from. Here, you ca..."
+          ]
+        },
+        {
+          "rule_id": "structure.sentence-in-short",
+          "category": "structure",
+          "description": "Sentence opening with a summary tag",
+          "weight": 1.5,
+          "count": 2,
+          "examples": [
+            "...ntly say most of them are simply useless. In short, most of these AI writing tools are just...",
+            "...ntly say most of them are simply useless. In short, most of these AI writing tools are just..."
+          ]
+        },
+        {
+          "rule_id": "structure.both-and",
+          "category": "structure",
+          "description": "'Both X and Y' balance",
+          "weight": 0.5,
+          "count": 8,
+          "examples": [
+            "...oint, I used the same writing prompt on both ChatGPT and Sudowrite, and the difference was clear. As you c...",
+            "...e scenes. And the best part? Over time, both ChatGPT and Claude have become incredibly powerful across...",
+            "...cific writing style. And the best part? Both ChatGPT and Claude offer free usage limits, which makes th..."
+          ]
+        },
+        {
+          "rule_id": "structure.tricolon-list",
+          "category": "structure",
+          "description": "Rhythmic 'X, Y, and Z' triplet of single words",
+          "weight": 0.5,
+          "count": 18,
+          "examples": [
+            "...nd well-formatted sections with logical transitions, subheadings, and CTAs without needing manual fixing. Rewrites...",
+            "...existing drafts in a way that improves clarity, emotion, and engagement, and can generate unique ideas without...",
+            "...iting tools still struggle to match the creativity, tone, and flow of a skilled human writer. In that case..."
+          ]
+        },
+        {
+          "rule_id": "hedge.genuinely",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'genuinely'",
+          "weight": 0.5,
+          "count": 4,
+          "examples": [
+            "...it can make me much more productive and genuinely help in my work. I’ve also noticed that...",
+            "...why I’m also including options that can genuinely make a difference for readers like you....",
+            "...it can make me much more productive and genuinely help in my work. I’ve also noticed that..."
+          ]
+        },
+        {
+          "rule_id": "structure.from-x-to-y",
+          "category": "structure",
+          "description": "'From X to Y' range flourish",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...see, it has all the features one needs, from brainstorming ideas to writing in continuation, rewriting a specific sentence or paragr...",
+            "...see, it has all the features one needs, from brainstorming ideas to writing in continuation, rewriting a specific sentence or paragr..."
+          ]
+        },
+        {
+          "rule_id": "vocab.craft",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'craft'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...ose your genre, select a writing style, craft a synopsis, do a brain dump, add charac...",
+            "...ose your genre, select a writing style, craft a synopsis, do a brain dump, add charac..."
+          ]
+        },
+        {
+          "rule_id": "vocab.enhance",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'enhance'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...streamline their marketing process. It enhances brand experience, speeds up content cre...",
+            "...streamline their marketing process. It enhances brand experience, speeds up content cre..."
+          ]
+        },
+        {
+          "rule_id": "vocab.streamline",
+          "category": "inflated-vocabulary",
+          "description": "Inflated vocabulary: 'streamline'",
+          "weight": 1.0,
+          "count": 2,
+          "examples": [
+            "...uilt to help businesses and individuals streamline their marketing process. It enhances br...",
+            "...uilt to help businesses and individuals streamline their marketing process. It enhances br..."
+          ]
+        },
+        {
+          "rule_id": "structure.colon-reveal",
+          "category": "structure",
+          "description": "Short colon reveal ('One thing: ...')",
+          "weight": 0.8,
+          "count": 2,
+          "examples": [
+            "...suggest to you some of the best options. Note: This post contains a few affiliate links. If you choose to become a paid member t...",
+            "...suggest to you some of the best options. Note: This post contains a few affiliate links. If you choose to become a paid member t..."
+          ]
+        },
+        {
+          "rule_id": "hedge.incredibly",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'incredibly'",
+          "weight": 0.5,
+          "count": 2,
+          "examples": [
+            "...me, both ChatGPT and Claude have become incredibly powerful across almost every category,...",
+            "...me, both ChatGPT and Claude have become incredibly powerful across almost every category,..."
+          ]
+        },
+        {
+          "rule_id": "hedge.truly",
+          "category": "hedge-intensifier",
+          "description": "Hedge or filler intensifier: 'truly'",
+          "weight": 0.5,
+          "count": 2,
+          "examples": [
+            "..., in my opinion, the best way to create truly high-quality content is still by hiring...",
+            "..., in my opinion, the best way to create truly high-quality content is still by hiring..."
+          ]
+        },
+        {
+          "rule_id": "structure.double-adjective-noun",
+          "category": "structure",
+          "description": "'X and Y' paired adjectives before a noun",
+          "weight": 0.5,
+          "count": 2,
+          "examples": [
+            "...input tab. And the whole process feels simple and easy because everything is available in a si...",
+            "...input tab. And the whole process feels simple and easy because everything is available in a si..."
+          ]
+        }
+      ],
+      "error": ""
+    },
+    {
+      "rank": 9,
+      "query": "ai writing tools",
+      "title": "What is actually the best AI writing tools right now (local ...",
+      "url": "https://www.reddit.com/r/WritingWithAI/comments/1qs5n13/what_is_actually_the_best_ai_writing_tools_right/",
+      "domain": "reddit.com",
+      "status": "error",
+      "score": null,
+      "band": "Not scored",
+      "word_count": 0,
+      "density_per_1k": 0.0,
+      "category_totals": {},
+      "hits": [],
+      "error": "blocked by robots.txt"
+    }
+  ]
+}
