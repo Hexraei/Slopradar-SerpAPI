@@ -73,6 +73,45 @@ def cmd_scan(args) -> int:
     return 0
 
 
+def cmd_compare(args) -> int:
+    """Same niche, several Google markets: where is search sloppier?"""
+    say = _progress(args.quiet)
+    markets = args.gl or ["us", "in"]
+    if len(markets) < 2:
+        print("error: give at least two --gl values", file=sys.stderr)
+        return 2
+    try:
+        client = SerpApiClient(cache_dir=None if args.no_cache else args.cache_dir)
+    except SerpApiError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    fetcher = PageFetcher(timeout=args.timeout, respect_robots=not args.ignore_robots)
+    rows = []
+    for gl in markets:
+        say(f"Market gl={gl}")
+        try:
+            report = run_radar(args.niche, search=lambda q, gl=gl: client.search(q, gl=gl, hl=args.hl),
+                               fetcher=fetcher, queries=1, max_results=args.num, progress=say)
+        except SerpApiError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        rows.append((gl, report))
+    if args.json:
+        print(json.dumps({"niche": args.niche, "markets": {gl: r.to_dict() for gl, r in rows}},
+                         indent=2, ensure_ascii=False))
+        return 0
+    print(f"AI Slop Index for \"{args.niche}\" by Google market")
+    for gl, r in sorted(rows, key=lambda x: -(x[1].slop_index or -1)):
+        idx = "n/a" if r.slop_index is None else f"{r.slop_index:>3}/100"
+        scored = sum(1 for p in r.pages if p.score is not None)
+        top = r.top_rules[0]["rule_id"] if r.top_rules else "-"
+        print(f"  gl={gl:<4} {idx}  {r.band:<8} {scored}/{len(r.pages)} pages scored, top pattern: {top}")
+    shared = set.intersection(*[{p.domain for p in r.pages} for _, r in rows])
+    print(f"Domains ranking in every market: {', '.join(sorted(shared)) or 'none'}")
+    print(f"SerpApi calls: {client.calls_made} (cache hits: {client.cache_hits})")
+    return 0
+
+
 class _FixtureFetcher(PageFetcher):
     """Serves pages from the bundled demo folder instead of the network."""
 
@@ -178,6 +217,19 @@ def build_parser() -> argparse.ArgumentParser:
                       help="replay a saved SerpApi JSON response instead of searching (pages are still fetched live)")
     _add_output_flags(scan)
     scan.set_defaults(func=cmd_scan)
+
+    compare = sub.add_parser("compare", help="compare one niche across Google markets (one search per market)")
+    compare.add_argument("niche")
+    compare.add_argument("--gl", action="append", help="country code, repeat for each market (default: us and in)")
+    compare.add_argument("--hl", default="en")
+    compare.add_argument("--num", type=int, default=10)
+    compare.add_argument("--cache-dir", default=os.environ.get("SLOPRADAR_CACHE", ".slopradar_cache"))
+    compare.add_argument("--no-cache", action="store_true")
+    compare.add_argument("--timeout", type=float, default=12.0)
+    compare.add_argument("--ignore-robots", action="store_true")
+    compare.add_argument("--json", action="store_true")
+    compare.add_argument("--quiet", action="store_true")
+    compare.set_defaults(func=cmd_compare)
 
     demo = sub.add_parser("demo", help="run the full pipeline on bundled sample data (no key needed)")
     _add_output_flags(demo)
