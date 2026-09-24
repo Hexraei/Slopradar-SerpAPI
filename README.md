@@ -307,6 +307,8 @@ The JSON report (`--json`) contains everything above plus, for each page, every 
 
 ## Scoring
 
+The short version: count the slop patterns on a page, adjust for how long the page is, and turn that into a 0-100 score where each extra hit matters a little less than the one before. The exact steps:
+
 1. Each rule is a regex with a weight (0.5 to 3.0). Structural tells like "It's not X, it's Y" weigh more than a single inflated word.
 2. A rule counts at most 5 times per page, so one repeated brand word cannot sink a page.
 3. Weighted hits are divided by word count and scaled to hits per 1,000 words (density).
@@ -314,18 +316,23 @@ The JSON report (`--json`) contains everything above plus, for each page, every 
 5. Bands: 0-24 Human, 25-49 Mixed, 50-74 Sloppy, 75-100 Slop.
 6. The niche index is the mean of scored pages. The rank-weighted index weights position 1 at 1, position 2 at 1/2, and so on, because searchers mostly read the top results.
 
+**Worked example.** A 600-word page has 9 weighted hits. That is 9 / 600 x 1,000 = 15 hits per 1,000 words. The score is 100 x (1 - e^(-15/25)) = 45, which is Mixed. At 25 hits per 1,000 words the score is 63 (Sloppy), and at 50 it is 86 (Slop). The curve flattens near 100, so a page cannot go past 100 however much slop it has, and the difference between "some" and "a lot" stays visible.
+
 ### Rule categories
 
 | Category | Count | Examples |
 |---|---|---|
-| inflated-vocabulary | 164 | delve, tapestry, testament, seamless, robust, elevate, leverage |
-| stock-phrase | 149 | "in today's fast-paced world", "let's dive in", "unlock the power of", "in conclusion" |
-| hedge-intensifier | 45 | "it's worth noting", "plays a crucial role", "a wide range of", truly |
-| structure | 32 | em dash overuse, "not just X but Y", "It's not X, it's Y", "Whether you're X or Y", "The result? ...", tricolons, emoji bullets |
+| inflated-vocabulary (buzzwords) | 164 | delve, tapestry, testament, seamless, robust, elevate, leverage |
+| stock-phrase (clichés) | 149 | "in today's fast-paced world", "let's dive in", "unlock the power of", "in conclusion" |
+| hedge-intensifier (filler that pads or oversells) | 45 | "it's worth noting", "plays a crucial role", "a wide range of", truly |
+| structure (sentence shapes) | 32 | em dash overuse, "not just X but Y", "It's not X, it's Y", "Whether you're X or Y", "The result? ...", tricolons (lists of exactly three for rhythm), emoji bullets |
 
 A high score means the page leans on patterns that are common in generated copy. It does not prove a page was written by AI, and a human who writes in marketing clichés will score high too. That is working as intended: the tool measures the copy, not the author.
 
 ## Cost
+
+SerpApi's free plan gives 100 searches a month, so SlopRadar is careful with them.
+
 
 - One scan with default settings is **one SerpApi search**. `--queries 3` is three: the related-search suggestions come free with the first response.
 - Responses are cached for repeat runs, and `--serp-json` replays a saved response for free.
