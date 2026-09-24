@@ -59,6 +59,8 @@ def cmd_scan(args) -> int:
             max_results=args.num,
             progress=say,
             serp_stats=lambda: {"calls": client.calls_made, "cache_hits": client.cache_hits},
+            related_search=(lambda q: client.search_with_related(q, gl=args.gl, hl=args.hl, location=args.location))
+            if args.expand == "related" else None,
         )
     except SerpApiError as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -156,6 +158,9 @@ def build_parser() -> argparse.ArgumentParser:
     scan.add_argument("niche", help='keyword or niche, e.g. "project management software"')
     scan.add_argument("--queries", type=int, default=1,
                       help="how many query variants to search (1-6, each costs one SerpApi search)")
+    scan.add_argument("--expand", choices=["related", "templates"], default="related",
+                      help="how extra queries are chosen when --queries > 1: Google's own related "
+                           "searches via SerpApi (default) or fixed templates")
     scan.add_argument("--gl", default="us", help="Google country code (default us)")
     scan.add_argument("--hl", default="en", help="Google language code (default en)")
     scan.add_argument("--location", help='optional SerpApi location, e.g. "Chennai, Tamil Nadu, India"')

@@ -4,7 +4,7 @@ from __future__ import annotations
 import statistics
 import time
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Tuple
 from urllib.parse import urlparse, urlunparse
 
 from .engine import score_text, band_for, SlopScore
@@ -148,16 +148,34 @@ def top_rules(pages: List[PageReport], limit: int = 10) -> List[Dict]:
 def run_radar(niche: str, search: Callable[[str], List[SearchResult]], fetcher: PageFetcher,
               queries: int = 1, max_results: int = 10,
               progress: Optional[Callable[[str], None]] = None,
-              serp_stats: Optional[Callable[[], Dict[str, int]]] = None) -> NicheReport:
+              serp_stats: Optional[Callable[[], Dict[str, int]]] = None,
+              related_search: Optional[Callable[[str], Tuple[List[SearchResult], List[str]]]] = None
+              ) -> NicheReport:
+    """Plan, search, dedupe, fetch, score and aggregate.
+
+    With ``related_search`` the planner is driven by SerpApi itself: the first
+    search runs on the niche, and follow-up queries come from Google's related
+    searches / people-also-ask for that niche. Otherwise fixed templates are used.
+    """
     started = time.time()
     say = progress or (lambda msg: None)
-    plan = plan_queries(niche, queries)
+    results_by_query: Dict[str, List[SearchResult]] = {}
+    if related_search and queries > 1:
+        first = " ".join(niche.split())
+        first_results, related = related_search(first)
+        results_by_query[first] = first_results
+        plan = [first] + [q for q in related if q.lower() != first.lower()][: queries - 1]
+        if len(plan) < queries:  # Google offered too few; top up with templates
+            plan += [q for q in plan_queries(niche, 6) if q not in plan][: queries - len(plan)]
+        say(f"SerpApi suggested follow-ups: {', '.join(plan[1:]) or 'none'}")
+    else:
+        plan = plan_queries(niche, queries)
     say(f"Planned {len(plan)} quer{'y' if len(plan) == 1 else 'ies'}: {', '.join(plan)}")
 
     picked: List[SearchResult] = []
     seen = set()
     for q in plan:
-        results = search(q)
+        results = results_by_query[q] if q in results_by_query else search(q)
         say(f"SerpApi: {len(results)} organic results for '{q}'")
         for r in results:
             key = normalize_url(r.link)
