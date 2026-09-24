@@ -61,3 +61,18 @@ def test_client_uses_right_engines():
     c2.trends_related("ai tools", geo="in")
     p = s2.calls[0][1]
     assert p["engine"] == "google_trends" and p["data_type"] == "RELATED_QUERIES" and p["geo"] == "IN"
+
+
+def test_on_topic_filter_on_real_trends_response():
+    # Recorded Google Trends RELATED_QUERIES response (US, past 90 days, Sep 2026).
+    import json
+    from pathlib import Path
+    from slopradar.pipeline import on_topic
+    payload = json.loads((Path(__file__).parent / "fixtures" / "trends_ai_writing_tools.json").read_text())
+    trends = [t.query for t in parse_trends_related(payload, limit=50)]
+    assert "concerts" in trends and "soup" in trends
+    kept = on_topic("ai writing tools", trends)
+    assert "concerts" not in kept and "soup" not in kept and "best data visualization tools" not in kept
+    assert kept[0] == "ai content writing tools"
+    assert "ai tools for writing" not in kept  # same words as the niche, would repeat its results
+    assert "ai tools for academic writing" in kept

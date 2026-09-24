@@ -31,7 +31,7 @@ class FakeClient:
         self.log.append(("trends", q))
         if self.trends_fail:
             raise SerpApiError("no data")
-        return [TrendQuery("rising one", "rising", "Breakout", 5000), TrendQuery("rising two", "rising", "+300%", 300)]
+        return [TrendQuery("ai tools rising one", "rising", "Breakout", 5000), TrendQuery("concerts", "rising", "+900%", 900), TrendQuery("ai tools rising two", "rising", "+300%", 300)]
 
 
 def _fetch(self, url):
@@ -68,7 +68,7 @@ def test_scan_expand_trends_uses_rising_queries(monkeypatch, capsys):
     monkeypatch.setattr(cli.PageFetcher, "fetch", _fetch)
     assert cli.main(["scan", "ai tools", "--queries", "3", "--expand", "trends", "--quiet", "--json"]) == 0
     data = json.loads(capsys.readouterr().out)
-    assert data["queries"] == ["ai tools", "rising one", "rising two"]
+    assert data["queries"] == ["ai tools", "ai tools rising one", "ai tools rising two"]  # "concerts" dropped
     assert made[0].log[:2] == [("web", "ai tools"), ("trends", "ai tools")]
 
 

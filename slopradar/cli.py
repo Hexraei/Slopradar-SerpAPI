@@ -12,7 +12,7 @@ from . import __version__
 from .engine import RULES, CATEGORIES, score_text
 from .extract import extract_text
 from .fetch import PageFetcher
-from .pipeline import run_radar
+from .pipeline import run_radar, on_topic
 from .report import to_json, to_markdown, to_terminal
 from .serp import SerpApiClient, SerpApiError, parse_organic_results
 
@@ -52,8 +52,12 @@ def _expander(args, client, say):
         except SerpApiError as exc:
             say(f"Google Trends had nothing for '{q}' ({exc}); falling back to templates")
             return results, []
-        say("Google Trends: " + ", ".join(f"{t.query} ({t.value})" for t in rising[:5]))
-        return results, [t.query for t in rising]
+        relevant = on_topic(q, [t.query for t in rising])
+        dropped = len(rising) - len(relevant)
+        labels = {t.query: t.value for t in rising}
+        say("Google Trends: " + (", ".join(f"{x} ({labels[x]})" for x in relevant[:5]) or "nothing on-topic")
+            + (f"; dropped {dropped} off-topic or duplicate" if dropped else ""))
+        return results, relevant
     return trends
 
 

@@ -1,0 +1,103 @@
+{
+ "related_queries": {
+  "rising": [
+   {
+    "query": "best data visualization tools",
+    "value": "+3,650%",
+    "extracted_value": 3650
+   },
+   {
+    "query": "concerts",
+    "value": "+350%",
+    "extracted_value": 350
+   },
+   {
+    "query": "soup",
+    "value": "+250%",
+    "extracted_value": 250
+   },
+   {
+    "query": "ai content writing tools",
+    "value": "+40%",
+    "extracted_value": 40
+   }
+  ],
+  "top": [
+   {
+    "query": "ai tools for writing",
+    "value": "100",
+    "extracted_value": 100
+   },
+   {
+    "query": "best ai tools for writing",
+    "value": "51",
+    "extracted_value": 51
+   },
+   {
+    "query": "ai content writing tools",
+    "value": "25",
+    "extracted_value": 25
+   },
+   {
+    "query": "free ai writing tools",
+    "value": "20",
+    "extracted_value": 20
+   },
+   {
+    "query": "ai tools for content writing",
+    "value": "18",
+    "extracted_value": 18
+   },
+   {
+    "query": "chatgpt ai writing tools",
+    "value": "13",
+    "extracted_value": 13
+   },
+   {
+    "query": "ai tools for academic writing",
+    "value": "13",
+    "extracted_value": 13
+   },
+   {
+    "query": "ai writing assistant",
+    "value": "11",
+    "extracted_value": 11
+   },
+   {
+    "query": "best ai content writing tools",
+    "value": "10",
+    "extracted_value": 10
+   },
+   {
+    "query": "best ai tools for content writing",
+    "value": "10",
+    "extracted_value": 10
+   },
+   {
+    "query": "best free ai writing tools",
+    "value": "8",
+    "extracted_value": 8
+   },
+   {
+    "query": "events",
+    "value": "5",
+    "extracted_value": 5
+   },
+   {
+    "query": "soup",
+    "value": "2",
+    "extracted_value": 2
+   },
+   {
+    "query": "concerts",
+    "value": "1",
+    "extracted_value": 1
+   },
+   {
+    "query": "best data visualization tools",
+    "value": "<1",
+    "extracted_value": 0
+   }
+  ]
+ }
+}

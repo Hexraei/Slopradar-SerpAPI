@@ -36,6 +36,36 @@ def plan_queries(niche: str, count: int = 1) -> List[str]:
     return planned
 
 
+_STOP = {"a", "an", "the", "for", "of", "to", "in", "on", "and", "or", "with", "best", "top", "free",
+         "how", "what", "is", "are", "vs", "near", "me", "my", "your", "2024", "2025", "2026"}
+
+
+def _tokens(text: str) -> set:
+    return {t for t in "".join(c.lower() if c.isalnum() else " " for c in text).split() if t not in _STOP}
+
+
+def on_topic(niche: str, candidates: List[str], min_overlap: float = 0.5) -> List[str]:
+    """Keep follow-up queries that share at least half of the niche's content words.
+
+    Google Trends "rising" lists often include unrelated breakout searches
+    ("concerts", "soup" for "ai writing tools"). Those would drag unrelated pages
+    into the index, so they are dropped here. Near-duplicates of the niche are
+    dropped too, since they would return the same results.
+    """
+    core = _tokens(niche)
+    if not core:
+        return list(candidates)
+    need = max(1, int(round(len(core) * min_overlap + 0.0001)))
+    kept, seen = [], {frozenset(core)}
+    for q in candidates:
+        toks = _tokens(q)
+        if len(core & toks) < need or frozenset(toks) in seen:
+            continue
+        seen.add(frozenset(toks))
+        kept.append(q)
+    return kept
+
+
 def normalize_url(url: str) -> str:
     parts = urlparse(url)
     path = parts.path.rstrip("/") or "/"
