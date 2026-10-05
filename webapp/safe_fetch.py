@@ -3,7 +3,7 @@ import ipaddress
 import socket
 from urllib.parse import urlsplit
 import requests
-from slopradar.fetch import PageFetcher, BROWSER_HEADERS
+from slopradar.fetch import PageFetcher, BROWSER_HEADERS, USER_AGENT
 
 def public_url(url):
     p=urlsplit(url)
@@ -66,8 +66,8 @@ class PublicPageFetcher(PageFetcher):
                             chunks.append(chunk)
                         else:
                             rp=robotparser.RobotFileParser();rp.parse(b''.join(chunks).decode('utf-8',errors='replace').splitlines());self._robots[base]=rp
-                            return rp.can_fetch(BROWSER_HEADERS['User-Agent'],url)
+                            return rp.can_fetch(USER_AGENT,url)
                     self._robots[base]=None
             except requests.RequestException:self._robots[base]=None
         rp=self._robots[base]
-        return True if rp is None else rp.can_fetch(BROWSER_HEADERS['User-Agent'],url)
+        return True if rp is None else rp.can_fetch(USER_AGENT,url)
