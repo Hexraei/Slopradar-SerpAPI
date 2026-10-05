@@ -1,6 +1,6 @@
 import * as THREE from './three.module.min.js';
 const canvas=document.querySelector('#radar-art'),host=canvas.parentElement;
-try{
+if(!matchMedia('(max-width:700px)').matches)try{
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(35,1,.1,100);camera.position.set(0,0,11);
 const sculpture=new THREE.Group();scene.add(sculpture);
