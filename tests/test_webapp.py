@@ -120,3 +120,41 @@ def test_lock_contention_never_spends(monkeypatch):
     monkeypatch.setattr(svc.requests,'get',lambda *a,**k:pytest.fail('contention must not spend'))
     with pytest.raises(ScanError) as e:svc.ScanService().scan('test query')
     assert e.value.status==429 and conn.closed
+
+def test_uncertain_search_counts_before_call_and_releases_lock(monkeypatch):
+    import webapp.service as svc
+    monkeypatch.setenv('DATABASE_URL','unused');monkeypatch.setenv('SERPAPI_API_KEY','SECRET')
+    class Cur:
+        stage=0
+        commands=[]
+        def __enter__(self):return self
+        def __exit__(self,*a):pass
+        def execute(self,q,args=None):self.commands.append(q)
+        def fetchone(self):
+            self.stage+=1
+            return {1:(True,),2:None,3:None}[self.stage]
+    cur=Cur()
+    class Conn:
+        closed=False
+        def cursor(self):return cur
+        def close(self):self.closed=True
+    conn=Conn();monkeypatch.setattr(svc.psycopg2,'connect',lambda *a,**k:conn)
+    class Account:
+        status_code=200
+        def json(self):return {'total_searches_left':244}
+    monkeypatch.setattr(svc.requests,'get',lambda *a,**k:Account())
+    def uncertain(*a,**k):
+        assert any('INSERT INTO slop_spend' in q for q in cur.commands)
+        raise TimeoutError('uncertain upstream')
+    monkeypatch.setattr(svc,'run_radar',uncertain)
+    with pytest.raises(TimeoutError):svc.ScanService().scan('test query')
+    assert conn.closed
+
+def test_json_array_rejected():
+    assert app.test_client().post('/api/scan',json=['bad']).status_code==400
+
+def test_redirect_to_metadata_is_rejected(monkeypatch):
+    import socket,requests
+    from webapp.safe_fetch import PublicSession
+    response=requests.Response();response.status_code=302;response.url='https://example.com/';response.headers['Location']='http://169.254.169.254/latest/meta-data/'
+    with pytest.raises(ValueError):PublicSession().get_redirect_target(response)
