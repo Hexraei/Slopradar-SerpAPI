@@ -144,7 +144,7 @@ python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\act
 pip install -e ".[dev]"
 ```
 
-To run live searches you need a SerpApi API key, which is like a password that lets the tool use your SerpApi account. The free plan gives 100 searches a month. Get your key from https://serpapi.com/manage-api-key and set it in your terminal:
+To run live searches you need a SerpApi API key, which is like a password that lets the tool use your SerpApi account. The hackathon page currently advertises 250 free search credits per month. Check your SerpApi account for the quota that applies to you. Get your key from https://serpapi.com/manage-api-key and set it in your terminal:
 
 ```bash
 export SERPAPI_API_KEY="your_key_here"        # Windows PowerShell: $env:SERPAPI_API_KEY="your_key_here"
@@ -360,7 +360,7 @@ A high score means the page leans on patterns in the rule library. The score is 
 
 ## Cost
 
-SerpApi's free plan gives 100 searches a month, so SlopRadar is careful with them.
+Search quotas can change. The [hackathon site](https://serpapi.github.io/serpapi-india-hackathon-2026/) advertises 250 free monthly credits as of October 5, 2026; check your account balance. SlopRadar is careful with them.
 
 
 - One scan with default settings is **one SerpApi search**. `--queries 3` is three: the related-search suggestions come free with the first response.
