@@ -9,9 +9,9 @@ A lot of what shows up on Google now reads like it was churned out by a chatbot:
 SlopRadar tells you how much of it is in the search results for any topic.
 
 1. You type a topic, for example `ai writing tools`.
-2. SlopRadar runs that search on Google right now and gets the same results a real person would see.
+2. SlopRadar gets Google results through SerpApi for the country, language and location you choose. Results can differ from a personalized browser search.
 3. It opens each of the top pages and reads the text.
-4. It checks the text against a list of 390 known "slop" patterns: overused words, stock phrases, empty filler and tell-tale sentence shapes.
+4. It checks the text against a list of 390 writing patterns: overused words, stock phrases, empty filler and tell-tale sentence shapes.
 5. It gives each page a score from 0 to 100, and the whole topic one overall number: the **AI Slop Index**.
 
 It also shows its work. For every page you see exactly which patterns it found and the sentence each one came from, so you never have to take a score on trust.
@@ -229,6 +229,25 @@ cat copy.txt | slopradar score -
 slopradar score draft.md --json
 ```
 
+### Compare saved scans without another search
+
+```bash
+slopradar scan "standing desks" --json-out monday.json
+# Repeat on a later day, deliberately bypassing the search cache.
+slopradar scan "standing desks" --no-cache --json-out friday.json
+slopradar changes monday.json friday.json
+```
+
+`changes` separates common-page score changes from pages entering or leaving the results. Both files must describe the same niche, query plan and source mode. A result-set change is not evidence that the writing got better. Page content, fetch coverage and scoring-rule versions can also change the index.
+
+### Review literal words before treating them as filler
+
+```bash
+slopradar score travel.txt --ignore-rule vocab.journey --json
+```
+
+A travel article might use "journey" literally. Exclude that exact rule for a single-file check. Repeat the flag for several rules; the JSON records every exclusion. This is a review control, not an automatic false-positive classifier.
+
 ### Browse the rules
 
 ```bash
@@ -236,6 +255,16 @@ slopradar rules                       # counts per category
 slopradar rules --category structure  # every structural rule
 slopradar rules --json                # full library with regexes
 ```
+
+## Read the HTML report
+
+```bash
+slopradar demo --html demo.html --json-out demo.json
+```
+
+Open `demo.html` in a browser. The source label tells you whether you are looking at live search, saved rankings or bundled sample data. The score appears beside the number of pages actually scored. Open a page row to see the source link, extracted word count, matched passages and weighted points. It is one portable file, with no scripts, external fonts or analytics.
+
+A scan of one or two pages is flagged as a small sample. If fewer than 60% of selected pages score, the report warns about coverage. Blocked and short pages never count as zero.
 
 ## Example output
 
@@ -327,7 +356,7 @@ The short version: count the slop patterns on a page, adjust for how long the pa
 | hedge-intensifier (filler that pads or oversells) | 45 | "it's worth noting", "plays a crucial role", "a wide range of", truly |
 | structure (sentence shapes) | 32 | em dash overuse, "not just X but Y", "It's not X, it's Y", "Whether you're X or Y", "The result? ...", tricolons (lists of exactly three for rhythm), emoji bullets |
 
-A high score means the page leans on patterns that are common in generated copy. It does not prove a page was written by AI, and a human who writes in marketing clichés will score high too. That is working as intended: the tool measures the copy, not the author.
+A high score means the page leans on patterns in the rule library. The score is not a measured probability or a calibrated AI-detection result. It does not prove a page was written by AI, and a human who writes in marketing clichés will score high too. That is working as intended: the tool measures the copy, not the author.
 
 ## Cost
 
@@ -344,20 +373,24 @@ SerpApi's free plan gives 100 searches a month, so SlopRadar is careful with the
 pytest
 ```
 
-56 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing, Google News cluster flattening, Google Trends ordering and off-topic filtering on a recorded response), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market and web-vs-news comparisons and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
+82 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing, Google News cluster flattening, Google Trends ordering and off-topic filtering on a recorded response), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market and web-vs-news comparisons and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
 
 ## Limitations
 
 - Sites behind bot protection (Cloudflare and similar) often return 403. They are reported as not scored.
 - The rules target English copy.
 - Short pages (under 80 words) are not scored because a couple of hits would swing the result.
+- Technical terms, literal words and quoted examples may match. A score of 0 does not prove human authorship. The label "Human" is a legacy low-pattern band, not a conclusion about the writer.
+- The index describes selected, readable results only. It is not the fraction of Google written by AI.
+- Cached search results do not expire automatically. Use `--no-cache` for a new search; page content is fetched again each run.
+- A page over 2 MB is skipped rather than scored from a truncated document.
 - Rule weights are hand-tuned. They are all visible in `slopradar/engine/rules.py`, and [docs/rules.md](docs/rules.md) explains how to add or tune one.
 
 ## Roadmap
 
-- Track a niche over time and chart the index week by week.
+- Add charts on top of saved snapshot comparisons.
 - Per-domain history, to spot sites that switched to templated content.
-- Project-level allowlists for words that are legitimate in a niche.
+- Extend explicit single-file rule exclusions to project-level profiles.
 
 ## Disclosure
 

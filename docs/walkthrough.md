@@ -7,8 +7,10 @@ A path through SlopRadar for reviewers. Steps 1-3 need no API key.
 ```bash
 git clone https://github.com/Hexraei/Slopradar-SerpAPI.git
 cd Slopradar-SerpAPI
+python -m venv .venv
+source .venv/bin/activate
 pip install -e ".[dev]"
-pytest -q            # 56 tests, all offline
+pytest -q            # 82 tests, all offline
 ```
 
 ## 2. See the whole pipeline offline
@@ -68,3 +70,25 @@ slopradar compare "credit cards" --gl us --gl in --gl uk
 - The niche index and the rank-weighted index. When they differ a lot, the top results and the long tail read differently.
 - "Most common patterns": the phrases a niche leans on.
 - "Not scored" rows: pages that refused automated fetches are shown, never guessed.
+
+## 9. Inspect evidence on a phone
+
+Open the HTML report at a narrow window width. Source mode, coverage and score stay visible. Open a page row: each pattern lists total hits, counted hits (capped at 5) and weighted points, followed by the matched passages.
+
+## 10. Compare snapshots
+
+```bash
+slopradar demo --json-out first.json --quiet
+slopradar demo --json-out second.json --quiet
+slopradar changes first.json second.json
+```
+
+No search credits used. The same fixture pages have zero score delta. A live tracking run needs fresh searches (`--no-cache`) on both dates.
+
+## 11. Exclude a literal domain word
+
+```bash
+slopradar score travel.txt --ignore-rule vocab.journey --json
+```
+
+The exclusion is printed in the JSON. You decide whether the use is literal; the tool does not infer authorship.
