@@ -406,7 +406,7 @@ Built by Navin Venkatesan ([@Hexraei](https://github.com/Hexraei)) for the SerpA
 ## Interactive web app
 
 The same deterministic CLI engine also powers a one-field Flask web app with a
-locally bundled Three.js hero. No search key is sent to the browser.
+animated writing-scanner hero (desktop only). No search key is sent to the browser.
 
 ```sh
 pip install -r requirements-web.txt
