@@ -26,6 +26,25 @@ def test_report_has_no_decorative_badges_or_external_scripts(tmp_path, capsys):
     assert main(["demo", "--quiet", "--html", str(out)]) == 0
     page = out.read_text()
     assert "#5b21f5" not in page and "gradient" not in page and 'class="band"' not in page
-    assert "Pages in search order" in page and "View evidence" in page
+    assert "The result ledger" in page and "Read evidence" in page
     assert "weighted points" in page and "80 readable words" in page
     assert "<script" not in page
+
+
+def test_report_embeds_distinctive_fonts_without_remote_requests(tmp_path, capsys):
+    out = tmp_path / "r.html"
+    assert main(["demo", "--quiet", "--html", str(out)]) == 0
+    page = out.read_text()
+    assert "data:font/woff2;base64," in page and "Newsreader" in page and "IBM Plex Sans" in page
+    assert "fonts.googleapis.com" not in page
+
+
+def test_fingerprint_maps_real_scores_and_missing_pages(tmp_path, capsys):
+    out = tmp_path / "r.html"
+    assert main(["demo", "--quiet", "--html", str(out)]) == 0
+    page = out.read_text()
+    assert 'viewBox="0 0 700 300"' in page
+    assert "Search fingerprint" in page and "unscored, not zero" in page
+    assert 'href="#case-1"' in page and 'id="case-1"' in page
+    assert "FOUND IN RESULT 01" in page
+    assert 'stroke-width="2"' in page

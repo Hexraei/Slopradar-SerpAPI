@@ -23,7 +23,7 @@ slopradar = "slopradar.cli:main"
 include = ["slopradar*"]
 
 [tool.setuptools.package-data]
-slopradar = ["demo_data/*"]
+slopradar = ["demo_data/*", "assets/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
