@@ -29,3 +29,17 @@ def test_falls_back_to_whole_page_when_article_is_short():
 def test_tolerates_broken_html():
     html = "<body><p>Unclosed <b>bold<p>Next para</div></span>"
     assert "Next para" in extract_text(html)
+
+
+def test_hidden_content_is_not_reader_visible():
+    html = '<main><div hidden>HIDDEN</div><p aria-hidden="true">HIDDEN</p><span style="display: none">HIDDEN</span><p>Real story.</p></main>'
+    assert extract_text(html) == "Real story."
+
+
+def test_noise_hints_do_not_drop_shared_article_or_commentary():
+    assert extract_text('<div class="shared-article"><p>Real story.</p></div>') == "Real story."
+    assert extract_text('<div class="commentary"><p>Analysis.</p></div>') == "Analysis."
+
+
+def test_self_closing_skip_tag_does_not_swallow_article():
+    assert extract_text('<script/><p>Real story.</p>') == "Real story."

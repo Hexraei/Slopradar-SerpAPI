@@ -15,7 +15,7 @@ BLOCK_TAGS = {"p", "li", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "td",
               "dd", "dt", "figcaption", "summary", "pre", "div", "section", "article", "br"}
 VOID_TAGS = {"br", "img", "hr", "meta", "link", "input", "source", "area", "base", "col",
              "embed", "param", "track", "wbr"}
-NOISE_HINTS = re.compile(r"cookie|consent|newsletter|subscribe|popup|modal|share|social|breadcrumb|comment",
+NOISE_HINTS = re.compile(r"(?:^|[\s_-])(?:cookie|consent|newsletter|subscribe|popup|modal|share|social|breadcrumb|comments?)(?:$|[\s_-])",
                          re.IGNORECASE)
 
 
@@ -46,16 +46,25 @@ class _Extractor(HTMLParser):
             if tag == "br":
                 self._flush()
             return
+        attrs_dict = dict(attrs)
+        hidden = ("hidden" in attrs_dict or attrs_dict.get("aria-hidden", "").lower() == "true"
+                  or bool(re.search(r"(?:display\s*:\s*none|visibility\s*:\s*hidden)",
+                                    attrs_dict.get("style", ""), re.I)))
         attr_text = " ".join(v or "" for k, v in attrs if k in ("class", "id", "role"))
         noisy = bool(attr_text and NOISE_HINTS.search(attr_text)) and tag in ("div", "section", "aside", "ul")
         self.stack.append(tag)
-        if self.skip_depth or tag in SKIP_TAGS or noisy:
+        if self.skip_depth or tag in SKIP_TAGS or noisy or hidden:
             self.skip_depth += 1
             return
         if tag in ("main", "article"):
             self.main_depth += 1
         if tag in BLOCK_TAGS:
             self._flush()
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in VOID_TAGS:
+            self.handle_endtag(tag)
 
     def handle_endtag(self, tag):
         if tag == "title":

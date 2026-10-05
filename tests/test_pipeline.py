@@ -71,3 +71,9 @@ def test_index_math():
     assert plain == 60
     assert weighted == 70  # (90*1 + 30*0.5) / 1.5
     assert build_index([]) == (None, None)
+
+
+def test_url_identity_keeps_content_parameters():
+    assert normalize_url("https://example.com/article?id=1") != normalize_url("https://example.com/article?id=2")
+    assert normalize_url("https://example.com/article?id=1&utm_source=x#top") == normalize_url("https://example.com/article?id=1")
+    assert normalize_url("https://example.com/article?b=2&a=1") == normalize_url("https://example.com/article?a=1&b=2")

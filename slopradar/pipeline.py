@@ -5,7 +5,7 @@ import statistics
 import time
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Optional, Tuple
-from urllib.parse import urlparse, urlunparse
+from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode
 
 from .engine import score_text, band_for, SlopScore
 from .extract import extract_text, extract_title
@@ -69,7 +69,11 @@ def on_topic(niche: str, candidates: List[str], min_overlap: float = 0.5) -> Lis
 def normalize_url(url: str) -> str:
     parts = urlparse(url)
     path = parts.path.rstrip("/") or "/"
-    return urlunparse((parts.scheme.lower(), parts.netloc.lower().removeprefix("www."), path, "", "", ""))
+    # Keep content parameters (id, page, q); only tracking parameters are noise.
+    query = urlencode(sorted((k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True)
+                             if not k.lower().startswith("utm")
+                             and k.lower() not in {"gclid", "fbclid", "msclkid"}))
+    return urlunparse((parts.scheme.lower(), parts.netloc.lower().removeprefix("www."), path, "", query, ""))
 
 
 @dataclass
