@@ -25,11 +25,19 @@ def _slug(text: str) -> str:
 
 
 def _word_regex(term: str) -> Pattern:
-    # Allow simple inflections for single words (delve, delves, delving, delved).
     escaped = re.escape(term).replace(r"\ ", r"\s+")
     if " " not in term and term.isalpha():
-        stem = escaped[:-1] if term.endswith("e") else escaped
-        return re.compile(rf"\b{stem}(?:e|es|ed|ing|s|d)?\b", re.IGNORECASE)
+        # Never allow a bare truncated stem (landscap, journe, cultur).
+        forms = {term, term + "s"}
+        if term.endswith("e"):
+            forms.update({term + "d", term[:-1] + "ing"})
+        elif term.endswith("y") and len(term) > 1 and term[-2] not in "aeiou":
+            forms.add(term[:-1] + "ies")
+        else:
+            forms.update({term + "ed", term + "ing"})
+        if term.endswith(("s", "x", "ch", "sh")):
+            forms.add(term + "es")
+        return re.compile(r"\b(?:" + "|".join(re.escape(f) for f in sorted(forms, key=len, reverse=True)) + r")\b", re.IGNORECASE)
     return re.compile(rf"\b{escaped}\b", re.IGNORECASE)
 
 

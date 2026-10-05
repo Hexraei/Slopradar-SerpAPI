@@ -116,3 +116,16 @@ def test_label_colons_are_not_reveals():
 def test_plain_comparison_is_not_flagged():
     r = score_text("I used the same prompt on both ChatGPT and Sudowrite." + FILLER)
     assert not any(h.rule_id.startswith("structure.both") for h in r.hits)
+
+
+def test_no_bare_truncated_stems():
+    result = score_text("landscap journe curat cultur " + FILLER)
+    assert not {"vocab.landscape", "vocab.journey", "vocab.curate"} & ids(result)
+
+
+def test_vocabulary_inflections_do_not_lose_original_words():
+    result = score_text("journey journeys delved delving delves curated curating" + FILLER)
+    counts = {h.rule_id: h.count for h in result.hits}
+    assert counts["vocab.journey"] == 2
+    assert counts["vocab.delve"] == 3
+    assert counts["vocab.curate"] == 2
