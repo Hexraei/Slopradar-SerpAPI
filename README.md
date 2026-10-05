@@ -373,7 +373,7 @@ Search quotas can change. The [hackathon site](https://serpapi.github.io/serpapi
 pytest
 ```
 
-84 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing, Google News cluster flattening, Google Trends ordering and off-topic filtering on a recorded response), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market and web-vs-news comparisons and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
+85 tests cover the rule engine (determinism, inflections, word boundaries, caps, bands, regression tests for false positives seen on live pages), HTML extraction, the SerpApi client (request parameters, error handling, caching that never stores the key, related-search parsing, Google News cluster flattening, Google Trends ordering and off-topic filtering on a recorded response), the pipeline (dedupe, ranking, index math, unscored pages, SerpApi-driven query expansion), the HTML report, the market and web-vs-news comparisons and the CLI. All SerpApi and page responses in the test suite are mocked, so the suite runs offline and uses no searches.
 
 ## Limitations
 

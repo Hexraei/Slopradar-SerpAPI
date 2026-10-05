@@ -43,3 +43,8 @@ def test_noise_hints_do_not_drop_shared_article_or_commentary():
 
 def test_self_closing_skip_tag_does_not_swallow_article():
     assert extract_text('<script/><p>Real story.</p>') == "Real story."
+
+
+def test_valueless_hidden_attributes_do_not_crash():
+    text = extract_text('<article aria-hidden style><p>Visible evidence stays readable.</p></article>')
+    assert 'Visible evidence stays readable.' in text

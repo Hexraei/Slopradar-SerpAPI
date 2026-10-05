@@ -47,9 +47,9 @@ class _Extractor(HTMLParser):
                 self._flush()
             return
         attrs_dict = dict(attrs)
-        hidden = ("hidden" in attrs_dict or attrs_dict.get("aria-hidden", "").lower() == "true"
+        hidden = ("hidden" in attrs_dict or (attrs_dict.get("aria-hidden") or "").lower() == "true"
                   or bool(re.search(r"(?:display\s*:\s*none|visibility\s*:\s*hidden)",
-                                    attrs_dict.get("style", ""), re.I)))
+                                    (attrs_dict.get("style") or ""), re.I)))
         attr_text = " ".join(v or "" for k, v in attrs if k in ("class", "id", "role"))
         noisy = bool(attr_text and NOISE_HINTS.search(attr_text)) and tag in ("div", "section", "aside", "ul")
         self.stack.append(tag)
