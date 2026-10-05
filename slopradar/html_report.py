@@ -9,12 +9,13 @@ from .pipeline import NicheReport
 BAND_COLORS = {"Human": "#1f9d55", "Mixed": "#d69e2e", "Sloppy": "#dd6b20", "Slop": "#c53030"}
 
 CSS = """
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:980px;margin:32px auto;padding:0 16px;color:#1a1a2e}
+*{box-sizing:border-box}a,code{overflow-wrap:anywhere}aside{background:#f5f4fa;padding:4px 14px;border-radius:8px}body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:980px;margin:32px auto;padding:0 16px;color:#1a1a2e}
 h1{margin-bottom:4px}.sub{color:#555;margin-top:0}
 .index{font-size:56px;font-weight:800;color:#5b21f5;margin:8px 0}
 table{border-collapse:collapse;width:100%;margin:16px 0}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #eee;vertical-align:top}
 .bar{background:#eee;border-radius:4px;height:10px;width:140px}.fill{height:10px;border-radius:4px;background:#5b21f5}
 .band{color:#fff;border-radius:10px;padding:1px 8px;font-size:12px;white-space:nowrap}
+@media(max-width:600px){body{margin:18px auto;font-size:14px}h1{font-size:26px}.bar{width:60px}th,td{padding:7px 4px}table{table-layout:fixed}table:first-of-type th:nth-child(1){width:26px}table:first-of-type th:nth-child(2){width:42px}table:first-of-type th:nth-child(3){display:none}table:first-of-type td:nth-child(3){display:none}table:first-of-type th:nth-child(4){width:86px}.band{font-size:11px;white-space:normal}details table td{overflow-wrap:anywhere}}
 details{border:1px solid #eee;border-radius:8px;padding:8px 12px;margin:8px 0}summary{cursor:pointer;font-weight:600}
 code{background:#f3f0ff;padding:1px 4px;border-radius:3px}mark{background:#ffe08a}.muted{color:#777}
 """
