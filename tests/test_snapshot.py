@@ -39,3 +39,17 @@ def test_changes_cli_uses_saved_files(tmp_path, capsys):
     b.write_text(json.dumps(report([page("https://x.test", 30)])))
     assert main(["changes", str(a), str(b), "--json"]) == 0
     assert json.loads(capsys.readouterr().out)["common_pages"][0]["delta"] == -50
+
+
+def test_demo_and_live_reports_are_not_comparable():
+    a, b = report([]), report([])
+    a["source_mode"], b["source_mode"] = "demo", "live"
+    with pytest.raises(ValueError, match="source mode"):
+        compare_snapshots(a, b)
+
+
+def test_different_query_plans_are_not_comparable():
+    a, b = report([]), report([])
+    a["queries"], b["queries"] = ["desks"], ["desks", "best desks"]
+    with pytest.raises(ValueError, match="query plan"):
+        compare_snapshots(a, b)

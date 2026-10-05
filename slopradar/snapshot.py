@@ -9,6 +9,10 @@ from .pipeline import normalize_url
 def compare_snapshots(before, after):
     if before.get("niche", "").strip().casefold() != after.get("niche", "").strip().casefold():
         raise ValueError("snapshots must describe the same niche")
+    if before.get("source_mode", "live") != after.get("source_mode", "live"):
+        raise ValueError("snapshots must use the same source mode (do not compare demo with live data)")
+    if before.get("queries") != after.get("queries"):
+        raise ValueError("snapshots must use the same query plan")
     for report in (before, after):
         if not isinstance(report.get("pages"), list):
             raise ValueError("expected a SlopRadar JSON report with a pages list")
