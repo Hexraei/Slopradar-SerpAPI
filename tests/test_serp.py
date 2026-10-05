@@ -75,3 +75,36 @@ def test_cache_avoids_second_call_and_never_stores_key(tmp_path, serp_payload):
     assert len(session.calls) == 1 and client.cache_hits == 1
     for f in tmp_path.iterdir():
         assert "secret-key" not in f.read_text() and "secret-key" not in f.name
+
+
+def test_connection_error_does_not_expose_key():
+    import requests
+    class BrokenSession:
+        def get(self, *args, **kwargs):
+            raise requests.ConnectionError("https://serpapi.com/search?api_key=secret")
+    client = SerpApiClient(api_key="secret", session=BrokenSession())
+    with pytest.raises(SerpApiError) as exc:
+        client.search("x")
+    assert "secret" not in str(exc.value) and "ConnectionError" in str(exc.value)
+
+
+def test_corrupt_cache_is_replaced(tmp_path, serp_payload):
+    session = FakeSession(serp_payload)
+    client = SerpApiClient(api_key="secret-key", session=session, cache_dir=str(tmp_path))
+    client.search("x")
+    next(tmp_path.glob("*.json")).write_text("broken json")
+    client.search("x")
+    assert len(session.calls) == 2 and client.cache_hits == 0
+
+
+def test_provider_metadata_never_persists_key(tmp_path):
+    payload = {"organic_results": [], "search_metadata": {"url": "https://x?api_key=secret-key"}}
+    client = SerpApiClient(api_key="secret-key", session=FakeSession(payload), cache_dir=str(tmp_path))
+    client.search("x")
+    assert "secret-key" not in next(tmp_path.glob("*.json")).read_text()
+
+
+def test_unexpected_response_is_clear():
+    client = SerpApiClient(api_key="key", session=FakeSession([]))
+    with pytest.raises(SerpApiError, match="JSON object"):
+        client.search("x")

@@ -177,23 +177,39 @@ class SerpApiClient:
     def _call(self, params: Dict) -> Dict:
         cache_path = self._cache_path(params)
         if cache_path and cache_path.exists():
-            self.cache_hits += 1
-            return json.loads(cache_path.read_text())
-        response = self.session.get(
-            SERPAPI_ENDPOINT, params={**params, "api_key": self.api_key}, timeout=self.timeout
-        )
+            try:
+                cached = json.loads(cache_path.read_text(encoding="utf-8"))
+                if isinstance(cached, dict) and not cached.get("error"):
+                    self.cache_hits += 1
+                    return cached
+            except (ValueError, OSError):
+                pass  # corrupt cache is a miss, not a broken product
+
         self.calls_made += 1
+        try:
+            response = self.session.get(
+                SERPAPI_ENDPOINT, params={**params, "api_key": self.api_key}, timeout=self.timeout
+            )
+        except requests.RequestException as exc:
+            # requests errors can contain the request URL including api_key.
+            raise SerpApiError(f"SerpApi connection failed: {type(exc).__name__}") from None
         try:
             payload = response.json()
         except ValueError as exc:
             raise SerpApiError(f"SerpApi returned non-JSON (HTTP {response.status_code})") from exc
+        if not isinstance(payload, dict):
+            raise SerpApiError("SerpApi returned an unexpected response (expected a JSON object)")
         if response.status_code != 200 or payload.get("error"):
             raise SerpApiError(
-                f"SerpApi request failed (HTTP {response.status_code}): {payload.get('error', 'unknown error')}"
+                f"SerpApi request failed (HTTP {response.status_code}): {str(payload.get('error', 'unknown error')).replace(self.api_key, '[redacted]')}"
             )
         if cache_path:
             cache_path.parent.mkdir(parents=True, exist_ok=True)
-            cache_path.write_text(json.dumps(payload))
+            # Provider metadata can include a request URL. Never persist a key.
+            safe_payload = json.loads(json.dumps(payload).replace(self.api_key, "[redacted]"))
+            temp = cache_path.with_suffix(".tmp")
+            temp.write_text(json.dumps(safe_payload), encoding="utf-8")
+            temp.replace(cache_path)
         return payload
 
     def search(self, query: str, **kwargs) -> List[SearchResult]:

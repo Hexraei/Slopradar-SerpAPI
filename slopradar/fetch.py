@@ -67,21 +67,33 @@ class PageFetcher:
             resp = self.session.get(url, timeout=self.timeout, stream=True, allow_redirects=True)
         except requests.RequestException as exc:
             return FetchedPage(url=url, ok=False, error=f"{type(exc).__name__}: {exc}"[:200])
-        ctype = resp.headers.get("Content-Type", "")
-        if resp.status_code >= 400:
-            return FetchedPage(url=url, ok=False, status=resp.status_code, error=f"HTTP {resp.status_code}")
-        if ctype and "html" not in ctype.lower():
-            return FetchedPage(url=url, ok=False, status=resp.status_code, error=f"not HTML ({ctype.split(';')[0]})")
-        body = b""
-        for chunk in resp.iter_content(65536):
-            body += chunk
-            if len(body) > MAX_BYTES:
-                break
-        encoding = resp.encoding or "utf-8"
-        if encoding.lower() == "iso-8859-1" and "charset" not in ctype.lower():
-            encoding = "utf-8"
-        html = body.decode(encoding, errors="replace")
-        return FetchedPage(url=url, ok=True, status=resp.status_code, html=html, final_url=resp.url or url)
+        try:
+            ctype = resp.headers.get("Content-Type", "")
+            if resp.status_code >= 400:
+                return FetchedPage(url=url, ok=False, status=resp.status_code, error=f"HTTP {resp.status_code}")
+            if ctype and "html" not in ctype.lower():
+                return FetchedPage(url=url, ok=False, status=resp.status_code, error=f"not HTML ({ctype.split(';')[0]})")
+            chunks, size = [], 0
+            for chunk in resp.iter_content(65536):
+                size += len(chunk)
+                if size > MAX_BYTES:
+                    return FetchedPage(url=url, ok=False, status=resp.status_code,
+                                       error=f"page exceeds {MAX_BYTES:,}-byte limit")
+                chunks.append(chunk)
+            encoding = resp.encoding or "utf-8"
+            if encoding.lower() == "iso-8859-1" and "charset" not in ctype.lower():
+                encoding = "utf-8"
+            try:
+                html = b"".join(chunks).decode(encoding, errors="replace")
+            except LookupError:
+                html = b"".join(chunks).decode("utf-8", errors="replace")
+            return FetchedPage(url=url, ok=True, status=resp.status_code, html=html, final_url=resp.url or url)
+        except requests.RequestException as exc:
+            # One interrupted download must not take down the entire scan.
+            return FetchedPage(url=url, ok=False, status=resp.status_code,
+                               error=f"download failed: {type(exc).__name__}")
+        finally:
+            resp.close()
 
     def fetch_many(self, urls: List[str], progress: Optional[Callable[[str], None]] = None) -> Dict[str, FetchedPage]:
         results: Dict[str, FetchedPage] = {}
