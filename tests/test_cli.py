@@ -47,3 +47,19 @@ def test_score_file_and_rules(tmp_path, capsys):
     assert "phrase.let-s-dive-in" in capsys.readouterr().out
     assert main(["rules"]) == 0
     assert "rules in" in capsys.readouterr().out
+
+
+def test_bad_cli_inputs_are_clean_errors(capsys):
+    for argv in [["demo", "--num", "-1"], ["scan", "x", "--queries", "7"],
+                 ["scan", " "], ["score", "/file-that-does-not-exist"],
+                 ["demo", "--show-rules", "-1"]]:
+        assert main(argv) == 2
+        assert "error:" in capsys.readouterr().err
+
+
+def test_demo_provenance_and_coverage(capsys):
+    assert main(["demo", "--json", "--quiet"]) == 0
+    data = json.loads(capsys.readouterr().out)
+    assert data["source_mode"] == "demo"
+    assert data["coverage"] == {"selected": 5, "scored": 4, "percent": 80.0}
+    assert data["warnings"]

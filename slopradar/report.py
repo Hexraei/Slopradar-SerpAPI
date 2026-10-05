@@ -28,6 +28,9 @@ def to_terminal(report: NicheReport, show_rules: int = 3) -> str:
     lines.append(f"AI SLOP INDEX for \"{report.niche}\": {idx}  ({report.band})")
     if report.rank_weighted_index is not None:
         lines.append(f"Rank-weighted index (top results count more): {report.rank_weighted_index}/100")
+    lines.append(f"Source: {report.source_mode}. Coverage: {sum(p.score is not None for p in report.pages)}/{len(report.pages)} pages scored.")
+    for warning in report.warnings:
+        lines.append(f"Note: {warning}")
     lines.append(f"Queries: {', '.join(report.queries)}")
     lines.append("")
     lines.append(f"{'#':>2}  {'score':>5}  {'':20}  {'band':<8}  domain / title")
@@ -74,6 +77,7 @@ def to_markdown(report: NicheReport, max_rules: int = 15) -> str:
              f"**Index: {idx} ({report.band})**", ""]
     if report.rank_weighted_index is not None:
         lines.append(f"Rank-weighted index: {report.rank_weighted_index}/100")
+    lines += [f"Source: {report.source_mode}", f"Coverage: {sum(p.score is not None for p in report.pages)}/{len(report.pages)} pages scored", *[f"> {w}" for w in report.warnings], ""]
     lines += [f"Queries searched via SerpApi: {', '.join('`' + q + '`' for q in report.queries)}",
               f"Generated: {report.generated_at}", "",
               "| Rank | Score | Band | Domain | Title |", "|---|---|---|---|---|"]

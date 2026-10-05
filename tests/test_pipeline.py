@@ -77,3 +77,10 @@ def test_url_identity_keeps_content_parameters():
     assert normalize_url("https://example.com/article?id=1") != normalize_url("https://example.com/article?id=2")
     assert normalize_url("https://example.com/article?id=1&utm_source=x#top") == normalize_url("https://example.com/article?id=1")
     assert normalize_url("https://example.com/article?b=2&a=1") == normalize_url("https://example.com/article?a=1&b=2")
+
+
+def test_low_coverage_and_small_sample_are_flagged(serp_payload, slop_html, human_html):
+    report = _run(serp_payload, slop_html, human_html, max_results=1)
+    assert any("Small sample" in w for w in report.warnings)
+    report.pages.extend([PageReport(rank=i, query="q", title="", url="", domain="", status="error") for i in range(2, 5)])
+    assert any("Low coverage" in w for w in report.warnings)

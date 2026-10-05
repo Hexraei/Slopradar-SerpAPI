@@ -69,6 +69,7 @@ def cmd_scan(args) -> int:
         fetcher = PageFetcher(timeout=args.timeout, respect_robots=not args.ignore_robots)
         report = run_radar(args.niche, search=lambda q: parse_organic_results(saved, q),
                            fetcher=fetcher, queries=1, max_results=args.num, progress=say)
+        report.source_mode = "replay"
         _emit(report, args)
         return 0
     try:
@@ -204,6 +205,7 @@ def cmd_demo(args) -> int:
     report = run_radar(niche, search=lambda q: parse_organic_results(serp, q),
                        fetcher=_FixtureFetcher(folder, mapping), queries=1,
                        max_results=args.num, progress=_progress(args.quiet))
+    report.source_mode = "demo"
     _emit(report, args)
     return 0
 
@@ -332,7 +334,25 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
-    return args.func(args)
+    for name in ("num", "queries", "timeout"):
+        value = getattr(args, name, None)
+        if value is not None and value <= 0:
+            print(f"error: --{name} must be greater than zero", file=sys.stderr)
+            return 2
+    if getattr(args, "queries", 1) > 6:
+        print("error: --queries must be between 1 and 6", file=sys.stderr)
+        return 2
+    if getattr(args, "show_rules", 0) < 0:
+        print("error: --show-rules cannot be negative", file=sys.stderr)
+        return 2
+    if hasattr(args, "niche") and not args.niche.strip():
+        print("error: the niche cannot be empty", file=sys.stderr)
+        return 2
+    try:
+        return args.func(args)
+    except (OSError, ValueError, SerpApiError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":

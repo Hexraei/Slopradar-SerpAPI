@@ -35,13 +35,14 @@ def to_html(report: NicheReport, max_rules: int = 25) -> str:
     e = html.escape
     idx = "n/a" if report.slop_index is None else str(report.slop_index)
     out: List[str] = [
-        "<!doctype html><html lang=en><head><meta charset=utf-8>",
+        "<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>",
         f"<title>AI Slop Index: {e(report.niche)}</title><style>{CSS}</style></head><body>",
         f"<h1>AI Slop Index: {e(report.niche)}</h1>",
-        f'<p class="sub">Live Google results via SerpApi for {", ".join("<code>" + e(q) + "</code>" for q in report.queries)}. Generated {e(report.generated_at)}.</p>',
+        f'<p class="sub">{e(report.source_mode.title())} Google results via SerpApi for {", ".join("<code>" + e(q) + "</code>" for q in report.queries)}. Generated {e(report.generated_at)}.</p>',
         f'<div class="index">{idx}<span style="font-size:24px">/100</span></div>',
         f"<p>{_band(report.band)} Rank-weighted: <b>{'n/a' if report.rank_weighted_index is None else report.rank_weighted_index}</b>/100. "
         f"Scored {sum(1 for p in report.pages if p.score is not None)} of {len(report.pages)} pages. No LLM used.</p>",
+        "<aside aria-label=Limitations>" + "".join("<p>" + e(w) + "</p>" for w in report.warnings) + "</aside>",
         "<table><tr><th>#</th><th>Score</th><th></th><th>Band</th><th>Page</th></tr>",
     ]
     for p in report.pages:

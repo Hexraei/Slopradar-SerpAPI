@@ -115,9 +115,17 @@ class NicheReport:
     serp_cache_hits: int
     elapsed_seconds: float
     generated_at: str
+    source_mode: str = "live"
 
     def to_dict(self) -> Dict:
         return {
+            "source_mode": self.source_mode,
+            "coverage": {
+                "selected": len(self.pages),
+                "scored": sum(p.score is not None for p in self.pages),
+                "percent": round(100 * sum(p.score is not None for p in self.pages) / len(self.pages), 1) if self.pages else 0,
+            },
+            "warnings": self.warnings,
             "niche": self.niche,
             "queries": self.queries,
             "slop_index": self.slop_index,
@@ -131,6 +139,17 @@ class NicheReport:
             "generated_at": self.generated_at,
             "pages": [p.to_dict() for p in self.pages],
         }
+
+
+    @property
+    def warnings(self) -> List[str]:
+        warnings = ["Style-pattern score, not authorship detection. Literal technical vocabulary and quoted examples can match."]
+        scored = sum(p.score is not None for p in self.pages)
+        if scored < 3:
+            warnings.append("Small sample: fewer than 3 pages scored. Do not generalize to the whole niche.")
+        if self.pages and scored / len(self.pages) < 0.6:
+            warnings.append("Low coverage: most selected pages could not be scored; the index may be biased.")
+        return warnings
 
 
 def _score_page(result: SearchResult, rank: int, page: FetchedPage) -> PageReport:
