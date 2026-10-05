@@ -49,3 +49,25 @@ class PublicPageFetcher(PageFetcher):
             return super().fetch(url)
         except (ValueError,socket.gaierror):
             return FetchedPage(url=url,ok=False,error='Not a reachable public web page')
+
+    def allowed(self, url):
+        """Read robots with the same size and destination limits as pages."""
+        from urllib import robotparser
+        from urllib.parse import urlsplit
+        p=urlsplit(url);base=f'{p.scheme}://{p.netloc}'
+        if base not in self._robots:
+            try:
+                with self.session.get(base+'/robots.txt',timeout=self.timeout,stream=True) as response:
+                    if response.status_code==200:
+                        chunks=[];size=0
+                        for chunk in response.iter_content(8192):
+                            size+=len(chunk)
+                            if size>256_000:break
+                            chunks.append(chunk)
+                        else:
+                            rp=robotparser.RobotFileParser();rp.parse(b''.join(chunks).decode('utf-8',errors='replace').splitlines());self._robots[base]=rp
+                            return rp.can_fetch(BROWSER_HEADERS['User-Agent'],url)
+                    self._robots[base]=None
+            except requests.RequestException:self._robots[base]=None
+        rp=self._robots[base]
+        return True if rp is None else rp.can_fetch(BROWSER_HEADERS['User-Agent'],url)

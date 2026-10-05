@@ -72,7 +72,11 @@ class ScanService:
                 # Count attempts BEFORE calling upstream. An uncertain timeout never retries.
                 cur.execute('INSERT INTO slop_spend(day,attempts) VALUES(%s,1) ON CONFLICT(day) DO UPDATE SET attempts=slop_spend.attempts+1',(day,))
                 client = SerpApiClient(cache_dir=None)
-                report = run_radar(query, search=lambda q: client.search(q,gl='us',hl='en'),fetcher=PublicPageFetcher(timeout=8),queries=1,max_results=8,serp_stats=lambda:{'calls':client.calls_made,'cache_hits':client.cache_hits})
+                fetcher=PublicPageFetcher(timeout=8)
+                try:
+                    report = run_radar(query, search=lambda q: client.search(q,gl='us',hl='en'),fetcher=fetcher,queries=1,max_results=8,serp_stats=lambda:{'calls':client.calls_made,'cache_hits':client.cache_hits})
+                finally:
+                    fetcher.session.close()
                 data = report.to_dict();markup = to_html(report)
                 cur.execute('INSERT INTO slop_cache(key,report,html) VALUES(%s,%s::jsonb,%s) ON CONFLICT(key) DO UPDATE SET report=EXCLUDED.report,html=EXCLUDED.html,created_at=now()', (key,json.dumps(data),markup))
                 return {'report':data,'html':markup,'cached':False,'scanned_at':report.generated_at}
