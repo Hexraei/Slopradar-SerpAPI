@@ -129,3 +129,11 @@ def test_vocabulary_inflections_do_not_lose_original_words():
     assert counts["vocab.journey"] == 2
     assert counts["vocab.delve"] == 3
     assert counts["vocab.curate"] == 2
+
+
+def test_hit_details_explain_cap_and_score_math():
+    result = score_text("Journey " * 50 + FILLER)
+    hit = next(h for h in result.hits if h.rule_id == "vocab.journey")
+    assert hit.count == 50 and hit.counted_hits == 5
+    assert hit.contribution == hit.weight * 5
+    assert sum(h.contribution for h in result.hits) == result.weighted_hits

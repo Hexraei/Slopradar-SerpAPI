@@ -65,7 +65,7 @@ def to_html(report: NicheReport, max_rules: int = 25) -> str:
         out.append(f'<p class="muted">{p.word_count} words, {p.density_per_1k:.1f} weighted hits per 1k words</p><table>')
         for h in p.hits[:max_rules]:
             ex = "<br>".join(e(x) for x in h["examples"])
-            out.append(f"<tr><td><code>{e(h['rule_id'])}</code></td><td>x{h['count']}</td><td>{ex}</td></tr>")
+            out.append(f"<tr><td><code>{e(h['rule_id'])}</code><br>{e(h['description'])}</td><td>x{h['count']}<br>{h.get('counted_hits', min(h['count'],5))} counted<br>{h.get('contribution', min(h['count'],5)*h['weight']):g} weighted points</td><td>{ex}</td></tr>")
         if len(p.hits) > max_rules:
             out.append(f'<tr><td colspan=3 class="muted">{len(p.hits) - max_rules} more in the JSON report</td></tr>')
         out.append("</table></details>")

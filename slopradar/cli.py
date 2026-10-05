@@ -223,14 +223,31 @@ def cmd_score(args) -> int:
     else:
         raw = Path(target).read_text(encoding="utf-8", errors="replace")
         text = extract_text(raw) if target.lower().endswith((".html", ".htm")) else raw
-    result = score_text(text)
+    ignored = set(args.ignore_rule)
+    unknown = ignored - {r.id for r in RULES}
+    if unknown:
+        raise ValueError("unknown --ignore-rule: " + ", ".join(sorted(unknown)))
+    result = score_text(text, rules=[r for r in RULES if r.id not in ignored])
     if args.json:
-        print(json.dumps(result.to_dict(), indent=2, ensure_ascii=False))
+        print(json.dumps({**result.to_dict(), "ignored_rules": sorted(ignored)}, indent=2, ensure_ascii=False))
         return 0
     print(f"Slop score: {'n/a' if result.score is None else result.score}/100 ({result.band}), "
           f"{result.word_count} words, {result.density_per_1k:.1f} weighted hits per 1k words")
+    print("Style patterns, not authorship. Review literal uses and quotations before editing.")
+    if ignored:
+        print("Ignored rules: " + ", ".join(sorted(ignored)))
     for h in result.hits:
-        print(f"  {h.rule_id:<42} x{h.count:<3} w={h.weight:<4} \"{h.examples[0] if h.examples else ''}\"")
+        print(f"  {h.rule_id:<42} x{h.count:<3} counted={h.counted_hits} points={h.contribution:g} w={h.weight:<4} \"{h.examples[0] if h.examples else ''}\"")
+    return 0
+
+
+
+def cmd_changes(args) -> int:
+    from .snapshot import compare_snapshots, render_changes
+    before = json.loads(Path(args.before).read_text(encoding="utf-8"))
+    after = json.loads(Path(args.after).read_text(encoding="utf-8"))
+    result = compare_snapshots(before, after)
+    print(json.dumps(result, indent=2, ensure_ascii=False) if args.json else render_changes(result))
     return 0
 
 
@@ -321,8 +338,16 @@ def build_parser() -> argparse.ArgumentParser:
     score = sub.add_parser("score", help="score one URL, file, or stdin (-) without searching")
     score.add_argument("target")
     score.add_argument("--json", action="store_true")
+    score.add_argument("--ignore-rule", action="append", default=[], metavar="RULE_ID",
+                       help="exclude a literal or domain-specific rule (repeatable, exclusions recorded in JSON)")
     score.add_argument("--ignore-robots", action="store_true")
     score.set_defaults(func=cmd_score)
+
+    changes = sub.add_parser("changes", help="compare two saved JSON scans without spending search credits")
+    changes.add_argument("before", help="earlier JSON report")
+    changes.add_argument("after", help="later JSON report")
+    changes.add_argument("--json", action="store_true")
+    changes.set_defaults(func=cmd_changes)
 
     rules = sub.add_parser("rules", help="list the rule library")
     rules.add_argument("--category")

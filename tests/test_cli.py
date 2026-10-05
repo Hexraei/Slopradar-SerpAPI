@@ -63,3 +63,13 @@ def test_demo_provenance_and_coverage(capsys):
     assert data["source_mode"] == "demo"
     assert data["coverage"] == {"selected": 5, "scored": 4, "percent": 80.0}
     assert data["warnings"]
+
+
+def test_context_exclusions_are_explicit_and_recorded(tmp_path, capsys):
+    path = tmp_path / "travel.txt"
+    path.write_text("Journey " * 100)
+    assert main(["score", str(path), "--ignore-rule", "vocab.journey", "--json"]) == 0
+    data = json.loads(capsys.readouterr().out)
+    assert data["score"] == 0 and data["ignored_rules"] == ["vocab.journey"]
+    assert main(["score", str(path), "--ignore-rule", "not-a-rule"]) == 2
+    assert "unknown --ignore-rule" in capsys.readouterr().err

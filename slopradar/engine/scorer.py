@@ -33,6 +33,8 @@ class RuleHit:
     weight: float
     count: int
     examples: List[str] = field(default_factory=list)
+    counted_hits: int = 0
+    contribution: float = 0.0
 
     def to_dict(self) -> Dict:
         return asdict(self)
@@ -100,6 +102,8 @@ def score_text(text: str, rules: Iterable[Rule] = RULES, max_examples: int = 3) 
             description=rule.description,
             weight=rule.weight,
             count=len(matches),
+            counted_hits=counted,
+            contribution=contribution,
             examples=[_context(text, m.start(), m.end()) for m in matches[:max_examples]],
         ))
     hits.sort(key=lambda h: (-min(h.count, PER_RULE_CAP) * h.weight, h.rule_id))
