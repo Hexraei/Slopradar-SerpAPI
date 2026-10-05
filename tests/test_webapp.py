@@ -82,3 +82,41 @@ def test_daily_cap_counts_uncertain_attempts(monkeypatch):
     monkeypatch.setattr(svc.psycopg2,'connect',lambda *a,**k:Conn())
     monkeypatch.setattr(svc.requests,'get',lambda *a,**k:pytest.fail('cap before upstream'))
     with pytest.raises(ScanError):svc.ScanService().scan('test query')
+
+def test_cache_precedes_upstream_and_budget(monkeypatch):
+    import webapp.service as svc
+    from datetime import datetime,timezone
+    monkeypatch.setenv('DATABASE_URL','unused');monkeypatch.setenv('SERPAPI_API_KEY','SECRET')
+    class Cur:
+        def __init__(self):self.stage=0
+        def __enter__(self):return self
+        def __exit__(self,*a):pass
+        def execute(self,q,args=None):pass
+        def fetchone(self):
+            self.stage+=1
+            return (True,) if self.stage==1 else ({'query':'cached'},'<html>cached</html>',datetime.now(timezone.utc))
+    class Conn:
+        closed=False
+        def cursor(self):return Cur()
+        def close(self):self.closed=True
+    conn=Conn();monkeypatch.setattr(svc.psycopg2,'connect',lambda *a,**k:conn)
+    monkeypatch.setattr(svc.requests,'get',lambda *a,**k:pytest.fail('cache must not spend'))
+    assert svc.ScanService().scan('TEST QUERY')['cached']
+    assert conn.closed
+
+def test_lock_contention_never_spends(monkeypatch):
+    import webapp.service as svc
+    monkeypatch.setenv('DATABASE_URL','unused');monkeypatch.setenv('SERPAPI_API_KEY','SECRET')
+    class Cur:
+        def __enter__(self):return self
+        def __exit__(self,*a):pass
+        def execute(self,q,args=None):pass
+        def fetchone(self):return (False,)
+    class Conn:
+        closed=False
+        def cursor(self):return Cur()
+        def close(self):self.closed=True
+    conn=Conn();monkeypatch.setattr(svc.psycopg2,'connect',lambda *a,**k:conn)
+    monkeypatch.setattr(svc.requests,'get',lambda *a,**k:pytest.fail('contention must not spend'))
+    with pytest.raises(ScanError) as e:svc.ScanService().scan('test query')
+    assert e.value.status==429 and conn.closed
