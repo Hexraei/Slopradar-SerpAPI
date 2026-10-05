@@ -1,12 +1,16 @@
 # SlopRadar
 
-**An AI Slop Index for any corner of Google.**
+**A writing-pattern audit of the pages that rank on Google.**
+
+[Try the web app](https://slopradar.onrender.com/) · [Open a real example report](https://hexraei.github.io/Slopradar-SerpAPI/)
+
+The free web demo can take about a minute to wake after idle. It scans English pages from US Google results, caches repeat terms for 24 hours, and allows up to 20 new searches per UTC day. The CLI below supports other search settings.
 
 ## In plain English
 
 A lot of what shows up on Google now reads like it was churned out by a chatbot: "In today's fast-paced digital landscape...", "Unlock the power of...", "It's not just a tool, it's a game-changer." People call this kind of filler **AI slop**.
 
-SlopRadar tells you how much of it is in the search results for any topic.
+SlopRadar checks the pages that rank for a topic and shows which writing patterns they contain. It does not determine who wrote them.
 
 1. You type a topic, for example `ai writing tools`.
 2. SlopRadar gets Google results through SerpApi for the country, language and location you choose. Results can differ from a personalized browser search.
@@ -26,7 +30,7 @@ Rank-weighted index (top results count more): 36/100
 
 | Score | Label | In practice |
 |---|---|---|
-| 0-24 | Human | Reads like a person wrote it. Few or no stock patterns. |
+| 0-24 | Human (legacy label) | Few matched stock patterns. This is not evidence of human authorship. |
 | 25-49 | Mixed | Some filler, but mostly normal writing. |
 | 50-74 | Sloppy | Leans on stock phrases and buzzwords. |
 | 75-100 | Slop | Packed with them, sentence after sentence. |
