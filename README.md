@@ -402,3 +402,35 @@ pytest
 [MIT](LICENSE)
 
 Built by Navin Venkatesan ([@Hexraei](https://github.com/Hexraei)) for the SerpApi India Hackathon 2026.
+
+## Interactive web app
+
+The same deterministic CLI engine also powers a one-field Flask web app with a
+locally bundled Three.js hero. No search key is sent to the browser.
+
+```sh
+pip install -r requirements-web.txt
+export SERPAPI_API_KEY=your_key
+export DATABASE_URL=your_postgres_connection
+# Optional, can only lower the hard cap of 20:
+export DAILY_SEARCH_CAP=20
+gunicorn webapp.app:app --bind 0.0.0.0:8000 --workers 2 --threads 4 --timeout 90
+```
+
+A separate PostgreSQL database holds the 24-hour query cache and daily attempt
+counter. A session advisory lock serializes uncached scans across workers and
+restarts. Attempts are counted before calling SerpApi; uncertain requests are
+not retried. The app checks the live balance and stops at 105 remaining credits,
+leaving a five-credit cushion above the owner's 100-credit reserve. Activity
+outside the app cannot be locked by this app. Limits use UTC days.
+
+Search-result fetches reject private addresses, unsafe ports, and redirects to
+private destinations. TCP connections use checked public IPs while retaining
+TLS hostname verification. Cached reports remain available after the daily
+cap. Expired cache entries are pruned. Queries/results are temporarily stored
+in this isolated database; there are no user accounts or saved browsing logs.
+
+`render.yaml` selects only Render's Free web service. Free services sleep after
+15 idle minutes, so a first visit may need roughly a minute to wake. Use a
+permanent Free database, not Render's expiring Free PostgreSQL service. Neither
+configuration authorizes paid upgrades or billing overages.

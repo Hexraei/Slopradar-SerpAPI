@@ -1,0 +1,3 @@
+recursive-include webapp/templates *.html
+recursive-include webapp/static *.css *.js *.woff2 *.txt
+include requirements-web.txt render.yaml

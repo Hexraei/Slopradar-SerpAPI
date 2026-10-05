@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: slopradar
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn webapp.app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 90
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: DAILY_SEARCH_CAP
+        value: '20'
+      - key: DATABASE_URL
+        sync: false
+      - key: SERPAPI_API_KEY
+        sync: false
