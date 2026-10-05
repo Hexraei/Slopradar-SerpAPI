@@ -43,8 +43,22 @@ def test_fingerprint_maps_real_scores_and_missing_pages(tmp_path, capsys):
     out = tmp_path / "r.html"
     assert main(["demo", "--quiet", "--html", str(out)]) == 0
     page = out.read_text()
-    assert 'viewBox="0 0 700 300"' in page
+    assert 'viewBox="0 0 1100 406"' in page
+    assert 'viewBox="0 0 380 356"' in page
     assert "Search fingerprint" in page and "unscored, not zero" in page
     assert 'href="#case-1"' in page and 'id="case-1"' in page
     assert "FOUND IN RESULT 01" in page
     assert 'stroke-width="2"' in page
+
+
+def test_live_report_embeds_sponsor_wordmark_and_nonredundant_copy():
+    from slopradar.pipeline import NicheReport
+    from slopradar.html_report import to_html
+    report = NicheReport('test', ['test'], [], None, None, 'Not scored', {}, [], 1, 0, 0, '2026-10-05', 'live')
+    page = to_html(report)
+    assert 'Live search using' in page and 'data:image/svg+xml;base64,' in page
+    assert 'alt="SerpApi"' in page
+    assert 'Writing audit / evidence atlas' not in page
+    assert 'A writing-pattern audit of the pages that rank for this search.' in page
+    assert 'Each line is one ranked page. Longer line means a higher pattern score.' in page
+    assert 'No scored pages' in page and 'n/a<span class=denom>' not in page

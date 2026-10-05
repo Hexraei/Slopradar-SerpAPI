@@ -24,6 +24,15 @@ body{background:#d5eb4b}.wrap{max-width:1440px;padding:24px 34px 50px}.mast{bord
 .evidence-ribbon{gap:14px;margin:18px 0 20px;grid-template-columns:1.25fr 1fr 1.1fr}.ribbon-note{border:0;background:#f5f0d4;padding:18px;color:#18271f;transform:rotate(-2deg)}.ribbon-note:nth-child(2){background:#fa836d;transform:rotate(2deg);margin-top:16px}.ribbon-note:nth-child(3){background:#d5eb4b;transform:rotate(-1deg);margin-top:4px}.ribbon-note span{color:#18271f;font-size:10px}.ribbon-note q{font-size:25px}
 .sectionhead{border-bottom:3px solid var(--ink);padding-bottom:16px;align-items:start;margin:32px 0 0}.sectionhead h2{font-size:59px;line-height:.9;max-width:500px}.sectionhead p{font-size:14px;color:var(--ink);max-width:220px;padding-top:8px}.result{border-top:0;border-bottom:2px solid var(--ink)}.result summary{grid-template-columns:34px 100px minmax(0,1fr) 124px;gap:20px;padding:24px 18px;background:#f5f0d4}.result:nth-of-type(even) summary{background:#fa836d}.result:nth-of-type(3n) summary{background:#b9d8ce}.result[open]{background:#f5f0d4}.result[open] summary{padding:24px 18px;border-bottom:2px solid var(--ink)}.rank{font-size:15px;font-weight:600}.metric{font-size:72px}.title{font-size:31px;letter-spacing:-.7px}.domain{color:#3e5146}.assessment{font-size:13px}.openhint{font-size:11px;color:#18271f;text-decoration:underline;text-underline-offset:4px}.detail{padding:20px 30px 26px 176px}.detail-meta{color:#3e5146;border-color:#18271f}.rule{border-color:#18271f}.rule code,.rule-head p{color:#3e5146}blockquote{border-left:4px solid #aa281f;font-size:25px}.patterns{background:#18271f;padding:0 22px;color:#f5f0d4;gap:0 38px}.pattern{border-color:#82947e;padding:20px 0}.pattern p{font:400 24px/1.15 'Newsreader';color:#f5f0d4}.pattern small,.pattern-count{color:#d5eb4b}.pattern-count{font-size:14px}.method{background:#b9d8ce;border-top:0;padding:28px;margin-top:28px}.method p,.method ul{color:#18271f;font-size:14px}.method h2{font-size:45px}.foot{color:#18271f;border-top:3px solid #18271f}
 @media(max-width:650px){.wrap{padding:16px 14px 32px}.brand{font-size:34px;letter-spacing:-1px}.mast{padding:8px 0 13px}.meta{font-size:9px;max-width:117px;padding-left:8px;border-left-width:2px}.intro{display:block;margin:22px 0}.intro .eyebrow{font-size:8px;letter-spacing:1px;padding:6px 9px}.intro h1{font-size:72px;letter-spacing:-2.8px;line-height:.87;margin:20px 0}.intro p{font-size:14px;max-width:none;margin-left:54px;padding-top:10px;border-top-width:2px}.trace-section{padding:18px 14px}.trace-top{gap:14px}.trace-copy{font-size:23px;line-height:1.05;max-width:190px}.trace-index{min-width:107px;padding:10px 9px;transform:rotate(3deg);margin-top:-29px;border-width:2px}.trace-index .number{font-size:64px;letter-spacing:-3px}.trace-index .denom{font-size:14px}.trace-index .eyebrow{font-size:8px;letter-spacing:.8px}.trace-index>span:last-child{font-size:11px}.trace-top .eyebrow{font-size:8px;letter-spacing:.8px}.fingerprint{margin-top:17px;padding:8px 0;min-height:142px}.evidence-ribbon{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 4px 16px}.ribbon-note{padding:12px;display:block;transform:rotate(-2deg)}.ribbon-note span{font-size:7px;line-height:1.3;margin-bottom:7px}.ribbon-note q{font-size:17px;line-height:1.12}.ribbon-note:nth-child(2){display:block;margin-top:10px;transform:rotate(2deg)}.ribbon-note:nth-child(3){display:none}.trace-caption{font-size:8px}.trace-facts{gap:8px 12px;margin-top:14px;padding-top:12px;font-size:10px}.trace-facts b{font-size:19px}.trace-section .context{font-size:10px;line-height:1.5}.sectionhead{padding-bottom:12px;margin-top:24px}.sectionhead h2{font-size:40px;max-width:none}.sectionhead p{font-size:12px;max-width:none;padding:0;margin-top:10px}.result summary{grid-template-columns:20px 76px minmax(0,1fr);gap:10px;padding:18px 11px}.result[open] summary{padding:18px 11px}.rank{font-size:11px}.metric{font-size:46px}.title{font-size:23px;letter-spacing:-.3px}.assessment{font-size:11px}.openhint{font-size:9px}.domain{font-size:10px}.detail{padding:16px 14px 22px}.detail-meta{font-size:11px}.rule-head p{font-size:11px}blockquote{font-size:21px}.patterns{padding:0 16px}.pattern p{font-size:22px}.pattern-count{font-size:11px}.method{padding:20px}.method h2{font-size:36px}.method p,.method ul{font-size:12px}.foot{font-size:10px}}
+.chart-hero{margin:28px -8px 8px;border:2px solid #d5eb4b;padding:6px;background:#114e46}.fingerprint{max-height:none;margin:0;padding:0;border:0;background:#114e46}.fingerprint-mobile{display:none}.chart-legend{display:flex;flex-wrap:wrap;gap:12px 22px;border-top:1px solid #8caf98;padding:14px 14px 8px;font-size:11px;color:#ecf1ba}.chart-legend span{display:flex;align-items:center;gap:7px}.chart-legend i{width:17px;height:17px;display:inline-block;border:1px solid #18271f}.chart-legend .legend-note{margin-left:auto;color:#d5eb4b}.trace-copy{max-width:620px}.trace-caption{font-size:11px}
+@media(max-width:650px){.chart-hero{margin:22px -5px 8px;padding:2px;border-width:1px}.fingerprint-desktop{display:none}.fingerprint-mobile{display:block;width:100%;min-height:0}.chart-legend{gap:9px 12px;padding:12px 9px;font-size:9px}.chart-legend i{width:12px;height:12px}.chart-legend .legend-note{margin-left:0;width:100%}.trace-copy{font-size:22px;line-height:1.05;max-width:180px}}
+.meta{border:0;padding:0;background:#18271f;color:#f5f0d4;max-width:none;display:flex;align-items:center;gap:12px;font:400 18px/1.1 'Newsreader',serif;padding:12px 16px}.serp-logo{width:88px;height:auto;display:block;filter:brightness(0) invert(1)}
+@media(max-width:650px){.meta{border:0;padding:8px 10px;max-width:145px;display:flex;flex-direction:column;align-items:end;gap:5px;font-size:13px}.serp-logo{width:64px}}
+.chart-open{border:0;padding:0;margin:36px 0 12px}.open-chart-caption{font-size:11px;line-height:1.6;color:#b9d8ce;margin:6px 0 0 210px}.trace-copy{font-size:34px;max-width:650px}
+@media(max-width:650px){.chart-open{margin:30px 0 10px}.open-chart-caption{margin-left:0;font-size:10px}.trace-copy{font-size:21px;max-width:180px}.trace-caption{font-size:9px}}
+@media(max-width:650px){.meta{display:none}}
+.chart-key{display:grid;grid-template-columns:1fr 1.6fr;gap:26px;border-top:2px solid #d5eb4b;margin:12px 0 22px;padding:18px 0 0}.key-title{font-size:9px;letter-spacing:1.5px;font-weight:600;color:#d5eb4b}.chart-key p{font:400 26px/1.05 'Newsreader';margin:10px 0 8px;color:#f5f0d4}.chart-key small{color:#b9d8ce;font-size:10px}.key-colors>div{display:flex;flex-wrap:wrap;gap:10px 22px;margin:12px 0}.key-colors>div span{display:flex;align-items:center;gap:8px;font-size:13px;color:#f5f0d4}.key-colors i{width:24px;height:6px;display:block}
+@media(max-width:650px){.chart-key{grid-template-columns:1fr;gap:18px;padding-top:15px;margin-top:3px}.chart-key p{font-size:25px;margin-top:7px}.key-colors>div{gap:12px 22px;margin:11px 0}.key-colors>div span{font-size:12px}.chart-key small{font-size:10px}.key-colors{border-top:1px solid #56796b;padding-top:13px}}
 @media print{details{break-inside:avoid}.detail{display:block}.openhint{display:none}}
 """
 
@@ -57,33 +66,34 @@ def _evidence_ribbon(report: NicheReport) -> str:
     return '<div class=evidence-ribbon aria-label="Actual evidence excerpts">'+''.join(snippets[:3])+'</div>'
 
 def _fingerprint(report: NicheReport) -> str:
-    """Each ranked page leaves a trace at its actual score, not a invented waveform."""
-    e = html.escape
-    width, height = 700, 300
-    left, right, top, bottom = 42, 670, 38, 240
-    out = [f'<svg class=fingerprint viewBox="0 0 {width} {height}" role=img aria-labelledby="trace-title trace-desc"><title id=trace-title>Search fingerprint</title><desc id=trace-desc>Each vertical trace is one page in search order. Higher dots mean more style patterns. Dashed traces are unscored, not zero. Short transverse ticks divide the weighted rule-category mix; they are not uncertainty bars.</desc>']
-    for value in [0, 50, 100]:
-        y = bottom - value * (bottom-top)/100
-        out.append(f'<line x1="{left}" y1="{y}" x2="{right}" y2="{y}" stroke="#d4d4c9" stroke-dasharray="2 6"/><text x=4 y="{y+4}" fill="#65685e" font-size=12>{value}</text>')
-    for i, page in enumerate(report.pages):
-        x = left + (right-left)*(i+.5)/max(1,len(report.pages))
-        out.append(f'<a href="#case-{page.rank}" aria-label="Rank {page.rank}, score {page.score if page.score is not None else "not scored"}, {e(page.title)}">')
-        if page.score is None:
-            out.append(f'<line x1="{x}" y1="{top}" x2="{x}" y2="{bottom}" stroke="#777a70" stroke-dasharray="3 5"/><text x="{x}" y=142 text-anchor=middle fill="#65685e" font-size=14>n/a</text>')
-        else:
-            y=bottom-page.score*(bottom-top)/100
-            out.append(f'<line x1="{x}" y1="{bottom}" x2="{x}" y2="{y}" stroke="#9a3f22" stroke-width="2" /><circle cx="{x}" cy="{y}" r=5 fill="#9a3f22"/><text x="{x}" y="{max(16,y-13)}" text-anchor=middle fill="#22231f" font-size=18>{page.score}</text>')
-            # Rule-category composition forms the trace's individual texture.
-            total=sum(page.category_totals.values())
-            if total:
-                offset=bottom
-                for category,points in sorted(page.category_totals.items()):
-                    size=(bottom-y)*points/total
-                    out.append(f'<line x1="{x-8}" y1="{offset-size/2}" x2="{x+8}" y2="{offset-size/2}" stroke="#22231f" stroke-width="1"><title>{e(category)}: {points:g} weighted points</title></line>')
-                    offset-=size
-        out.append(f'<text x="{x}" y=267 text-anchor=middle fill="#65685e" font-size=12>{page.rank:02d}</text></a>')
-    out.append('</svg>')
-    return ''.join(out)
+    """Open horizontal score lanes: one number, one stroke, one real page."""
+    e=html.escape
+    colors={"structure":"#fa836d","inflated-vocabulary":"#d5eb4b","stock-phrase":"#b9d8ce","hedge":"#f5f0d4","hedge-intensifier":"#ecb960","filler":"#ecb960"}
+    diagrams=[]
+    for mobile in (False,True):
+        width=380 if mobile else 1100
+        row=55 if mobile else 65;top=46;height=top+row*max(1,len(report.pages))+35
+        left=48 if mobile else 210;right=width-65;span=right-left
+        variant='mobile' if mobile else 'desktop'
+        out=[f'<svg class="fingerprint fingerprint-{variant}" viewBox="0 0 {width} {height}" role=img aria-labelledby="trace-title-{variant} trace-desc-{variant}"><title id="trace-title-{variant}">Search fingerprint</title><desc id="trace-desc-{variant}">Each horizontal lane is one page in search order. Stroke length is its style-pattern score. Dashed lanes are unscored, not zero. Color names the dominant weighted rule category. Category details are in the evidence.</desc>']
+        out.append(f'<text x="{left}" y="20" fill="#b9d8ce" font-size="11">0</text><text x="{left+span/2}" y="20" text-anchor="middle" fill="#b9d8ce" font-size="11">50</text><text x="{right}" y="20" text-anchor="end" fill="#b9d8ce" font-size="11">100</text>')
+        for i,page in enumerate(report.pages):
+            y=top+i*row
+            category=max(page.category_totals,key=page.category_totals.get) if page.category_totals else ''
+            color=colors.get(category,'#f5f0d4')
+            out.append(f'<a href="#case-{page.rank}" aria-label="Rank {page.rank}, score {page.score if page.score is not None else "not scored"}, {e(page.title)}"><title>{e(page.domain)} / dominant category: {e(category) if category else "none"}</title>')
+            out.append(f'<text x="{12 if mobile else 18}" y="{y+5}" fill="#d5eb4b" font-size="{15 if mobile else 19}" font-weight="600">{page.rank:02d}</text>')
+            if not mobile:
+                out.append(f'<text x="61" y="{y+5}" fill="#ecf1ba" font-size="14">{e(page.domain[:20])}</text>')
+            out.append(f'<line x1="{left}" y1="{y}" x2="{right}" y2="{y}" stroke="#56796b" stroke-width="1"/>')
+            if page.score is None:
+                out.append(f'<line x1="{left}" y1="{y}" x2="{right}" y2="{y}" stroke="#b9d8ce" stroke-width="2" stroke-dasharray="4 8"/><text x="{right+12}" y="{y+5}" fill="#ecf1ba" font-size="14">n/a</text>')
+            else:
+                x=left+span*page.score/100
+                out.append(f'<line x1="{left}" y1="{y}" x2="{x}" y2="{y}" stroke="{color}" stroke-width="{8 if mobile else 11}"/><circle cx="{x}" cy="{y}" r="{5 if mobile else 7}" fill="{color}"/><rect x="{x+7}" y="{y-20}" width="{37 if mobile else 50}" height="36" fill="#114e46"/><text x="{x+12}" y="{y+8}" fill="{color}" font-family="Newsreader" font-size="{31 if mobile else 40}">{page.score}</text>')
+            out.append('</a>')
+        out.append('</svg>');diagrams.append(''.join(out))
+    return '<div class="chart-hero chart-open">'+''.join(diagrams)+'<div class="chart-key"><div class="key-scale"><span class="key-title">SCORE / 0-100</span><p>Line length shows the score.</p><small>Writing patterns, not authorship</small></div><div class="key-colors"><span class="key-title">MAIN PATTERN</span><div><span><i style="background:#fa836d"></i>Structure</span><span><i style="background:#d5eb4b"></i>Vocabulary</span><span><i style="background:#b9d8ce"></i>Stock phrases</span><span><i style="background:#ecb960"></i>Hedges</span></div><small>Open a result for its full breakdown.</small></div></div></div>'
 
 def to_html(report: NicheReport, max_rules: int = 25) -> str:
     e = html.escape
@@ -91,15 +101,17 @@ def to_html(report: NicheReport, max_rules: int = 25) -> str:
     idx = "n/a" if report.slop_index is None else str(report.slop_index)
     rank = "Not available" if report.rank_weighted_index is None else f"{report.rank_weighted_index}/100"
     mode = {"demo": "Offline demo / sample data", "replay": "Saved rankings / replay", "live": "Live search / SerpApi"}.get(report.source_mode, report.source_mode)
+    logo = base64.b64encode((Path(__file__).parent / "assets" / "serpapi-logo.svg").read_bytes()).decode("ascii")
+    provenance = f'<span class="provenance-copy">Live search using</span><img class="serp-logo" alt="SerpApi" src="data:image/svg+xml;base64,{logo}">' if report.source_mode == "live" else e(mode)
     out: List[str] = ["<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>",
         f"<title>AI Slop Index: {e(report.niche)}</title><style>{_font_css()}{CSS}</style></head><body><main class=wrap>",
-        f'<header class=mast><span class=brand>SlopRadar</span><span class=meta>{e(mode)}</span></header>',
-        f'<section class=intro><span class=eyebrow>Writing audit / evidence atlas</span><h1>{e(report.niche)}</h1><p>Every page leaves a trace. Follow the writing patterns through the results, then inspect the words behind them.</p></section>',
-        '<section class=trace-section><div class=trace-top><div><span class=eyebrow>The search fingerprint</span><p class=trace-copy>One trace per page. The higher it reaches,<br>the more stock patterns it contains.</p></div>',
+        f'<header class=mast><span class=brand>SlopRadar</span><span class=meta>{provenance}</span></header>',
+        f'<section class=intro><span class=eyebrow>Writing audit</span><h1>{e(report.niche)}</h1><p>A writing-pattern audit of the pages that rank for this search.</p></section>',
+        '<section class=trace-section><div class=trace-top><div><span class=eyebrow>The search fingerprint</span><p class=trace-copy>Each line is one ranked page. Longer line means a higher pattern score.</p></div>',
         f'<div class=trace-index><span class=eyebrow>Sample index</span><div class=number>{idx}' + ('<span class=denom> /100</span>' if report.slop_index is not None else '') + f'</div><span>{e(report.band) if report.slop_index is not None else "No scored pages"}</span></div></div>',
         _fingerprint(report),
         _evidence_ribbon(report),
-        '<div class=trace-caption><span>Search rank / first to last</span><span>Dashed = unscored / ticks = category mix</span></div>',
+        '<div class=trace-caption><span>Search rank / first to last</span><span>Dashed = not scored</span></div>',
         f'<div class=trace-facts><span><b>{scored}/{len(report.pages)}</b> pages scored</span><span><b>{rank}</b> rank-weighted</span><span><b>{report.serp_calls}</b> searches used</span><span><b>{report.serp_cache_hits}</b> cache hits</span></div><p class=context>Style patterns, not the probability of AI authorship. The fingerprint describes this readable sample only.</p></section>',
         '<div class=sectionhead><h2>The result ledger</h2><p>Open a page to inspect its matched patterns.</p></div>',
         '<div class=columns aria-hidden=true><span>Rank</span><span>Page</span><span class=right>Score</span><span class=right>Assessment</span></div>']
