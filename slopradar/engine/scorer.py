@@ -79,7 +79,7 @@ def _context(text: str, start: int, end: int, pad: int = 40) -> str:
 
 
 def count_words(text: str) -> int:
-    return len(_WORD_RE.findall(text))
+    return sum(1 for _ in _WORD_RE.finditer(text))
 
 
 def score_text(text: str, rules: Iterable[Rule] = RULES, max_examples: int = 3) -> SlopScore:
@@ -89,10 +89,15 @@ def score_text(text: str, rules: Iterable[Rule] = RULES, max_examples: int = 3) 
     weighted = 0.0
     categories: Dict[str, float] = {}
     for rule in rules:
-        matches = list(rule.pattern.finditer(text))
-        if not matches:
+        total = 0
+        examples = []
+        for match in rule.pattern.finditer(text):
+            total += 1
+            if len(examples) < max_examples:
+                examples.append(_context(text, match.start(), match.end()))
+        if not total:
             continue
-        counted = min(len(matches), PER_RULE_CAP)
+        counted = min(total, PER_RULE_CAP)
         contribution = counted * rule.weight
         weighted += contribution
         categories[rule.category] = categories.get(rule.category, 0.0) + contribution
@@ -101,10 +106,10 @@ def score_text(text: str, rules: Iterable[Rule] = RULES, max_examples: int = 3) 
             category=rule.category,
             description=rule.description,
             weight=rule.weight,
-            count=len(matches),
+            count=total,
             counted_hits=counted,
             contribution=contribution,
-            examples=[_context(text, m.start(), m.end()) for m in matches[:max_examples]],
+            examples=examples,
         ))
     hits.sort(key=lambda h: (-min(h.count, PER_RULE_CAP) * h.weight, h.rule_id))
     density = (weighted / words * 1000.0) if words else 0.0
