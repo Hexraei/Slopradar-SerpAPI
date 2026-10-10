@@ -8,7 +8,8 @@ import psycopg2
 import requests
 
 from webapp.safe_fetch import PublicPageFetcher
-from slopradar.pipeline import run_radar
+from slopradar.pipeline import run_radar, NicheReport, PageReport
+from dataclasses import fields
 from slopradar.serp import SerpApiClient
 from slopradar.html_report import to_html
 
@@ -55,7 +56,9 @@ class ScanService:
                 cur.execute('SELECT report, html, created_at FROM slop_cache WHERE key=%s AND created_at > now() - interval \'24 hours\'', (key,))
                 cached = cur.fetchone()
                 if cached:
-                    return {'report':cached[0], 'html':cached[1], 'cached':True, 'scanned_at':cached[2].isoformat()}
+                    data = cached[0]
+                    report = NicheReport(**{f.name: data[f.name] for f in fields(NicheReport) if f.name in data and f.name != 'pages'}, pages=[PageReport(**p) for p in data['pages']])
+                    return {'report':report.to_dict(), 'html':to_html(report), 'cached':True, 'scanned_at':cached[2].isoformat()}
                 day = datetime.now(timezone.utc).date()
                 cur.execute('SELECT attempts FROM slop_spend WHERE day=%s',(day,))
                 row = cur.fetchone(); used = row[0] if row else 0

@@ -94,14 +94,17 @@ def test_cache_precedes_upstream_and_budget(monkeypatch):
         def execute(self,q,args=None):pass
         def fetchone(self):
             self.stage+=1
-            return (True,) if self.stage==1 else ({'query':'cached'},'<html>cached</html>',datetime.now(timezone.utc))
+            return (True,) if self.stage==1 else (__import__('slopradar.pipeline',fromlist=['NicheReport']).NicheReport('cached',['cached'],[],None,None,'Not scored',{},[],0,0,0,'2026-10-10').to_dict(),'<html>outdated copy</html>',datetime.now(timezone.utc))
     class Conn:
         closed=False
         def cursor(self):return Cur()
         def close(self):self.closed=True
     conn=Conn();monkeypatch.setattr(svc.psycopg2,'connect',lambda *a,**k:conn)
     monkeypatch.setattr(svc.requests,'get',lambda *a,**k:pytest.fail('cache must not spend'))
-    assert svc.ScanService().scan('TEST QUERY')['cached']
+    result=svc.ScanService().scan('TEST QUERY')
+    assert result['cached']
+    assert 'outdated copy' not in result['html']
+    assert 'Page scores' in result['html']
     assert conn.closed
 
 def test_lock_contention_never_spends(monkeypatch):

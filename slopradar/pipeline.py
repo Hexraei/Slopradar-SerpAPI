@@ -143,12 +143,12 @@ class NicheReport:
 
     @property
     def warnings(self) -> List[str]:
-        warnings = ["Style-pattern score, not authorship detection. Literal technical vocabulary and quoted examples can match."]
+        warnings = ["Quoted examples and technical terms can match these rules without being bad writing."]
         scored = sum(p.score is not None for p in self.pages)
         if scored < 3:
-            warnings.append("Small sample: fewer than 3 pages scored. Do not generalize to the whole niche.")
+            warnings.append("Fewer than three pages were scored. This is too small a sample to judge the search as a whole.")
         if self.pages and scored / len(self.pages) < 0.6:
-            warnings.append("Low coverage: most selected pages could not be scored; the index may be biased.")
+            warnings.append("Most pages could not be scored. The average may not represent these search results.")
         return warnings
 
 

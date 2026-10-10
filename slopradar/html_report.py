@@ -53,6 +53,17 @@ def _safe_url(url: str) -> str:
 
 
 
+def _plain_rule(description: str) -> str:
+    return (description.replace("Inflated vocabulary:", "Word to check:")
+            .replace("Hedge or filler intensifier:", "Filler or qualifier:")
+            .replace("Em dash (U+2014), heavily overused in generated copy", "Em dash")
+            .replace("Rhythmic 'X, Y, and Z' triplet of single words", "List of three single words")
+            .replace("Tricolon of adjectives or -ly/-ive/-ful words", "List of three describing words")
+            .replace("Sentence opening with a summary tag", "Opens with a summary phrase")
+            .replace("Sentence opening with a stiff transition", "Opens with a formal transition")
+            .replace("'From X to Y' range flourish", "'From X to Y' phrase")
+            .replace("'Whether you're X or Y' audience sweep", "'Whether you're X or Y' phrase"))
+
 def _evidence_ribbon(report: NicheReport) -> str:
     e=html.escape
     snippets=[]
@@ -60,9 +71,9 @@ def _evidence_ribbon(report: NicheReport) -> str:
         if page.hits:
             hit=page.hits[0]
             example=hit.get("examples", [""])[0]
-            snippets.append(f'<a class=ribbon-note href="#case-{page.rank}"><span>FOUND IN RESULT {page.rank:02d}</span><q>{e(example[:170])}</q></a>')
+            snippets.append(f'<a class=ribbon-note href="#case-{page.rank}"><span>FOUND ON PAGE {page.rank:02d}</span><q>{e(example[:170])}</q></a>')
     if not snippets:
-        return '<p class=empty>No scored evidence to map.</p>'
+        return '<p class=empty>No matched text to show.</p>'
     return '<div class=evidence-ribbon aria-label="Actual evidence excerpts">'+''.join(snippets[:3])+'</div>'
 
 def _fingerprint(report: NicheReport) -> str:
@@ -75,7 +86,7 @@ def _fingerprint(report: NicheReport) -> str:
         row=55 if mobile else 65;top=46;height=top+row*max(1,len(report.pages))+35
         left=48 if mobile else 210;right=width-65;span=right-left
         variant='mobile' if mobile else 'desktop'
-        out=[f'<svg class="fingerprint fingerprint-{variant}" viewBox="0 0 {width} {height}" role=img aria-labelledby="trace-title-{variant} trace-desc-{variant}"><title id="trace-title-{variant}">Search fingerprint</title><desc id="trace-desc-{variant}">Each horizontal lane is one page in search order. Stroke length is its style-pattern score. Dashed lanes are unscored, not zero. Color names the dominant weighted rule category. Category details are in the evidence.</desc>']
+        out=[f'<svg class="fingerprint fingerprint-{variant}" viewBox="0 0 {width} {height}" role=img aria-labelledby="trace-title-{variant} trace-desc-{variant}"><title id="trace-title-{variant}">Page scores</title><desc id="trace-desc-{variant}">Each horizontal lane is one page in search order. Stroke length is its style-pattern score. Dashed lanes are unscored, not zero. Color names the dominant weighted rule category. Category details are in the evidence.</desc>']
         out.append(f'<text x="{left}" y="20" fill="#b9d8ce" font-size="11">0</text><text x="{left+span/2}" y="20" text-anchor="middle" fill="#b9d8ce" font-size="11">50</text><text x="{right}" y="20" text-anchor="end" fill="#b9d8ce" font-size="11">100</text>')
         for i,page in enumerate(report.pages):
             y=top+i*row
@@ -93,7 +104,7 @@ def _fingerprint(report: NicheReport) -> str:
                 out.append(f'<line x1="{left}" y1="{y}" x2="{x}" y2="{y}" stroke="{color}" stroke-width="{8 if mobile else 11}"/><circle cx="{x}" cy="{y}" r="{5 if mobile else 7}" fill="{color}"/><rect x="{x+7}" y="{y-20}" width="{37 if mobile else 50}" height="36" fill="#114e46"/><text x="{x+12}" y="{y+8}" fill="{color}" font-family="Newsreader" font-size="{31 if mobile else 40}">{page.score}</text>')
             out.append('</a>')
         out.append('</svg>');diagrams.append(''.join(out))
-    return '<div class="chart-hero chart-open">'+''.join(diagrams)+'<div class="chart-key"><div class="key-scale"><span class="key-title">SCORE / 0-100</span><p>Line length shows the score.</p><small>Writing patterns, not authorship</small></div><div class="key-colors"><span class="key-title">MAIN PATTERN</span><div><span><i style="background:#fa836d"></i>Structure</span><span><i style="background:#d5eb4b"></i>Vocabulary</span><span><i style="background:#b9d8ce"></i>Stock phrases</span><span><i style="background:#ecb960"></i>Hedges</span></div><small>Open a result for its full breakdown.</small></div></div></div>'
+    return '<div class="chart-hero chart-open">'+''.join(diagrams)+'<div class="chart-key"><div class="key-scale"><span class="key-title">SCORE / 0-100</span><p>Line length shows the score.</p><small>Dashed lines were not scored.</small></div><div class="key-colors"><span class="key-title">MAIN RULE TYPE</span><div><span><i style="background:#fa836d"></i>Structure</span><span><i style="background:#d5eb4b"></i>Vocabulary</span><span><i style="background:#b9d8ce"></i>Stock phrases</span><span><i style="background:#ecb960"></i>Hedges</span></div><small>Open a page to see all its matches.</small></div></div></div>'
 
 def to_html(report: NicheReport, max_rules: int = 25) -> str:
     e = html.escape
@@ -102,34 +113,34 @@ def to_html(report: NicheReport, max_rules: int = 25) -> str:
     rank = "Not available" if report.rank_weighted_index is None else f"{report.rank_weighted_index}/100"
     mode = {"demo": "Offline demo / sample data", "replay": "Saved rankings / replay", "live": "Live search / SerpApi"}.get(report.source_mode, report.source_mode)
     logo = base64.b64encode((Path(__file__).parent / "assets" / "serpapi-logo.svg").read_bytes()).decode("ascii")
-    provenance = f'<span class="provenance-copy">Live search using</span><img class="serp-logo" alt="SerpApi" src="data:image/svg+xml;base64,{logo}">' if report.source_mode == "live" else e(mode)
+    provenance = f'<span class="provenance-copy">Search results from</span><img class="serp-logo" alt="SerpApi" src="data:image/svg+xml;base64,{logo}">' if report.source_mode == "live" else e(mode)
     out: List[str] = ["<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>",
-        f"<title>AI Slop Index: {e(report.niche)}</title><style>{_font_css()}{CSS}</style></head><body><main class=wrap>",
+        f"<title>SlopRadar: {e(report.niche)}</title><style>{_font_css()}{CSS}</style></head><body><main class=wrap>",
         f'<header class=mast><span class=brand>SlopRadar</span><span class=meta>{provenance}</span></header>',
-        f'<section class=intro><span class=eyebrow>Writing audit</span><h1>{e(report.niche)}</h1><p>A writing-pattern audit of the pages that rank for this search.</p></section>',
-        '<section class=trace-section><div class=trace-top><div><span class=eyebrow>The search fingerprint</span><p class=trace-copy>Each line is one ranked page. Longer line means a higher pattern score.</p></div>',
-        f'<div class=trace-index><span class=eyebrow>Sample index</span><div class=number>{idx}' + ('<span class=denom> /100</span>' if report.slop_index is not None else '') + f'</div><span>{e(report.band) if report.slop_index is not None else "No scored pages"}</span></div></div>',
+        f'<section class=intro><span class=eyebrow>Page report</span><h1>{e(report.niche)}</h1><p>The pages Google returned, with scores and the text that matched.</p></section>',
+        '<section class=trace-section><div class=trace-top><div><span class=eyebrow>Page scores</span><p class=trace-copy>Each line is one page, in search order. Longer lines have higher scores.</p></div>',
+        f'<div class=trace-index><span class=eyebrow>Average score</span><div class=number>{idx}' + ('<span class=denom> /100</span>' if report.slop_index is not None else '') + f'</div><span>{e(report.band) if report.slop_index is not None else "No scored pages"}</span></div></div>',
         _fingerprint(report),
         _evidence_ribbon(report),
         '<div class=trace-caption><span>Search rank / first to last</span><span>Dashed = not scored</span></div>',
-        f'<div class=trace-facts><span><b>{scored}/{len(report.pages)}</b> pages scored</span><span><b>{rank}</b> rank-weighted</span><span><b>{report.serp_calls}</b> searches used</span><span><b>{report.serp_cache_hits}</b> cache hits</span></div><p class=context>Style patterns, not the probability of AI authorship. The fingerprint describes this readable sample only.</p></section>',
-        '<div class=sectionhead><h2>The result ledger</h2><p>Open a page to inspect its matched patterns.</p></div>',
+        f'<div class=trace-facts><span><b>{scored}/{len(report.pages)}</b> pages scored</span><span><b>{rank}</b> average, top pages count more</span><span><b>{report.serp_calls}</b> searches used</span><span><b>{report.serp_cache_hits}</b> cache hits</span></div><p class=context>This is not an AI detector. It scores the text we could read.</p></section>',
+        '<div class=sectionhead><h2>Pages checked</h2><p>Open a page to see what matched.</p></div>',
         '<div class=columns aria-hidden=true><span>Rank</span><span>Page</span><span class=right>Score</span><span class=right>Assessment</span></div>']
     if not report.pages:
         out.append('<p class=empty>No pages were returned. Try a more specific query or check the saved search response.</p>')
     for p in report.pages:
         score = "n/a" if p.score is None else str(p.score)
         status = p.band if p.score is not None else "Not scored"
-        out.append(f'<details class=result id="case-{p.rank}"><summary><span class=rank>{p.rank:02d}</span><span class=pageidentity><span class=title>{e(p.title)}</span><span class=domain style="display:block">{e(p.domain)}</span></span><span class=metric>{score}</span><span class=assessment>{e(status)}<span class=openhint>Read evidence</span></span></summary><div class=detail>')
-        out.append(f'<div class=detail-meta><a href="{e(_safe_url(p.url))}" rel="noreferrer">Open source page</a><span>{p.word_count:,} words extracted</span><span>{p.density_per_1k:.1f} weighted hits /1k words</span></div>')
+        out.append(f'<details class=result id="case-{p.rank}"><summary><span class=rank>{p.rank:02d}</span><span class=pageidentity><span class=title>{e(p.title)}</span><span class=domain style="display:block">{e(p.domain)}</span></span><span class=metric>{score}</span><span class=assessment>{e(status)}<span class=openhint>See matches</span></span></summary><div class=detail>')
+        out.append(f'<div class=detail-meta><a href="{e(_safe_url(p.url))}" rel="noreferrer">Visit page</a><span>{p.word_count:,} words extracted</span><span>{p.density_per_1k:.1f} weighted matches per 1,000 words</span></div>')
         if p.score is None:
-            out.append(f'<p class=reason>{e(p.error) if p.error else "Fewer than 80 readable words. This page does not contribute to the index."}</p>')
+            out.append(f'<p class=reason>{e(p.error) if p.error else "Under 80 words of text, so it was left out of the average."}</p>')
         if p.hits:
             out.append('<div class=rules>')
             for h in p.hits[:max_rules]:
                 counted = h.get('counted_hits', min(h['count'], 5))
                 contribution = h.get('contribution', counted * h['weight'])
-                out.append(f'<article class=rule><div class=rule-head><h3>{e(h["description"])}</h3><p>{h["count"]} found / {counted} counted / {contribution:g} weighted points</p></div><code>{e(h["rule_id"])}</code>')
+                out.append(f'<article class=rule><div class=rule-head><h3>{e(_plain_rule(h["description"]))}</h3><p>{h["count"]} found / {counted} counted / {contribution:g} weighted points</p></div><code>{e(h["rule_id"])}</code>')
                 for ex in h['examples']:
                     out.append(f'<blockquote>{e(ex)}</blockquote>')
                 out.append('</article>')
@@ -137,15 +148,15 @@ def to_html(report: NicheReport, max_rules: int = 25) -> str:
                 out.append(f'<p class=reason>{len(p.hits) - max_rules} more matched rules are available in the JSON report.</p>')
             out.append('</div>')
         elif p.score is not None:
-            out.append('<p class=reason>No patterns matched. This does not establish human authorship.</p>')
+            out.append('<p class=reason>No rules matched this page. That does not tell us who wrote it.</p>')
         out.append('</div></details>')
     if report.top_rules:
-        out.append('<div class=sectionhead><h2>Recurring fingerprints</h2><p>Ordered by pages affected, then total hits.</p></div><div class=patterns>')
+        out.append('<div class=sectionhead><h2>Common matches</h2><p>Most pages first. Ties use the number of matches.</p></div><div class=patterns>')
         for r in report.top_rules:
-            out.append(f'<div class=pattern><div><p>{e(r["description"])}</p><small>{e(r["rule_id"])}</small></div><span class=pattern-count>{r["pages"]} pages<br>{r["total_hits"]} hits</span></div>')
+            out.append(f'<div class=pattern><div><p>{e(_plain_rule(r["description"]))}</p><small>{e(r["rule_id"])}</small></div><span class=pattern-count>{r["pages"]} pages<br>{r["total_hits"]} hits</span></div>')
         out.append('</div>')
-    out.append('<section class=method><h2>The fine print</h2><p>Scores come from deterministic rules. Repeated hits for one rule are capped at 5, then weighted and normalized by text length. No LLM is used.</p><ul>')
+    out.append('<section class=method><h2>How scoring works</h2><p>Fixed rules check phrases and sentence shapes. Each rule counts up to five matches. Its weight and the page length determine the score. No AI model scores the text.</p><ul>')
     for warning in report.warnings:
         out.append(f'<li>{e(warning)}</li>')
-    out.append('</ul><p>Search queries: ' + e(', '.join(report.queries)) + f'</p><p>Generated: {e(report.generated_at)}. Source: {e(mode)}.</p></section><footer class=foot>Made with <a href="https://github.com/Hexraei/Slopradar-SerpAPI">SlopRadar</a>. Search data from SerpApi. Scores describe writing patterns, not authorship.</footer></main></body></html>')
+    out.append('</ul><p>Search queries: ' + e(', '.join(report.queries)) + f'</p><p>Generated: {e(report.generated_at)}. Source: {e(mode)}.</p></section><footer class=foot>Made with <a href="https://github.com/Hexraei/Slopradar-SerpAPI">SlopRadar</a>. Search data from SerpApi. Open a page above to check each match in context.</footer></main></body></html>')
     return '\n'.join(out)

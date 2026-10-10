@@ -81,6 +81,6 @@ def test_url_identity_keeps_content_parameters():
 
 def test_low_coverage_and_small_sample_are_flagged(serp_payload, slop_html, human_html):
     report = _run(serp_payload, slop_html, human_html, max_results=1)
-    assert any("Small sample" in w for w in report.warnings)
+    assert any("Fewer than three pages" in w for w in report.warnings)
     report.pages.extend([PageReport(rank=i, query="q", title="", url="", domain="", status="error") for i in range(2, 5)])
-    assert any("Low coverage" in w for w in report.warnings)
+    assert any("Most pages could not" in w for w in report.warnings)
